@@ -47,8 +47,8 @@ nav {
 nav.scrolled { border-color: var(--border); }
 
 .nav-logo img {
-  height: 36px;
-  filter: invert(1); /* beyaz logoyu siyah yapar */
+  height: 52px;
+  filter: invert(1);
 }
 
 .nav-links {
@@ -230,9 +230,26 @@ nav.scrolled { border-color: var(--border); }
 .hero-stats {
   display: flex;
   gap: 40px;
-  margin-top: 64px;
-  padding-top: 40px;
+  margin-top: 28px;
+  padding-top: 28px;
   border-top: 1px solid var(--border);
+}
+
+.hero-bg-logo {
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20rem;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(0,0,0,0.04);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  white-space: nowrap;
 }
 .stat-num {
   font-family: 'Cormorant Garamond', serif;
@@ -944,21 +961,22 @@ nav.scrolled { border-color: var(--border); }
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-left">
-    <div class="hero-tag">İsa Kurt Hair Artist</div>
-    <h1 class="hero-title">
+  <div class="hero-left" style="position:relative;z-index:1">
+    <div class="hero-bg-logo">HA</div>
+    <div class="hero-tag" style="position:relative;z-index:1">İsa Kurt Hair Artist</div>
+    <h1 class="hero-title" style="position:relative;z-index:1">
       Saçınızı bir<br>
       <em>sanat eserine</em><br>
       dönüştürün.
     </h1>
-    <p class="hero-sub">
+    <p class="hero-sub" style="position:relative;z-index:1">
       Profesyonel saç kesimi, boyama ve bakım hizmetleriyle her müşterimize özel bir deneyim sunuyoruz.
     </p>
-    <div class="hero-btns">
+    <div class="hero-btns" style="position:relative;z-index:1">
       <a href="/rezervasyon" class="btn-primary">Hemen Rezervasyon Yap</a>
       <a href="/fiyatlar" class="btn-outline">Fiyat Listesi</a>
     </div>
-    <div class="hero-stats">
+    <div class="hero-stats" style="position:relative;z-index:1">
       <div>
         <div class="stat-num">8+</div>
         <div class="stat-label">Yıl Deneyim</div>
