@@ -117,7 +117,15 @@ nav {
 .hero-panel:hover img { transform: scale(1.04); }
 
 .hero-panel-content {
-  position: absolute; bottom: 60px; left: 36px; z-index: 2;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
 }
 .hero-panel-title {
   font-family: 'Barlow Condensed', sans-serif;
@@ -128,7 +136,25 @@ nav {
 }
 .hero-panel-sub {
   font-size: 0.85rem; font-weight: 300;
-  color: rgba(255,255,255,0.65); letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.75); letter-spacing: 0.04em;
+  margin-bottom: 28px;
+}
+/* Hover book now butonu */
+.hero-panel-btn {
+  display: inline-block;
+  background: var(--white);
+  color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 13px 36px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.hero-panel:hover .hero-panel-btn {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* INTRO */
@@ -547,37 +573,65 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 
     <div class="hero-panel" style="background:linear-gradient(160deg,#2a2018,#1a1610)">
       <img src="images/hero-sac.jpg" alt="" onerror="this.style.display='none'">
-      <div class="hero-panel-content"><div class="hero-panel-title">SAÇ</div><div class="hero-panel-sub">Kesim, boyama ve bakım</div></div>
+      <div class="hero-panel-content">
+        <div class="hero-panel-title">SAÇ</div>
+        <div class="hero-panel-sub">Kesim, boyama ve bakım</div>
+        <a href="/rezervasyon" class="hero-panel-btn">RANDEVU AL</a>
+      </div>
     </div>
 
     <div class="hero-panel" style="background:linear-gradient(160deg,#1a1a22,#0f0f18)">
       <img src="images/hero-makyaj.jpg" alt="" onerror="this.style.display='none'">
-      <div class="hero-panel-content"><div class="hero-panel-title">MAKYAJ</div><div class="hero-panel-sub">Günlük, gece, gelin</div></div>
+      <div class="hero-panel-content">
+        <div class="hero-panel-title">MAKYAJ</div>
+        <div class="hero-panel-sub">Günlük, gece, gelin</div>
+        <a href="/rezervasyon" class="hero-panel-btn">RANDEVU AL</a>
+      </div>
     </div>
 
     <div class="hero-panel" style="background:linear-gradient(160deg,#1e1a18,#141210)">
       <img src="images/hero-gelin.jpg" alt="" onerror="this.style.display='none'">
-      <div class="hero-panel-content"><div class="hero-panel-title">GELİN</div><div class="hero-panel-sub">Özel gün tasarımı</div></div>
+      <div class="hero-panel-content">
+        <div class="hero-panel-title">GELİN</div>
+        <div class="hero-panel-sub">Özel gün tasarımı</div>
+        <a href="/rezervasyon" class="hero-panel-btn">RANDEVU AL</a>
+      </div>
     </div>
 
     <div class="hero-panel" style="background:linear-gradient(160deg,#181220,#100c18)">
       <img src="images/hero-tirnak.jpg" alt="" onerror="this.style.display='none'">
-      <div class="hero-panel-content"><div class="hero-panel-title">TIRNAK</div><div class="hero-panel-sub">Manikür, pedikür, kalıcı</div></div>
+      <div class="hero-panel-content">
+        <div class="hero-panel-title">TIRNAK</div>
+        <div class="hero-panel-sub">Manikür, pedikür, kalıcı</div>
+        <a href="/rezervasyon" class="hero-panel-btn">RANDEVU AL</a>
+      </div>
     </div>
 
     <div class="hero-panel" style="background:linear-gradient(160deg,#121a14,#0c1410)">
       <img src="images/hero-balayage.jpg" alt="" onerror="this.style.display='none'">
-      <div class="hero-panel-content"><div class="hero-panel-title">BALAYAGE</div><div class="hero-panel-sub">Doğal ve uzun ömürlü renk</div></div>
+      <div class="hero-panel-content">
+        <div class="hero-panel-title">BALAYAGE</div>
+        <div class="hero-panel-sub">Doğal ve uzun ömürlü renk</div>
+        <a href="/rezervasyon" class="hero-panel-btn">RANDEVU AL</a>
+      </div>
     </div>
 
     <div class="hero-panel" style="background:linear-gradient(160deg,#1a1218,#100c10)">
       <img src="images/hero-boyama.jpg" alt="" onerror="this.style.display='none'">
-      <div class="hero-panel-content"><div class="hero-panel-title">BOYAMA</div><div class="hero-panel-sub">Röfle, ombre, tam boyama</div></div>
+      <div class="hero-panel-content">
+        <div class="hero-panel-title">BOYAMA</div>
+        <div class="hero-panel-sub">Röfle, ombre, tam boyama</div>
+        <a href="/rezervasyon" class="hero-panel-btn">RANDEVU AL</a>
+      </div>
     </div>
 
     <div class="hero-panel" style="background:linear-gradient(160deg,#201414,#180e0e)">
       <img src="images/hero-kaynak.jpg" alt="" onerror="this.style.display='none'">
-      <div class="hero-panel-content"><div class="hero-panel-title">KAYNAK</div><div class="hero-panel-sub">Hacim ve uzunluk</div></div>
+      <div class="hero-panel-content">
+        <div class="hero-panel-title">KAYNAK</div>
+        <div class="hero-panel-sub">Hacim ve uzunluk</div>
+        <a href="/rezervasyon" class="hero-panel-btn">RANDEVU AL</a>
+      </div>
     </div>
 
   </div>
