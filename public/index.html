@@ -506,6 +506,11 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   margin-top:4px;
 }
 
+/* Hizmet fiyat listesi */
+.service-price-list { margin-top:16px; display:flex; flex-direction:column; gap:6px; border-top:1px solid var(--border); padding-top:14px; }
+.spl-item { display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:0.75rem; color:#444; }
+.spl-item span:last-child { font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:0.8rem; color:var(--black); white-space:nowrap; }
+
 /* RESPONSIVE */
 @media (max-width:1024px) {
   nav { padding:0 20px; height:72px; }
@@ -755,42 +760,83 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <a href="/fiyatlar" class="btn-outline-black">FİYAT LİSTESİ →</a>
   </div>
   <div class="services-grid">
+
     <div class="service-card">
       <div class="service-num">01</div>
-      <div class="service-name">Saç Kesimi</div>
-      <div class="service-desc">Yüz şeklinize ve kişiliğinize uygun, en güncel tekniklerle uygulanan profesyonel kesim.</div>
-      <div class="service-tags"><span class="service-tag">Klasik</span><span class="service-tag">Modern</span><span class="service-tag">Bob & Lob</span><span class="service-tag">Layered</span></div>
+      <div class="service-name">Renklendirme & Açma</div>
+      <div class="service-desc">Ombre, sombre, freelights, facelight, röfle, gölge, ters ombre ve daha fazlası.</div>
+      <div class="service-tags"><span class="service-tag">Ombre</span><span class="service-tag">Balayage</span><span class="service-tag">Röfle</span><span class="service-tag">Freelights</span></div>
+      <div class="service-price-list">
+        <div class="spl-item"><span>Ombre / Sombre</span><span>5.000 – 7.000 TL</span></div>
+        <div class="spl-item"><span>Freelights</span><span>7.500 – 10.000 TL</span></div>
+        <div class="spl-item"><span>Facelight</span><span>4.000 TL</span></div>
+        <div class="spl-item"><span>Röfle / Gölge</span><span>5.000 TL</span></div>
+        <div class="spl-item"><span>Ters Ombre</span><span>4.000 – 6.000 TL</span></div>
+        <div class="spl-item"><span>Açma + Boyama</span><span>8.000 TL</span></div>
+        <div class="spl-item"><span>Bütün Boyama</span><span>1.900 TL</span></div>
+        <div class="spl-item"><span>Dip Boyama</span><span>900 TL</span></div>
+        <div class="spl-item"><span>Pigmentasyon</span><span>2.500 TL</span></div>
+        <div class="spl-item"><span>Transparan Boyama</span><span>2.200 TL</span></div>
+        <div class="spl-item"><span>Cila Renklendirme</span><span>2.000 TL</span></div>
+      </div>
     </div>
+
     <div class="service-card">
       <div class="service-num">02</div>
-      <div class="service-name">Boyama & Balayage</div>
-      <div class="service-desc">Renk teorisi ve modern tekniklerle her tona uyumlu, uzun ömürlü boyama sonuçları.</div>
-      <div class="service-tags"><span class="service-tag">Balayage</span><span class="service-tag">Röfle</span><span class="service-tag">Ombre</span><span class="service-tag">Tam Boyama</span></div>
+      <div class="service-name">Kesim & Şekillendirme</div>
+      <div class="service-desc">Yüz şeklinize uygun profesyonel saç kesimi ve şekillendirme hizmetleri.</div>
+      <div class="service-tags"><span class="service-tag">Kesim</span><span class="service-tag">Fön</span><span class="service-tag">Maşa</span><span class="service-tag">Topuz</span></div>
+      <div class="service-price-list">
+        <div class="spl-item"><span>Yönetici Saç Kesimi</span><span>1.500 TL</span></div>
+        <div class="spl-item"><span>Saç Kesimi</span><span>750 TL</span></div>
+        <div class="spl-item"><span>Fön</span><span>450 TL</span></div>
+        <div class="spl-item"><span>Maşa</span><span>1.500 TL</span></div>
+        <div class="spl-item"><span>Topuz</span><span>2.500 TL</span></div>
+      </div>
     </div>
+
     <div class="service-card">
       <div class="service-num">03</div>
-      <div class="service-name">Bakım & Keratin</div>
-      <div class="service-desc">Derin besleyici bakım maskeleri, keratin düzleştirme ve saç botoksu uygulamaları.</div>
-      <div class="service-tags"><span class="service-tag">Keratin</span><span class="service-tag">Botoks</span><span class="service-tag">Derin Bakım</span></div>
+      <div class="service-name">Bakım & Onarım</div>
+      <div class="service-desc">Saçınızı derinlemesine besleyen keratin, botoks ve derin bakım uygulamaları.</div>
+      <div class="service-tags"><span class="service-tag">Keratin</span><span class="service-tag">Botoks</span><span class="service-tag">Maske</span></div>
+      <div class="service-price-list">
+        <div class="spl-item"><span>Keratin Botoks</span><span>1.500 TL</span></div>
+        <div class="spl-item"><span>Protein Botoks</span><span>2.500 TL</span></div>
+        <div class="spl-item"><span>Salon Bakımı (Maske)</span><span>750 TL</span></div>
+      </div>
     </div>
+
     <div class="service-card">
       <div class="service-num">04</div>
       <div class="service-name">Makyaj</div>
       <div class="service-desc">Günlük, gece ve özel gün makyajı. Kalıcı makyaj ve airbrush uygulamaları.</div>
       <div class="service-tags"><span class="service-tag">Günlük</span><span class="service-tag">Gece</span><span class="service-tag">Airbrush</span></div>
+      <div class="service-price-list">
+        <div class="spl-item"><span>Fiyat için lütfen arayın</span><span>–</span></div>
+      </div>
     </div>
+
     <div class="service-card">
       <div class="service-num">05</div>
       <div class="service-name">Gelin & Özel Gün</div>
-      <div class="service-desc">En özel gününüz için tasarlanmış saç ve makyaj paketi. Prova ve uygulama dahil.</div>
+      <div class="service-desc">En özel gününüz için saç ve makyaj paketi. Prova ve uygulama dahil.</div>
       <div class="service-tags"><span class="service-tag">Gelin Saçı</span><span class="service-tag">Gelin Makyajı</span><span class="service-tag">Prova</span></div>
+      <div class="service-price-list">
+        <div class="spl-item"><span>Fiyat için lütfen arayın</span><span>–</span></div>
+      </div>
     </div>
+
     <div class="service-card">
       <div class="service-num">06</div>
       <div class="service-name">Saç Kaynak</div>
-      <div class="service-desc">Doğal görünümlü kalıcı ve geçici saç kaynak uygulamaları. Hacim ve uzunluk için.</div>
+      <div class="service-desc">Doğal görünümlü kalıcı ve geçici saç kaynak uygulamaları.</div>
       <div class="service-tags"><span class="service-tag">Kalıcı</span><span class="service-tag">Geçici</span><span class="service-tag">Hacim</span></div>
+      <div class="service-price-list">
+        <div class="spl-item"><span>Fiyat için lütfen arayın</span><span>–</span></div>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -822,9 +868,9 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <h2>ONLİNE RANDEVU ALIN</h2>
     <p>Sizi en kısa sürede ağırlamak için hazırız. Formu doldurun, sizinle iletişime geçelim.</p>
     <ul class="rez-contacts">
-      <li class="rez-contact"><span class="rez-contact-icon">📍</span><span>Adres bilgisi burada, İstanbul</span></li>
-      <li class="rez-contact"><span class="rez-contact-icon">📞</span><span>0532 000 00 00</span></li>
-      <li class="rez-contact"><span class="rez-contact-icon">🕐</span><span>Hafta içi 09:00 – 20:00<br>Cumartesi 09:00 – 18:00</span></li>
+      <li class="rez-contact"><span class="rez-contact-icon">📍</span><span>Kocatepe, No:231<br>34045 Bayrampaşa / İstanbul</span></li>
+      <li class="rez-contact"><span class="rez-contact-icon">📞</span><span><a href="tel:+905464725878" style="color:inherit;text-decoration:none">0546 472 58 78</a></span></li>
+      <li class="rez-contact"><span class="rez-contact-icon">🕐</span><span>Her gün 09:00 – 20:00<br>Salı kapalı</span></li>
     </ul>
   </div>
   <div class="rez-form">
@@ -861,6 +907,38 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 <!-- FOOTER -->
 <footer id="contact">
   <div class="footer-top">
+
+    <!-- Logo + Sosyal Medya -->
+    <div>
+      <a href="/" class="footer-logo-link">
+        <img src="images/logo.png" alt="Hair Artist"
+             style="height:48px;filter:brightness(0) invert(1);display:block;margin-bottom:20px"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span style="display:none;font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:0.08em;color:var(--white);margin-bottom:20px;display:block">HAIR ARTIST</span>
+      </a>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
+        <a href="https://instagram.com" target="_blank" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:rgba(255,255,255,0.6);font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">
+          <span style="width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </span>
+          Instagram
+        </a>
+        <a href="https://wa.me/905464725878" target="_blank" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:rgba(255,255,255,0.6);font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">
+          <span style="width:30px;height:30px;border-radius:7px;background:#25D366;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </span>
+          WhatsApp
+        </a>
+        <a href="https://facebook.com/hairartistcomtr" target="_blank" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:rgba(255,255,255,0.6);font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">
+          <span style="width:30px;height:30px;border-radius:7px;background:#1877F2;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </span>
+          Facebook
+        </a>
+      </div>
+    </div>
+
+    <!-- Sayfalar -->
     <div>
       <div class="footer-col-title">Sayfalar</div>
       <ul class="footer-links">
@@ -868,17 +946,14 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <li><a href="#services">Hizmetler</a></li>
         <li><a href="/fiyatlar">Fiyatlar</a></li>
         <li><a href="/portfolio">Portfolyo</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Diğer</div>
-      <ul class="footer-links">
         <li><a href="/shop">Shop</a></li>
         <li><a href="/rezervasyon">Rezervasyon</a></li>
         <li><a href="#">Gizlilik Politikası</a></li>
         <li><a href="#">Çerez Politikası</a></li>
       </ul>
     </div>
+
+    <!-- İletişim -->
     <div>
       <div class="footer-col-title">İletişim</div>
       <div class="footer-contact-info">
@@ -888,6 +963,8 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <p>Her gün 09:00 – 20:00<br>Salı kapalı</p>
       </div>
     </div>
+
+    <!-- Harita -->
     <div class="footer-book-col">
       <div class="footer-col-title">Konum</div>
       <iframe
@@ -895,14 +972,16 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.917216214105!2d28.8978924!3d41.0489394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabbc1760a7371%3A0x14264c2fabb32a66!2s%C4%B0sa%20Kurt%20Hair%20Artist!5e0!3m2!1str!2str!4v1776620330004!5m2!1str!2str"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
       </iframe>
-      <a href="https://maps.google.com/?q=Kocatepe+231+Bayrampaşa+İstanbul" class="btn-blue" style="justify-content:center;text-decoration:none;margin-top:8px" target="_blank">YOL TARİFİ AL</a>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=41.0489394,28.8978924&destination_place_id=0x14cabbc1760a7371:0x14264c2fabb32a66"
+         class="btn-blue" style="justify-content:center;text-decoration:none;margin-top:8px;display:flex" target="_blank">YOL TARİFİ AL</a>
     </div>
+
   </div>
   <div class="footer-mid">
     <div class="footer-socials">
-      <a href="#">Instagram</a>
-      <a href="#">WhatsApp</a>
-      <a href="#">Facebook</a>
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a href="https://wa.me/905464725878" target="_blank">WhatsApp</a>
+      <a href="https://facebook.com/hairartistcomtr" target="_blank">Facebook</a>
     </div>
     <span class="footer-copy">© 2026 Hair Artist · branded by İsa Kurt</span>
     <a href="https://www.vionasoft.com" class="footer-credit" target="_blank">Tasarım: Vionasoft</a>
