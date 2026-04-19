@@ -497,13 +497,13 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 .footer-copy { font-size:0.72rem; font-weight:300; color:rgba(255,255,255,0.25); }
 .footer-credit { font-size:0.72rem; font-weight:300; color:rgba(255,255,255,0.25); text-decoration:none; transition:color 0.2s; }
 .footer-credit:hover { color:rgba(255,255,255,0.5); }
-.footer-brand-big {
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(5rem,14vw,16rem); font-weight:800;
-  text-transform:uppercase; letter-spacing:0.02em;
-  color:var(--white); line-height:0.85;
-  margin-top:8px; white-space:nowrap; overflow:hidden;
-  display:block; width:100%;
+.footer-brand-big { display:none; }
+
+/* Footer harita */
+.footer-map {
+  width:100%; height:140px; border:none; display:block;
+  filter:grayscale(1) invert(1) brightness(0.8);
+  margin-top:4px;
 }
 
 /* RESPONSIVE */
@@ -882,31 +882,31 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <div>
       <div class="footer-col-title">İletişim</div>
       <div class="footer-contact-info">
-        <p>Adres bilgisi burada<br>İstanbul</p>
-        <p><a href="tel:+905320000000">0532 000 00 00</a></p>
+        <p>Kocatepe, No:231<br>34045 Bayrampaşa / İstanbul</p>
+        <p><a href="tel:+905464725878">0546 472 58 78</a></p>
         <p><a href="mailto:info@hairartist.com">info@hairartist.com</a></p>
-        <p>09:00 – 20:00, haftanın 6 günü</p>
+        <p>Her gün 09:00 – 20:00<br>Salı kapalı</p>
       </div>
     </div>
     <div class="footer-book-col">
-      <div class="footer-col-title">Rezervasyon</div>
-      <div class="footer-addr-box">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-        İSTANBUL
-      </div>
-      <a href="/rezervasyon" class="btn-blue" style="justify-content:center;text-decoration:none">ŞİMDİ REZERVASYON</a>
+      <div class="footer-col-title">Konum</div>
+      <iframe
+        class="footer-map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.9!2d28.9311!3d41.0631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab9e3f3f3f3f3%3A0x1!2sKocatepe%2C%20231%2C%20Bayrampa%C5%9Fa%2C%20%C4%B0stanbul!5e0!3m2!1str!2str!4v1"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <a href="https://maps.google.com/?q=Kocatepe+231+Bayrampaşa+İstanbul" class="btn-blue" style="justify-content:center;text-decoration:none;margin-top:8px" target="_blank">YOL TARİFİ AL</a>
     </div>
   </div>
   <div class="footer-mid">
     <div class="footer-socials">
       <a href="#">Instagram</a>
       <a href="#">WhatsApp</a>
-      <a href="#">YouTube</a>
+      <a href="#">Facebook</a>
     </div>
     <span class="footer-copy">© 2026 Hair Artist · branded by İsa Kurt</span>
     <a href="https://www.vionasoft.com" class="footer-credit" target="_blank">Tasarım: Vionasoft</a>
   </div>
-  <span class="footer-brand-big">HAIR ARTIST</span>
 </footer>
 
 <script>
