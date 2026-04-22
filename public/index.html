@@ -45,8 +45,10 @@ nav {
   border:1px solid var(--border); padding:11px 20px;
   font-family:'Barlow Condensed',sans-serif;
   font-size:0.72rem; font-weight:600; letter-spacing:0.12em;
-  text-transform:uppercase; color:var(--black); cursor:default; white-space:nowrap;
+  text-transform:uppercase; color:var(--black); cursor:pointer; white-space:nowrap;
+  text-decoration:none; transition:background 0.2s;
 }
+.nav-address:hover { background:var(--gray); }
 .nav-address svg { width:13px; height:13px; flex-shrink:0; }
 .nav-book {
   display:inline-flex; align-items:center; gap:6px;
@@ -79,6 +81,16 @@ nav {
   position:absolute; top:20px; right:28px;
   background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--muted);
 }
+.mob-book {
+  display:inline-flex; align-items:center; justify-content:center;
+  background:var(--blue); color:var(--white);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.85rem; font-weight:700; letter-spacing:0.18em;
+  text-transform:uppercase; text-decoration:none;
+  padding:16px 48px; margin-top:12px;
+  transition:opacity 0.2s;
+}
+.mob-book:hover { opacity:0.88; }
 
 /* HERO CAROUSEL - sonsuz, otomatik, birer birer */
 .hero {
@@ -505,22 +517,44 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   margin-top:4px;
 }
 
-/* Hizmet fiyat listesi */
-.service-price-list { margin-top:16px; display:flex; flex-direction:column; gap:6px; border-top:1px solid var(--border); padding-top:14px; }
-.spl-item { display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:0.75rem; color:#444; }
-.spl-item span:last-child { font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:0.8rem; color:var(--black); white-space:nowrap; }
+/* Hizmet kategori listesi */
+.service-toggle {
+  display:none; /* mobilde görünür, webde gizli */
+}
+.service-items {
+  list-style:none;
+  margin-top:16px;
+  border-top:1px solid var(--border);
+  padding-top:14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.service-items li {
+  font-size:0.8rem;
+  font-weight:300;
+  color:#555;
+  padding-left:12px;
+  position:relative;
+  line-height:1.5;
+}
+.service-items li::before {
+  content:'—';
+  position:absolute;
+  left:0;
+  color:var(--blue);
+  font-size:0.7rem;
+}
 
 /* RESPONSIVE */
 @media (max-width:1024px) {
   nav { padding:0 20px; height:72px; }
-  .nav-address { display:none; }
   .hero { margin-top:72px; height:calc(100vh - 72px); }
   .hero-slide-content { left:28px; bottom:48px; }
   .hero-dots { right:28px; }
   .hero-counter { right:28px; }
   .hero-arrow { display:none; }
   .intro { grid-template-columns:1fr; padding:48px 24px; gap:40px; }
-  .intro-right { display:none; }
   .why { grid-template-columns:1fr; padding:48px 24px; }
   .why-left { padding-right:0; border-right:none; border-bottom:1px solid var(--border); padding-bottom:40px; margin-bottom:40px; }
   .why-right { padding-left:0; }
@@ -542,7 +576,8 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 @media (max-width:768px) {
   /* NAV */
   nav { padding:0 16px; height:64px; }
-  .nav-book { padding:10px 16px; font-size:0.65rem; }
+  .nav-book { display:none; }
+  .nav-address { display:flex; border:none; padding:8px 10px; font-size:0.62rem; }
   .hero { margin-top:64px; height:calc(100vh - 64px); min-height:480px; }
 
   /* HERO — mobilde tek panel tam ekran */
@@ -550,9 +585,14 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   .hero-panel-title { font-size:clamp(2.4rem,10vw,4rem); }
   .hero-panel-btn { opacity:1; transform:translateY(0); font-size:0.7rem; padding:11px 28px; }
 
-  /* INTRO */
-  .intro { padding:40px 16px; gap:32px; }
-  .intro-left h2 { font-size:1.6rem; }
+  /* INTRO — portfolyo mosaic mobilde görünsün */
+  .intro { grid-template-columns:1fr; padding:40px 16px; gap:32px; }
+  .intro-right {
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    grid-template-rows:130px 130px 130px;
+    gap:4px;
+  }
   .intro-socials { flex-wrap:wrap; gap:12px; }
   .intro-stats { grid-template-columns:1fr 1fr 1fr; }
   .intro-stat-num { font-size:1.4rem; }
@@ -563,17 +603,47 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   .why-panel-img { height:220px; }
   .why-panel-text { padding:24px 20px; }
 
-  /* BANNER CTA */
-  .banner-cta-content { padding:0 16px; }
+  /* BANNER — kadın görseli mobilde görünsün */
+  .banner-cta { flex-direction:column; height:auto; padding:0; }
+  .banner-cta-content { padding:48px 16px; z-index:3; }
   .banner-cta h2 { font-size:2rem; margin-bottom:20px; }
-  .banner-woman { display:none; }
+  .banner-woman {
+    display:block;
+    position:relative;
+    width:100%;
+    height:280px;
+  }
+  .banner-woman::before { background:linear-gradient(to bottom, #111 0%, transparent 40%); }
+  .banner-woman img { object-position:center top; }
 
-  /* SERVİCES */
+  /* SERVİCES — mobilde accordion */
   .services { padding:40px 16px; }
   .services-head { flex-direction:column; align-items:flex-start; gap:16px; }
   .services-grid { grid-template-columns:1fr; }
-  .service-card { padding:28px 20px; }
+  .service-card { padding:28px 20px; cursor:pointer; }
   .service-name { font-size:1.3rem; }
+  .service-toggle {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    margin-top:14px;
+    background:none;
+    border:none;
+    border-top:1px solid var(--border);
+    padding-top:12px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:0.16em;
+    color:var(--blue);
+    cursor:pointer;
+    text-align:left;
+  }
+  .service-toggle span { font-size:1.1rem; transition:transform 0.25s; }
+  .service-toggle.open span { transform:rotate(45deg); }
+  .service-items { display:none; }
+  .service-items.open { display:flex; }
 
   /* SALON */
   .salon-img { height:240px; }
@@ -600,7 +670,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   /* NAV */
   nav { padding:0 12px; }
   .nav-logo img { height:40px; }
-  .nav-book { display:none; }
+  .nav-address { font-size:0.58rem; padding:6px 8px; }
 
   /* HERO */
   .hero-panel-title { font-size:clamp(2rem,12vw,3.2rem); }
@@ -652,10 +722,10 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <span class="nav-logo-text" style="display:none">HAIR ARTIST</span>
   </a>
   <div class="nav-right">
-    <div class="nav-address">
+    <a href="https://www.google.com/maps/dir/?api=1&destination=41.0489394,28.8978924&destination_place_id=0x14cabbc1760a7371:0x14264c2fabb32a66" target="_blank" class="nav-address">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
       Kocatepe, No:231 · Bayrampaşa / İstanbul
-    </div>
+    </a>
     <a href="/rezervasyon" class="nav-book">REZERVASYON YAP +</a>
     <button class="nav-hamburger" id="ham" aria-label="Menü">
       <span></span><span></span>
@@ -671,6 +741,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   <a href="/fiyatlar" onclick="this.closest('.mob-menu').classList.remove('open')">Fiyatlar</a>
   <a href="#rezervasyon" onclick="this.closest('.mob-menu').classList.remove('open')">Rezervasyon</a>
   <a href="#contact" onclick="this.closest('.mob-menu').classList.remove('open')">İletişim</a>
+  <a href="/rezervasyon" class="mob-book">REZERVASYON YAP +</a>
 </div>
 
 <!-- HERO: sonsuz otomatik carousel, 3 panel görünür, birer birer kayıyor -->
@@ -867,6 +938,20 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       <div class="service-name">Renklendirme & Açma</div>
       <div class="service-desc">Ombre, sombre, freelights, facelight, röfle, gölge, ters ombre ve daha fazlası.</div>
       <div class="service-tags"><span class="service-tag">Ombre</span><span class="service-tag">Balayage</span><span class="service-tag">Röfle</span><span class="service-tag">Freelights</span></div>
+      <button class="service-toggle" onclick="toggleService(this)">HİZMETLER <span>+</span></button>
+      <ul class="service-items">
+        <li>Ombre / Sombre</li>
+        <li>Freelights</li>
+        <li>Facelight</li>
+        <li>Röfle / Gölge</li>
+        <li>Ters Ombre</li>
+        <li>Açma + Boyama</li>
+        <li>Bütün Boyama</li>
+        <li>Dip Boyama</li>
+        <li>Pigmentasyon</li>
+        <li>Transparan Boyama</li>
+        <li>Cila Renklendirme</li>
+      </ul>
     </div>
 
     <div class="service-card">
@@ -874,6 +959,14 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       <div class="service-name">Kesim & Şekillendirme</div>
       <div class="service-desc">Yüz şeklinize uygun profesyonel saç kesimi ve şekillendirme hizmetleri.</div>
       <div class="service-tags"><span class="service-tag">Kesim</span><span class="service-tag">Fön</span><span class="service-tag">Maşa</span><span class="service-tag">Topuz</span></div>
+      <button class="service-toggle" onclick="toggleService(this)">HİZMETLER <span>+</span></button>
+      <ul class="service-items">
+        <li>Yönetici Saç Kesimi</li>
+        <li>Saç Kesimi</li>
+        <li>Fön</li>
+        <li>Maşa</li>
+        <li>Topuz</li>
+      </ul>
     </div>
 
     <div class="service-card">
@@ -881,6 +974,12 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       <div class="service-name">Bakım & Onarım</div>
       <div class="service-desc">Saçınızı derinlemesine besleyen keratin, botoks ve derin bakım uygulamaları.</div>
       <div class="service-tags"><span class="service-tag">Keratin</span><span class="service-tag">Botoks</span><span class="service-tag">Maske</span></div>
+      <button class="service-toggle" onclick="toggleService(this)">HİZMETLER <span>+</span></button>
+      <ul class="service-items">
+        <li>Keratin Botoks</li>
+        <li>Protein Botoks</li>
+        <li>Salon Bakımı (Maske)</li>
+      </ul>
     </div>
 
     <div class="service-card">
@@ -888,6 +987,13 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       <div class="service-name">Makyaj</div>
       <div class="service-desc">Günlük, gece ve özel gün makyajı. Kalıcı makyaj ve airbrush uygulamaları.</div>
       <div class="service-tags"><span class="service-tag">Günlük</span><span class="service-tag">Gece</span><span class="service-tag">Airbrush</span></div>
+      <button class="service-toggle" onclick="toggleService(this)">HİZMETLER <span>+</span></button>
+      <ul class="service-items">
+        <li>Günlük Makyaj</li>
+        <li>Gece Makyajı</li>
+        <li>Airbrush Makyaj</li>
+        <li>Kalıcı Makyaj</li>
+      </ul>
     </div>
 
     <div class="service-card">
@@ -895,6 +1001,14 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       <div class="service-name">Gelin & Özel Gün</div>
       <div class="service-desc">En özel gününüz için saç ve makyaj paketi. Prova ve uygulama dahil.</div>
       <div class="service-tags"><span class="service-tag">Gelin Saçı</span><span class="service-tag">Gelin Makyajı</span><span class="service-tag">Prova</span></div>
+      <button class="service-toggle" onclick="toggleService(this)">HİZMETLER <span>+</span></button>
+      <ul class="service-items">
+        <li>Gelin Saçı</li>
+        <li>Gelin Makyajı</li>
+        <li>Damat Tıraşı & Bakım</li>
+        <li>Prova Paketi</li>
+        <li>Özel Gün Tasarımı</li>
+      </ul>
     </div>
 
     <div class="service-card">
@@ -902,6 +1016,13 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       <div class="service-name">Saç Kaynak</div>
       <div class="service-desc">Doğal görünümlü kalıcı ve geçici saç kaynak uygulamaları.</div>
       <div class="service-tags"><span class="service-tag">Kalıcı</span><span class="service-tag">Geçici</span><span class="service-tag">Hacim</span></div>
+      <button class="service-toggle" onclick="toggleService(this)">HİZMETLER <span>+</span></button>
+      <ul class="service-items">
+        <li>Kalıcı Kaynak</li>
+        <li>Geçici Kaynak</li>
+        <li>Bant Kaynak</li>
+        <li>Nano Kaynak</li>
+      </ul>
     </div>
 
   </div>
@@ -1142,6 +1263,15 @@ function setWhyPanel(idx, btn) {
   document.querySelectorAll('.why-panel').forEach(p => p.classList.remove('active'));
   btn.closest('.why-item').classList.add('active');
   document.getElementById('whyPanel' + idx).classList.add('active');
+}
+
+// Service accordion (sadece mobilde çalışır, web'de liste zaten açık)
+function toggleService(btn) {
+  if (window.innerWidth > 768) return;
+  const items = btn.nextElementSibling;
+  const isOpen = items.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  items.classList.toggle('open', !isOpen);
 }
 </script>
 </body>
