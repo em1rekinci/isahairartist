@@ -332,10 +332,11 @@ nav {
   color: var(--blue); margin-bottom: 12px;
 }
 .why-card-title {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 1.15rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--black); margin-bottom: 14px; line-height: 1.2;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.2rem; font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--black); margin-bottom: 14px; line-height: 1.25;
 }
 .why-card-desc {
   font-size: 0.82rem; font-weight: 300;
@@ -661,10 +662,12 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   .intro-stats { grid-template-columns:1fr 1fr 1fr; }
   .intro-stat-num { font-size:1.4rem; }
 
-  /* WHY — mobilde tek kart, elle kaydırma */
+  /* WHY — mobilde tek kart tam ekran, yanlar görünmesin */
   .why { padding:40px 0; }
   .why-header { padding: 0 16px 32px; }
-  .why-card { width: 85vw; border-right: 1px solid var(--border); }
+  .why-slider-wrap { overflow: hidden; }
+  .why-slider { padding: 0; }
+  .why-card { width: 100vw; border-right: none; border-bottom: 1px solid var(--border); }
   .why-card-img { height: 200px; }
   .why-card-body { padding: 22px 24px 28px; }
   .why-dots { margin-top: 20px; }
@@ -793,7 +796,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <span class="nav-logo-text" style="display:none">HAIR ARTIST</span>
   </a>
   <div class="nav-right">
-    <a href="https://www.google.com/maps/place/?q=place_id:ChIJcXMKdse7yhQRZiqzK0/MLhQ" target="_blank" class="nav-address">
+    <a href="https://share.google/86vUdvQPdo0pvzjrl" target="_blank" class="nav-address">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
       Kocatepe, No:231 · Bayrampaşa / İstanbul
     </a>
@@ -944,7 +947,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <div class="why-card-img"><div class="why-num-bg">01</div><img src="images/about.jpg" alt="" onerror="this.style.display='none'"></div>
         <div class="why-card-body">
           <div class="why-card-num">01</div>
-          <h3 class="why-card-title">İHTİYAÇLARINIZA UYUM SAĞLARIZ</h3>
+          <h3 class="why-card-title">İhtiyaçlarınıza uyum sağlarız</h3>
           <p class="why-card-desc">Erken uçuşunuz mu var? Salonu erkenden açabiliriz. Önemli bir etkinliğiniz mi? Sizi daha geç saate kadar bekliyoruz. Tüm hizmetlerimiz size özel planlanır.</p>
         </div>
       </div>
@@ -953,7 +956,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <div class="why-card-img"><div class="why-num-bg">02</div><img src="images/portfolio-2.jpg" alt="" onerror="this.style.display='none'"></div>
         <div class="why-card-body">
           <div class="why-card-num">02</div>
-          <h3 class="why-card-title">ZAMANINIZI KURTARIRIZ</h3>
+          <h3 class="why-card-title">Zamanınızı kurtarırız</h3>
           <p class="why-card-desc">Saç ve makyajınızı aynı anda yaptırabilirsiniz. Uzman ekibimiz birlikte çalışarak tek randevuda komple bakım sağlar.</p>
         </div>
       </div>
@@ -962,7 +965,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <div class="why-card-img"><div class="why-num-bg">03</div><img src="images/portfolio-3.jpg" alt="" onerror="this.style.display='none'"></div>
         <div class="why-card-body">
           <div class="why-card-num">03</div>
-          <h3 class="why-card-title">UZMAN EKİBİMİZ</h3>
+          <h3 class="why-card-title">Uzman ekibimiz</h3>
           <p class="why-card-desc">Her stilist sertifikalı ve deneyimlidir. Sürekli eğitimle güncel teknikler uygulanır. Sanatını icra eden bir ekip.</p>
         </div>
       </div>
@@ -971,7 +974,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <div class="why-card-img"><div class="why-num-bg">04</div></div>
         <div class="why-card-body">
           <div class="why-card-num">04</div>
-          <h3 class="why-card-title">KALİTE STANDARTLARI</h3>
+          <h3 class="why-card-title">Kalite standartları</h3>
           <p class="why-card-desc">Premium ve güvenilir ürünler kullanılır. Her işlem öncesi kalite kontrolü yapılır. Sonuçlardan memnun kalmazsanız tekrar yapıyoruz.</p>
         </div>
       </div>
@@ -980,7 +983,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <div class="why-card-img"><div class="why-num-bg">05</div></div>
         <div class="why-card-body">
           <div class="why-card-num">05</div>
-          <h3 class="why-card-title">TIBBİ STERİLİZASYON</h3>
+          <h3 class="why-card-title">Tıbbi sterilizasyon</h3>
           <p class="why-card-desc">Tüm aletlerimiz tıbbi standartlarda sterilize edilir. Hijyen tartışılmaz bir önceliktir. Güvenli ortamda hizmet alırsınız.</p>
         </div>
       </div>
@@ -989,7 +992,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <div class="why-card-img"><div class="why-num-bg">06</div></div>
         <div class="why-card-body">
           <div class="why-card-num">06</div>
-          <h3 class="why-card-title">MODERN EKİPMAN</h3>
+          <h3 class="why-card-title">Modern ekipman</h3>
           <p class="why-card-desc">En son teknoloji ekipmanlarla donanmış salonumuzda en iyi sonuçları elde edersiniz. Profesyonel araçlar, profesyonel sonuçlar.</p>
         </div>
       </div>
@@ -1228,7 +1231,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       </div>
       <div class="footer-contact-info" style="margin-top:20px">
         <div class="footer-info-label">ADRES</div>
-        <p><a href="https://www.google.com/maps/place/?q=place_id:ChIJcXMKdse7yhQRZiqzK0/MLhQ" target="_blank" style="color:rgba(255,255,255,0.55);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Kocatepe, No:231<br>34045 Bayrampaşa / İstanbul</a></p>
+        <p><a href="https://share.google/86vUdvQPdo0pvzjrl" target="_blank" style="color:rgba(255,255,255,0.55);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Kocatepe, No:231<br>34045 Bayrampaşa / İstanbul</a></p>
         <p>📞 <a href="tel:+905464725878">0546 472 58 78</a></p>
         <p>✉️ <a href="mailto:info@hairartist.com.tr">info@hairartist.com.tr</a></p>
       </div>
@@ -1266,7 +1269,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.917216214105!2d28.8978924!3d41.0489394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabbc1760a7371%3A0x14264c2fabb32a66!2s%C4%B0sa%20Kurt%20Hair%20Artist!5e0!3m2!1str!2str!4v1776620330004!5m2!1str!2str"
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
       </iframe>
-      <a href="https://www.google.com/maps/place/?q=place_id:ChIJcXMKdse7yhQRZiqzK0/MLhQ"
+      <a href="https://share.google/86vUdvQPdo0pvzjrl"
          class="btn-blue" style="justify-content:center;text-decoration:none;margin-top:8px;display:flex" target="_blank">YOL TARİFİ AL</a>
     </div>
 
