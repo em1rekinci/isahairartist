@@ -538,6 +538,108 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   .footer-top { grid-template-columns:1fr 1fr; gap:32px; }
   .footer-mid { flex-direction:column; gap:16px; text-align:center; }
 }
+
+@media (max-width:768px) {
+  /* NAV */
+  nav { padding:0 16px; height:64px; }
+  .nav-book { padding:10px 16px; font-size:0.65rem; }
+  .hero { margin-top:64px; height:calc(100vh - 64px); min-height:480px; }
+
+  /* HERO — mobilde tek panel tam ekran */
+  .hero-panel { width:100%; }
+  .hero-panel-title { font-size:clamp(2.4rem,10vw,4rem); }
+  .hero-panel-btn { opacity:1; transform:translateY(0); font-size:0.7rem; padding:11px 28px; }
+
+  /* INTRO */
+  .intro { padding:40px 16px; gap:32px; }
+  .intro-left h2 { font-size:1.6rem; }
+  .intro-socials { flex-wrap:wrap; gap:12px; }
+  .intro-stats { grid-template-columns:1fr 1fr 1fr; }
+  .intro-stat-num { font-size:1.4rem; }
+
+  /* WHY */
+  .why { padding:40px 16px; }
+  .why-title { font-size:1.6rem; letter-spacing:0.06em; }
+  .why-panel-img { height:220px; }
+  .why-panel-text { padding:24px 20px; }
+
+  /* BANNER CTA */
+  .banner-cta-content { padding:0 16px; }
+  .banner-cta h2 { font-size:2rem; margin-bottom:20px; }
+  .banner-woman { display:none; }
+
+  /* SERVİCES */
+  .services { padding:40px 16px; }
+  .services-head { flex-direction:column; align-items:flex-start; gap:16px; }
+  .services-grid { grid-template-columns:1fr; }
+  .service-card { padding:28px 20px; }
+  .service-name { font-size:1.3rem; }
+
+  /* SALON */
+  .salon-img { height:240px; }
+  .salon-content { padding:36px 16px; }
+  .salon-content h2 { font-size:1.5rem; }
+  .salon-features { gap:20px; }
+
+  /* REZERVASYON */
+  .rezervasyon { padding:40px 16px; gap:32px; }
+  .rez-left h2 { font-size:1.8rem; }
+  .form-input, .form-select { padding:12px 14px; font-size:0.85rem; }
+  .form-submit { padding:14px; font-size:0.72rem; }
+
+  /* FOOTER */
+  footer { padding:40px 16px 0; }
+  .footer-top { grid-template-columns:1fr; gap:36px; }
+  .footer-map { height:160px; }
+  .footer-col-title { margin-bottom:14px; }
+  .footer-links { gap:10px; }
+  .footer-mid { padding:20px 0; gap:12px; font-size:0.65rem; }
+}
+
+@media (max-width:480px) {
+  /* NAV */
+  nav { padding:0 12px; }
+  .nav-logo img { height:40px; }
+  .nav-book { display:none; }
+
+  /* HERO */
+  .hero-panel-title { font-size:clamp(2rem,12vw,3.2rem); }
+  .hero-panel-sub { font-size:0.75rem; }
+
+  /* INTRO */
+  .intro { padding:32px 12px; }
+  .intro-left h2 { font-size:1.4rem; }
+  .intro-stat-num { font-size:1.2rem; }
+  .intro-stat-lbl { font-size:0.6rem; }
+  .social-icon-link { font-size:0.65rem; }
+
+  /* WHY */
+  .why { padding:32px 12px; }
+  .why-trigger { padding:16px 0; }
+  .why-trigger-text { font-size:0.85rem; }
+
+  /* BANNER */
+  .banner-cta h2 { font-size:1.7rem; }
+
+  /* SERVİCES */
+  .services { padding:32px 12px; }
+  .service-card { padding:22px 16px; }
+  .service-name { font-size:1.2rem; }
+  .service-tags { gap:4px; }
+  .service-tag { font-size:0.58rem; padding:3px 8px; }
+
+  /* SALON */
+  .salon-content { padding:28px 12px; }
+
+  /* REZERVASYON */
+  .rezervasyon { padding:32px 12px; }
+  .rez-contact { font-size:0.8rem; }
+
+  /* FOOTER */
+  footer { padding:32px 12px 0; }
+  .footer-top { gap:28px; }
+  .footer-book-col .btn-blue { font-size:0.7rem; padding:12px 20px; }
+}
 </style>
 </head>
 <body>
@@ -910,7 +1012,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <img src="images/logo.png" alt="Hair Artist"
              style="height:80px;filter:brightness(0) invert(1);display:block;margin-bottom:20px"
              onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-        <span style="display:none;font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:0.08em;color:var(--white);margin-bottom:20px;display:block">HAIR ARTIST</span>
+        <span style="display:none"></span>
       </a>
       <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
         <a href="https://instagram.com" target="_blank" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:rgba(255,255,255,0.6);font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">
