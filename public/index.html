@@ -262,57 +262,85 @@ nav {
   font-size:3rem; font-weight:800; color:rgba(0,0,0,0.1); pointer-events:none;
 }
 
-/* WHY US */
+/* WHY US — Slider */
 .why {
-  padding:80px 60px;
-  display:grid; grid-template-columns:1fr 1fr; gap:0;
-  border-bottom:1px solid var(--border);
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
 }
-.why-left { padding-right:60px; border-right:1px solid var(--border); }
-.why-title {
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(2rem,3vw,3rem); font-weight:800;
-  text-transform:uppercase; letter-spacing:0.12em;
-  color:var(--black); margin-bottom:40px;
+.why-slider-wrap {
+  position: relative;
 }
-.why-list { list-style:none; }
-.why-item { border-top:1px solid var(--border); }
-.why-item:last-child { border-bottom:1px solid var(--border); }
-.why-trigger {
-  width:100%; background:none; border:none;
-  padding:22px 0; display:flex; align-items:center; justify-content:center;
-  cursor:pointer; text-align:center; transition:background 0.2s;
+.why-slider {
+  display: flex;
+  gap: 0;
+  transition: transform 0.6s cubic-bezier(0.77,0,0.18,1);
+  cursor: grab;
+  user-select: none;
 }
-.why-trigger:hover { background:var(--gray); }
-.why-item.active .why-trigger { background:var(--gray); }
-.why-trigger-text {
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1rem; font-weight:600; letter-spacing:0.12em;
-  text-transform:uppercase; color:var(--black);
+.why-slider.dragging { cursor: grabbing; transition: none; }
+.why-card {
+  flex-shrink: 0;
+  width: calc(100% / 3);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  background: var(--white);
+  transition: background 0.25s;
 }
-.why-item.active .why-trigger-text { color:var(--blue); }
-.why-item.active .why-trigger-text::before { content:'( '; }
-.why-item.active .why-trigger-text::after { content:' )'; }
-.why-right { padding-left:60px; display:flex; flex-direction:column; }
-.why-panel { display:none; flex-direction:column; }
-.why-panel.active { display:flex; }
-.why-panel-img {
-  width:100%; height:320px; background:var(--black);
-  overflow:hidden; position:relative;
+.why-card:last-child { border-right: none; }
+.why-card:hover { background: var(--gray); }
+.why-card-img {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background: var(--black);
+  overflow: hidden;
 }
-.why-panel-img img { width:100%; height:100%; object-fit:cover; opacity:0.8; filter:saturate(0.7); }
+.why-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.8;
+  filter: saturate(0.7);
+  transition: transform 0.5s;
+}
+.why-card:hover .why-card-img img { transform: scale(1.04); }
 .why-num-bg {
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  font-family:'Barlow Condensed',sans-serif; font-size:10rem; font-weight:800;
-  color:rgba(255,255,255,0.05);
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 7rem; font-weight: 800;
+  color: rgba(255,255,255,0.06);
+  pointer-events: none;
 }
-.why-panel-text { background:var(--black); color:var(--white); padding:32px 36px; }
-.why-panel-text h3 {
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.3rem; font-weight:700; letter-spacing:0.06em;
-  text-transform:uppercase; margin-bottom:14px;
+.why-card-body {
+  padding: 28px 32px 36px;
+  display: flex; flex-direction: column; flex: 1;
 }
-.why-panel-text p { font-size:0.85rem; font-weight:300; color:rgba(255,255,255,0.65); line-height:1.85; }
+.why-card-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em;
+  color: var(--blue); margin-bottom: 12px;
+}
+.why-card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.15rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--black); margin-bottom: 14px; line-height: 1.2;
+}
+.why-card-desc {
+  font-size: 0.82rem; font-weight: 300;
+  color: var(--muted); line-height: 1.85;
+}
+.why-dots {
+  display: flex; justify-content: center; gap: 8px;
+  margin-top: 28px;
+}
+.why-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--border); cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.why-dot.active { background: var(--blue); transform: scale(1.3); }
 
 /* BANNER CTA */
 .banner-cta {
@@ -617,16 +645,22 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   .intro-stats { grid-template-columns:1fr 1fr 1fr; }
   .intro-stat-num { font-size:1.4rem; }
 
-  /* WHY */
-  .why { padding:40px 16px; }
-  .why-title { font-size:1.6rem; letter-spacing:0.06em; }
-  .why-panel-img { height:220px; }
-  .why-panel-text { padding:24px 20px; }
+  /* WHY — mobilde tek kart, elle kaydırma */
+  .why { padding:40px 0; }
+  .why-card { width: 85vw; border-right: 1px solid var(--border); }
+  .why-card-img { height: 200px; }
+  .why-card-body { padding: 22px 24px 28px; }
+  .why-dots { margin-top: 20px; }
 
   /* BANNER — kadın görseli mobilde görünsün */
   .banner-cta { flex-direction:column; height:auto; padding:0; }
-  .banner-cta-content { padding:48px 16px; z-index:3; }
-  .banner-cta h2 { font-size:2rem; margin-bottom:20px; }
+  .banner-cta-content { padding:48px 16px; z-index:3; text-align:center; }
+  .banner-cta h2 {
+    font-size:clamp(2.2rem,9vw,3rem);
+    margin-bottom:20px;
+    line-height:1.05;
+    white-space:nowrap;
+  }
   .banner-woman {
     display:block;
     position:relative;
@@ -877,7 +911,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       </a>
     </div>
 
-    <a href="#salon" class="btn-outline-black">DAHA FAZLA BİLGİ AL</a>
+    <a href="/portfolio" class="btn-outline-black">TÜMÜNÜ GÖR →</a>
   </div>
 
   <div class="intro-right">
@@ -892,42 +926,66 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 
 <!-- WHY US -->
 <section class="why">
-  <div class="why-left">
-    <div class="why-title">N E D E N &nbsp; B İ Z ?</div>
-    <ul class="why-list">
-      <li class="why-item active"><button class="why-trigger" onclick="setWhyPanel(0,this)"><span class="why-trigger-text">İHTİYAÇLARINIZA UYUM SAĞLARIZ</span></button></li>
-      <li class="why-item"><button class="why-trigger" onclick="setWhyPanel(1,this)"><span class="why-trigger-text">ZAMANINIZI KURTARIRIZ</span></button></li>
-      <li class="why-item"><button class="why-trigger" onclick="setWhyPanel(2,this)"><span class="why-trigger-text">UZMAN EKİBİMİZ</span></button></li>
-      <li class="why-item"><button class="why-trigger" onclick="setWhyPanel(3,this)"><span class="why-trigger-text">KALİTE STANDARTLARI</span></button></li>
-      <li class="why-item"><button class="why-trigger" onclick="setWhyPanel(4,this)"><span class="why-trigger-text">TIBBİ STERİLİZASYON</span></button></li>
-      <li class="why-item"><button class="why-trigger" onclick="setWhyPanel(5,this)"><span class="why-trigger-text">MODERN EKİPMAN</span></button></li>
-    </ul>
-  </div>
-  <div class="why-right">
-    <div class="why-panel active" id="whyPanel0">
-      <div class="why-panel-img"><div class="why-num-bg">01</div><img src="images/about.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="why-panel-text"><h3>İHTİYAÇLARINIZA UYUM SAĞLARIZ</h3><p>Erken uçuşunuz mu var? Salonu erkenden açabiliriz. Önemli bir etkinliğiniz mi? Sizi daha geç saate kadar bekliyoruz. Tüm hizmetlerimiz size özel planlanır.</p></div>
+  <div class="why-slider-wrap">
+    <div class="why-slider" id="whySlider">
+
+      <div class="why-card">
+        <div class="why-card-img"><div class="why-num-bg">01</div><img src="images/about.jpg" alt="" onerror="this.style.display='none'"></div>
+        <div class="why-card-body">
+          <div class="why-card-num">01</div>
+          <h3 class="why-card-title">İHTİYAÇLARINIZA UYUM SAĞLARIZ</h3>
+          <p class="why-card-desc">Erken uçuşunuz mu var? Salonu erkenden açabiliriz. Önemli bir etkinliğiniz mi? Sizi daha geç saate kadar bekliyoruz. Tüm hizmetlerimiz size özel planlanır.</p>
+        </div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-card-img"><div class="why-num-bg">02</div><img src="images/portfolio-2.jpg" alt="" onerror="this.style.display='none'"></div>
+        <div class="why-card-body">
+          <div class="why-card-num">02</div>
+          <h3 class="why-card-title">ZAMANINIZI KURTARIRIZ</h3>
+          <p class="why-card-desc">Saç ve makyajınızı aynı anda yaptırabilirsiniz. Uzman ekibimiz birlikte çalışarak tek randevuda komple bakım sağlar.</p>
+        </div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-card-img"><div class="why-num-bg">03</div><img src="images/portfolio-3.jpg" alt="" onerror="this.style.display='none'"></div>
+        <div class="why-card-body">
+          <div class="why-card-num">03</div>
+          <h3 class="why-card-title">UZMAN EKİBİMİZ</h3>
+          <p class="why-card-desc">Her stilist sertifikalı ve deneyimlidir. Sürekli eğitimle güncel teknikler uygulanır. Sanatını icra eden bir ekip.</p>
+        </div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-card-img"><div class="why-num-bg">04</div></div>
+        <div class="why-card-body">
+          <div class="why-card-num">04</div>
+          <h3 class="why-card-title">KALİTE STANDARTLARI</h3>
+          <p class="why-card-desc">Premium ve güvenilir ürünler kullanılır. Her işlem öncesi kalite kontrolü yapılır. Sonuçlardan memnun kalmazsanız tekrar yapıyoruz.</p>
+        </div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-card-img"><div class="why-num-bg">05</div></div>
+        <div class="why-card-body">
+          <div class="why-card-num">05</div>
+          <h3 class="why-card-title">TIBBİ STERİLİZASYON</h3>
+          <p class="why-card-desc">Tüm aletlerimiz tıbbi standartlarda sterilize edilir. Hijyen tartışılmaz bir önceliktir. Güvenli ortamda hizmet alırsınız.</p>
+        </div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-card-img"><div class="why-num-bg">06</div></div>
+        <div class="why-card-body">
+          <div class="why-card-num">06</div>
+          <h3 class="why-card-title">MODERN EKİPMAN</h3>
+          <p class="why-card-desc">En son teknoloji ekipmanlarla donanmış salonumuzda en iyi sonuçları elde edersiniz. Profesyonel araçlar, profesyonel sonuçlar.</p>
+        </div>
+      </div>
+
     </div>
-    <div class="why-panel" id="whyPanel1">
-      <div class="why-panel-img"><div class="why-num-bg">02</div><img src="images/portfolio-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="why-panel-text"><h3>ZAMANINIZI KURTARIRIZ</h3><p>Saç ve makyajınızı aynı anda yaptırabilirsiniz. Uzman ekibimiz birlikte çalışarak tek randevuda komple bakım sağlar.</p></div>
-    </div>
-    <div class="why-panel" id="whyPanel2">
-      <div class="why-panel-img"><div class="why-num-bg">03</div><img src="images/portfolio-3.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="why-panel-text"><h3>UZMAN EKİBİMİZ</h3><p>Her stilist sertifikalı ve deneyimlidir. Sürekli eğitimle güncel teknikler uygulanır. Sanatını icra eden bir ekip.</p></div>
-    </div>
-    <div class="why-panel" id="whyPanel3">
-      <div class="why-panel-img"><div class="why-num-bg">04</div></div>
-      <div class="why-panel-text"><h3>KALİTE STANDARTLARI</h3><p>Premium ve güvenilir ürünler kullanılır. Her işlem öncesi kalite kontrolü yapılır. Sonuçlardan memnun kalmazsanız tekrar yapıyoruz.</p></div>
-    </div>
-    <div class="why-panel" id="whyPanel4">
-      <div class="why-panel-img"><div class="why-num-bg">05</div></div>
-      <div class="why-panel-text"><h3>TIBBİ STERİLİZASYON</h3><p>Tüm aletlerimiz tıbbi standartlarda sterilize edilir. Hijyen tartışılmaz bir önceliktir. Güvenli ortamda hizmet alırsınız.</p></div>
-    </div>
-    <div class="why-panel" id="whyPanel5">
-      <div class="why-panel-img"><div class="why-num-bg">06</div></div>
-      <div class="why-panel-text"><h3>MODERN EKİPMAN</h3><p>En son teknoloji ekipmanlarla donanmış salonumuzda en iyi sonuçları elde edersiniz. Profesyonel araçlar, profesyonel sonuçlar.</p></div>
-    </div>
+    <!-- Dots -->
+    <div class="why-dots" id="whyDots"></div>
   </div>
 </section>
 
@@ -935,7 +993,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 <div class="banner-cta">
   <div class="banner-cta-bg"><img src="images/banner.jpg" alt="" onerror="this.style.display='none'"></div>
   <div class="banner-cta-content">
-    <h2>ÇÜNKÜ SEN<br>HER ŞEYE<br>DEĞERSİN</h2>
+    <h2>ÇÜNKÜ SEN HER ŞEYE<br>DEĞERSİN</h2>
     <a href="/rezervasyon" class="btn-blue">RANDEVU AL +</a>
   </div>
   <!-- Sağ kadın görseli -->
@@ -1286,13 +1344,79 @@ document.getElementById('ham').addEventListener('click', () => {
   });
 })();
 
-// Why Us panel
-function setWhyPanel(idx, btn) {
-  document.querySelectorAll('.why-item').forEach(i => i.classList.remove('active'));
-  document.querySelectorAll('.why-panel').forEach(p => p.classList.remove('active'));
-  btn.closest('.why-item').classList.add('active');
-  document.getElementById('whyPanel' + idx).classList.add('active');
-}
+// Why Us Slider
+(function() {
+  const slider = document.getElementById('whySlider');
+  const dotsWrap = document.getElementById('whyDots');
+  if (!slider) return;
+
+  const cards = Array.from(slider.children);
+  const total = cards.length;
+  let current = 0;
+  let autoTimer;
+
+  // Dots oluştur
+  cards.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'why-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i, true));
+    dotsWrap.appendChild(d);
+  });
+
+  function getVisible() {
+    return window.innerWidth <= 768 ? 1 : 3;
+  }
+
+  function getCardWidth() {
+    return cards[0].getBoundingClientRect().width;
+  }
+
+  function updateDots() {
+    dotsWrap.querySelectorAll('.why-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function goTo(idx, resetAuto) {
+    const vis = getVisible();
+    const max = total - vis;
+    current = Math.max(0, Math.min(idx, max));
+    slider.style.transform = `translateX(-${current * getCardWidth()}px)`;
+    updateDots();
+    if (resetAuto) { clearInterval(autoTimer); startAuto(); }
+  }
+
+  function startAuto() {
+    autoTimer = setInterval(() => {
+      const vis = getVisible();
+      goTo(current + 1 > total - vis ? 0 : current + 1, false);
+    }, 3500);
+  }
+
+  // Touch / drag
+  let startX = 0, isDragging = false, dragDelta = 0;
+
+  slider.addEventListener('mousedown', e => { isDragging = true; startX = e.clientX; slider.classList.add('dragging'); });
+  slider.addEventListener('mousemove', e => { if (!isDragging) return; dragDelta = e.clientX - startX; });
+  slider.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false; slider.classList.remove('dragging');
+    if (dragDelta < -50) goTo(current + 1, true);
+    else if (dragDelta > 50) goTo(current - 1, true);
+    dragDelta = 0;
+  });
+  slider.addEventListener('mouseleave', () => { if (isDragging) { isDragging = false; slider.classList.remove('dragging'); dragDelta = 0; } });
+
+  slider.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+  slider.addEventListener('touchend', e => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if (diff < -40) goTo(current + 1, true);
+    else if (diff > 40) goTo(current - 1, true);
+  });
+
+  window.addEventListener('resize', () => goTo(0, false));
+  startAuto();
+})();
 
 // Service accordion (sadece mobilde çalışır, web'de liste zaten açık)
 function toggleService(btn) {
