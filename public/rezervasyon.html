@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rezervasyon — Hair Artist İsa Kurt</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@300;400;500&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --white: #ffffff;
+  --black: #0a0a0a;
+  --gray:  #f2f2f2;
+  --muted: #888;
+  --blue:  #1a6ff4;
+  --border: #d8d8d8;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:200;
+  height: 88px; background: var(--white);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display:flex; align-items:center; text-decoration:none; flex-shrink:0; }
+.nav-logo img { height:68px; width:auto; display:block; }
+.nav-logo-text { font-family:'Barlow Condensed',sans-serif; font-size:1.5rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--black); white-space:nowrap; }
+.nav-right { display:flex; align-items:center; gap:14px; }
+.nav-address {
+  display:flex; align-items:center; gap:8px;
+  border:1px solid var(--border); padding:11px 20px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem; font-weight:600; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--black); white-space:nowrap;
+  text-decoration:none; transition:background 0.2s;
+}
+.nav-address:hover { background:var(--gray); }
+.nav-address svg { width:13px; height:13px; flex-shrink:0; }
+.nav-book {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--blue); color:var(--white);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:0.72rem; font-weight:700; letter-spacing:0.14em;
+  text-transform:uppercase; text-decoration:none;
+  padding:12px 26px; transition:opacity 0.2s; white-space:nowrap;
+}
+.nav-book:hover { opacity:0.88; }
+.nav-hamburger { display:flex; flex-direction:column; justify-content:center; gap:6px; background:none; border:none; cursor:pointer; padding:6px; flex-shrink:0; }
+.nav-hamburger span { display:block; width:26px; height:2px; background:var(--black); }
+.mob-menu { display:none; position:fixed; inset:0; background:var(--white); z-index:190; flex-direction:column; align-items:center; justify-content:center; gap:28px; }
+.mob-menu.open { display:flex; }
+.mob-menu a { font-family:'Barlow Condensed',sans-serif; font-size:2.4rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--black); text-decoration:none; }
+.mob-menu a:hover { color:var(--blue); }
+.mob-close { position:absolute; top:20px; right:28px; background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--muted); }
+.mob-book { display:inline-flex; align-items:center; justify-content:center; background:var(--blue); color:var(--white); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; margin-top:12px; transition:opacity 0.2s; }
+.mob-book:hover { opacity:0.88; }
+
+/* PAGE HERO */
+.page-hero {
+  margin-top: 88px;
+  padding: 72px 60px 56px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
+  background: var(--white);
+}
+.page-hero-left h1 {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.page-hero-left p {
+  font-size: 0.9rem; font-weight: 300; color: var(--muted);
+  max-width: 460px; line-height: 1.8;
+}
+.page-hero-right {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+  white-space: nowrap; text-align: right;
+}
+.page-hero-right a { color: var(--blue); text-decoration: none; }
+.page-hero-right a:hover { text-decoration: underline; }
+
+/* REZERVASYON LAYOUT */
+.rez-wrap {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  min-height: calc(100vh - 88px - 200px);
+}
+
+/* SOL: FORM */
+.rez-form-col {
+  padding: 64px 60px;
+  border-right: 1px solid var(--border);
+}
+
+.rez-step {
+  margin-bottom: 56px;
+}
+.rez-step:last-child { margin-bottom: 0; }
+
+.rez-step-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.rez-step-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em;
+  color: var(--blue); text-transform: uppercase;
+  background: rgba(26,111,244,0.08);
+  padding: 4px 10px; border-radius: 2px;
+}
+.rez-step-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--black);
+}
+
+/* HİZMET SEÇİMİ — kart grid */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.service-card {
+  border: 1px solid var(--border);
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  user-select: none;
+}
+.service-card:hover { border-color: #aaa; background: var(--gray); }
+.service-card.selected {
+  border-color: var(--blue);
+  background: rgba(26,111,244,0.04);
+}
+.service-card.selected::after {
+  content: '✓';
+  position: absolute; top: 10px; right: 12px;
+  font-size: 0.75rem; color: var(--blue); font-weight: 700;
+}
+.service-card-icon { font-size: 1.4rem; margin-bottom: 8px; }
+.service-card-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.88rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--black);
+  line-height: 1.2;
+}
+.service-card-sub {
+  font-size: 0.72rem; font-weight: 300; color: var(--muted);
+  margin-top: 4px; line-height: 1.4;
+}
+
+/* TARİH & SAAT */
+.datetime-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted);
+}
+.form-input, .form-select {
+  border: 1px solid var(--border); background: var(--white);
+  padding: 13px 16px; font-family: 'Barlow', sans-serif;
+  font-size: 0.88rem; font-weight: 300; color: var(--black);
+  outline: none; transition: border-color 0.2s; appearance: none;
+  width: 100%;
+}
+.form-input:focus, .form-select:focus { border-color: var(--blue); }
+.form-input::placeholder { color: #bbb; }
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23888'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+/* SAAT BUTONLARI */
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.time-slot {
+  border: 1px solid var(--border);
+  padding: 10px 6px; text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em;
+  color: var(--black); cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none;
+}
+.time-slot:hover { border-color: #aaa; background: var(--gray); }
+.time-slot.selected { border-color: var(--blue); background: rgba(26,111,244,0.06); color: var(--blue); }
+.time-slot.disabled { color: #ccc; border-color: #eee; cursor: not-allowed; background: #fafafa; }
+
+/* KİŞİSEL BİLGİLER */
+.personal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.personal-grid .full { grid-column: 1 / -1; }
+.form-textarea {
+  border: 1px solid var(--border); background: var(--white);
+  padding: 13px 16px; font-family: 'Barlow', sans-serif;
+  font-size: 0.88rem; font-weight: 300; color: var(--black);
+  outline: none; transition: border-color 0.2s;
+  width: 100%; resize: vertical; min-height: 80px;
+}
+.form-textarea:focus { border-color: var(--blue); }
+.form-textarea::placeholder { color: #bbb; }
+
+/* KVKK */
+.kvkk-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 20px;
+  font-size: 0.78rem; font-weight: 300; color: var(--muted); line-height: 1.6;
+}
+.kvkk-row input[type="checkbox"] {
+  margin-top: 3px; accent-color: var(--blue); flex-shrink: 0;
+  width: 15px; height: 15px; cursor: pointer;
+}
+.kvkk-row a { color: var(--blue); text-decoration: none; }
+
+/* GÖNDER BUTONU */
+.rez-submit {
+  margin-top: 28px;
+  width: 100%; background: var(--blue); color: var(--white); border: none;
+  padding: 17px; font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; cursor: pointer; transition: opacity 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.rez-submit:hover { opacity: 0.88; }
+.rez-submit svg { width: 15px; height: 15px; }
+
+/* BAŞARI MESAJI */
+.success-msg {
+  display: none;
+  flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 80px 40px;
+  gap: 16px;
+}
+.success-msg.show { display: flex; }
+.success-icon { font-size: 3rem; }
+.success-title {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 2rem; font-weight: 700; color: var(--black);
+}
+.success-sub { font-size: 0.9rem; font-weight: 300; color: var(--muted); max-width: 340px; line-height: 1.8; }
+.success-back {
+  margin-top: 8px; display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--blue); text-decoration: none;
+  border-bottom: 1px solid rgba(26,111,244,0.3); padding-bottom: 2px;
+  transition: border-color 0.2s;
+}
+.success-back:hover { border-color: var(--blue); }
+
+/* SAĞ: BİLGİ PANELİ */
+.rez-info-col {
+  background: var(--gray);
+  padding: 56px 40px;
+  display: flex; flex-direction: column; gap: 40px;
+}
+
+.info-block {}
+.info-block-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Özet kartı */
+.rez-summary {
+  border: 1px solid var(--border); background: var(--white);
+  padding: 20px;
+}
+.summary-row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 9px 0; border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-label { font-weight: 300; color: var(--muted); }
+.summary-val { font-weight: 500; color: var(--black); text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.04em; }
+.summary-val.empty { color: #ccc; font-weight: 300; font-family: 'Barlow', sans-serif; font-size: 0.8rem; }
+
+/* Çalışma saatleri */
+.hours-list { display: flex; flex-direction: column; gap: 3px; }
+.hours-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 10px; border-radius: 3px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.04em;
+  color: #666;
+}
+.hours-row.today { background: rgba(26,111,244,0.08); border: 1px solid rgba(26,111,244,0.25); color: var(--black); }
+.hours-row.today .hday { color: var(--blue); }
+.hours-row.closed { color: #bbb; }
+.hday { font-weight: 600; }
+.htime { font-weight: 300; font-size: 0.7rem; }
+
+/* İletişim */
+.contact-list { display: flex; flex-direction: column; gap: 12px; }
+.contact-item { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; font-weight: 300; color: #444; }
+.contact-item a { color: var(--blue); text-decoration: none; font-weight: 500; }
+.contact-item a:hover { text-decoration: underline; }
+.contact-icon { width: 30px; height: 30px; background: var(--white); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.85rem; }
+
+/* WhatsApp butonu */
+.wa-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: #25D366; color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 13px 20px; transition: opacity 0.2s;
+}
+.wa-btn:hover { opacity: 0.88; }
+
+/* FOOTER */
+footer { background:var(--black); color:var(--white); padding:64px 60px 0; overflow:hidden; }
+.footer-top { display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:48px; padding-bottom:48px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.footer-col-title { font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:20px; }
+.footer-left-col { display:flex; flex-direction:column; }
+.footer-brand-row { display:flex; align-items:center; justify-content:space-between; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.footer-brand-heading { display:flex; align-items:baseline; gap:10px; margin-top:2px; }
+.footer-brand-bold { font-family:'Barlow Condensed',sans-serif; font-size:2.4rem; font-weight:800; letter-spacing:0.01em; color:var(--white); line-height:1; }
+.footer-brand-italic { font-family:'Playfair Display',serif; font-size:2.4rem; font-weight:700; font-style:italic; color:rgba(255,255,255,0.55); line-height:1; }
+.footer-contact-info { display:flex; flex-direction:column; gap:10px; }
+.footer-contact-info p { font-size:0.8rem; font-weight:300; color:rgba(255,255,255,0.55); line-height:1.7; }
+.footer-contact-info a { color:rgba(255,255,255,0.55); text-decoration:none; transition:color 0.2s; }
+.footer-contact-info a:hover { color:var(--white); }
+.footer-info-label { font-family:'Barlow Condensed',sans-serif; font-size:0.58rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:6px; }
+.footer-social-row { display:flex; gap:10px; margin-top:10px; }
+.footer-social-icon { display:flex; text-decoration:none; transition:opacity 0.2s; }
+.footer-social-icon:hover { opacity:0.8; }
+.footer-social-icon span { width:32px; height:32px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.footer-hours-col { display:flex; flex-direction:column; }
+.footer-hours-box { display:flex; flex-direction:column; gap:4px; }
+.footer-hours-row { display:flex; justify-content:space-between; align-items:center; padding:7px 10px; border-radius:4px; font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:0.06em; color:rgba(255,255,255,0.45); }
+.footer-hours-row.today { background:rgba(26,111,244,0.18); border:1px solid rgba(26,111,244,0.5); color:var(--white); }
+.footer-hours-row.closed { color:rgba(255,255,255,0.2); }
+.footer-hours-row .day { font-weight:600; }
+.footer-hours-row .time { font-weight:300; font-size:0.7rem; }
+.footer-hours-row.today .day { color:var(--blue); }
+.footer-book-col { display:flex; flex-direction:column; gap:12px; }
+.footer-map { width:100%; height:140px; border:none; display:block; margin-top:4px; }
+.footer-mid { padding:28px 0; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); }
+.footer-copy { font-size:0.72rem; font-weight:300; color:rgba(255,255,255,0.25); }
+.footer-credit { font-size:0.72rem; font-weight:300; color:rgba(255,255,255,0.25); text-decoration:none; transition:color 0.2s; }
+.footer-credit:hover { color:rgba(255,255,255,0.5); }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  nav { padding: 0 20px; height: 72px; }
+  .page-hero { margin-top: 72px; padding: 48px 24px 40px; flex-direction: column; align-items: flex-start; }
+  .page-hero-right { text-align: left; }
+  .rez-wrap { grid-template-columns: 1fr; }
+  .rez-form-col { padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .rez-info-col { padding: 40px 24px; }
+  footer { padding: 48px 24px 0; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-mid { flex-direction: column; gap: 16px; text-align: center; }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 16px; height: 64px; }
+  .nav-book { display: none; }
+  .nav-address { display:flex; border:none; padding:8px 10px; font-size:0.62rem; }
+  .page-hero { margin-top: 64px; padding: 36px 16px 32px; }
+  .page-hero-left h1 { font-size: 2.8rem; }
+  .rez-form-col { padding: 36px 16px; }
+  .service-grid { grid-template-columns: 1fr 1fr; }
+  .time-slots { grid-template-columns: repeat(4, 1fr); }
+  .personal-grid { grid-template-columns: 1fr; }
+  .personal-grid .full { grid-column: 1; }
+  .datetime-grid { grid-template-columns: 1fr; }
+  footer { padding: 40px 16px 0; }
+  .footer-top { grid-template-columns: 1fr; gap: 36px; }
+}
+@media (max-width: 480px) {
+  nav { padding: 0 12px; }
+  .nav-logo img { height: 48px; }
+  .service-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .time-slots { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="/" class="nav-logo">
+    <img src="images/logo.png" alt="Hair Artist"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="nav-logo-text" style="display:none">HAIR ARTIST</span>
+  </a>
+  <div class="nav-right">
+    <a href="https://www.google.com/maps?cid=1451931697501383270" target="_blank" class="nav-address">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      Kocatepe, No:231 · Bayrampaşa / İstanbul
+    </a>
+    <a href="/rezervasyon" class="nav-book">REZERVASYON YAP +</a>
+    <button class="nav-hamburger" id="ham" aria-label="Menü"><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="this.parentElement.classList.remove('open')">kapat ✕</button>
+  <a href="/" onclick="this.closest('.mob-menu').classList.remove('open')">Ana Sayfa</a>
+  <a href="/#about" onclick="this.closest('.mob-menu').classList.remove('open')">Hakkımızda</a>
+  <a href="/#services" onclick="this.closest('.mob-menu').classList.remove('open')">Hizmetler</a>
+  <a href="/fiyatlar" onclick="this.closest('.mob-menu').classList.remove('open')">Fiyatlar</a>
+  <a href="/portfolio" onclick="this.closest('.mob-menu').classList.remove('open')">Portfolyo</a>
+  <a href="/rezervasyon" onclick="this.closest('.mob-menu').classList.remove('open')">Rezervasyon</a>
+  <a href="/#contact" onclick="this.closest('.mob-menu').classList.remove('open')">İletişim</a>
+  <a href="/rezervasyon" class="mob-book">REZERVASYON YAP +</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-left">
+    <h1>Rezervasyon</h1>
+    <p>Aşağıdaki formu doldurarak hızlıca randevu alabilirsiniz. Size en kısa sürede dönüş yapacağız.</p>
+  </div>
+  <div class="page-hero-right">
+    Online randevu · 7/24<br>
+    Telefon: <a href="tel:+905464725878">0546 472 58 78</a>
+  </div>
+</div>
+
+<!-- ANA İÇERİK -->
+<div class="rez-wrap">
+
+  <!-- SOL: FORM -->
+  <div class="rez-form-col">
+
+    <div id="formArea">
+
+      <!-- ADIM 1: HİZMET -->
+      <div class="rez-step">
+        <div class="rez-step-header">
+          <span class="rez-step-num">Adım 01</span>
+          <span class="rez-step-title">Hizmet Seçin</span>
+        </div>
+        <div class="service-grid">
+          <div class="service-card" data-service="Saç Kesimi" onclick="selectService(this)">
+            <div class="service-card-icon">✂️</div>
+            <div class="service-card-name">Saç Kesimi</div>
+            <div class="service-card-sub">Kesim & şekillendirme</div>
+          </div>
+          <div class="service-card" data-service="Boyama / Balayage" onclick="selectService(this)">
+            <div class="service-card-icon">🎨</div>
+            <div class="service-card-name">Boyama</div>
+            <div class="service-card-sub">Röfle, ombre, balayage</div>
+          </div>
+          <div class="service-card" data-service="Makyaj" onclick="selectService(this)">
+            <div class="service-card-icon">💄</div>
+            <div class="service-card-name">Makyaj</div>
+            <div class="service-card-sub">Günlük, gece, airbrush</div>
+          </div>
+          <div class="service-card" data-service="Gelin & Özel Gün" onclick="selectService(this)">
+            <div class="service-card-icon">👰</div>
+            <div class="service-card-name">Gelin & Özel Gün</div>
+            <div class="service-card-sub">Saç + makyaj paketi</div>
+          </div>
+          <div class="service-card" data-service="Bakım & Keratin" onclick="selectService(this)">
+            <div class="service-card-icon">✨</div>
+            <div class="service-card-name">Bakım</div>
+            <div class="service-card-sub">Keratin, botoks, maske</div>
+          </div>
+          <div class="service-card" data-service="Saç Kaynak" onclick="selectService(this)">
+            <div class="service-card-icon">💇</div>
+            <div class="service-card-name">Saç Kaynak</div>
+            <div class="service-card-sub">Kalıcı & geçici kaynak</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADIM 2: TARİH & SAAT -->
+      <div class="rez-step">
+        <div class="rez-step-header">
+          <span class="rez-step-num">Adım 02</span>
+          <span class="rez-step-title">Tarih & Saat</span>
+        </div>
+
+        <div class="datetime-grid">
+          <div class="form-group">
+            <label class="form-label">Tarih</label>
+            <input type="date" class="form-input" id="rezDate" onchange="updateSummary()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tercih Edilen Saat</label>
+            <div class="time-slots" id="timeSlots">
+              <div class="time-slot" onclick="selectTime(this)" data-time="09:00">09:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="10:00">10:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="11:00">11:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="12:00">12:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="13:00">13:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="14:00">14:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="15:00">15:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="16:00">16:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="17:00">17:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="18:00">18:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADIM 3: KİŞİSEL BİLGİLER -->
+      <div class="rez-step">
+        <div class="rez-step-header">
+          <span class="rez-step-num">Adım 03</span>
+          <span class="rez-step-title">Kişisel Bilgiler</span>
+        </div>
+        <div class="personal-grid">
+          <div class="form-group">
+            <label class="form-label">Ad</label>
+            <input type="text" class="form-input" id="firstName" placeholder="Adınız" oninput="updateSummary()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Soyad</label>
+            <input type="text" class="form-input" id="lastName" placeholder="Soyadınız" oninput="updateSummary()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefon</label>
+            <input type="tel" class="form-input" id="phone" placeholder="05XX XXX XX XX">
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-posta</label>
+            <input type="email" class="form-input" id="email" placeholder="ornek@mail.com">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Notlar (isteğe bağlı)</label>
+            <textarea class="form-textarea" id="notes" placeholder="Özel isteğiniz, saç uzunluğunuz veya eklemek istediğiniz bir şey..."></textarea>
+          </div>
+        </div>
+
+        <div class="kvkk-row">
+          <input type="checkbox" id="kvkk">
+          <label for="kvkk">Kişisel verilerimin işlenmesine ilişkin <a href="#">Aydınlatma Metni</a>'ni okudum ve onaylıyorum.</label>
+        </div>
+
+        <button class="rez-submit" onclick="submitForm()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          RANDEVU TALEBİ GÖNDER
+        </button>
+      </div>
+
+    </div><!-- /formArea -->
+
+    <!-- BAŞARI MESAJI -->
+    <div class="success-msg" id="successMsg">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Talebiniz Alındı!</div>
+      <p class="success-sub">Randevu talebiniz başarıyla iletildi. En kısa sürede sizi arayarak randevunuzu onaylayacağız.</p>
+      <a href="/" class="success-back">← Ana sayfaya dön</a>
+    </div>
+
+  </div><!-- /rez-form-col -->
+
+  <!-- SAĞ: BİLGİ PANELİ -->
+  <div class="rez-info-col">
+
+    <!-- Randevu özeti -->
+    <div class="info-block">
+      <div class="info-block-title">Randevu Özetiniz</div>
+      <div class="rez-summary">
+        <div class="summary-row">
+          <span class="summary-label">Ad Soyad</span>
+          <span class="summary-val empty" id="sumName">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Hizmet</span>
+          <span class="summary-val empty" id="sumService">Seçilmedi</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Tarih</span>
+          <span class="summary-val empty" id="sumDate">Seçilmedi</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Saat</span>
+          <span class="summary-val empty" id="sumTime">Seçilmedi</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Çalışma saatleri -->
+    <div class="info-block">
+      <div class="info-block-title">Çalışma Saatleri</div>
+      <div class="hours-list" id="sideHours"></div>
+    </div>
+
+    <!-- İletişim -->
+    <div class="info-block">
+      <div class="info-block-title">Doğrudan İletişim</div>
+      <div class="contact-list">
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div><a href="tel:+905464725878">0546 472 58 78</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div><a href="mailto:info@hairartist.com.tr">info@hairartist.com.tr</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>Kocatepe, No:231<br>Bayrampaşa / İstanbul</div>
+        </div>
+      </div>
+      <a href="https://wa.me/905464725878?text=Merhaba,%20randevu%20almak%20istiyorum." target="_blank" class="wa-btn" style="margin-top:16px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp ile Yaz
+      </a>
+    </div>
+
+  </div><!-- /rez-info-col -->
+
+</div><!-- /rez-wrap -->
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-top">
+    <div class="footer-left-col">
+      <div class="footer-brand-row">
+        <div>
+          <div class="footer-col-title" style="margin-bottom:6px">İLETİŞİM</div>
+          <div class="footer-brand-heading">
+            <span class="footer-brand-bold">Bize</span>
+            <span class="footer-brand-italic">Ulaşın</span>
+          </div>
+        </div>
+        <a href="/" class="footer-logo-link">
+          <img src="images/logo.png" alt="Hair Artist"
+               style="height:72px;filter:brightness(0) invert(1);display:block"
+               onerror="this.style.display='none'">
+        </a>
+      </div>
+      <div class="footer-contact-info" style="margin-top:20px">
+        <div class="footer-info-label">ADRES</div>
+        <p><a href="https://www.google.com/maps?cid=1451931697501383270" target="_blank" style="color:rgba(255,255,255,0.55);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Kocatepe, No:231<br>34045 Bayrampaşa / İstanbul</a></p>
+        <p>📞 <a href="tel:+905464725878">0546 472 58 78</a></p>
+        <p>✉️ <a href="mailto:info@hairartist.com.tr">info@hairartist.com.tr</a></p>
+      </div>
+      <div class="footer-info-label" style="margin-top:18px;margin-bottom:10px">SOSYAL MEDYA</div>
+      <div class="footer-social-row">
+        <a href="https://instagram.com" target="_blank" class="footer-social-icon" title="Instagram">
+          <span style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </span>
+        </a>
+        <a href="https://wa.me/905464725878" target="_blank" class="footer-social-icon" title="WhatsApp">
+          <span style="background:#25D366">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </span>
+        </a>
+        <a href="https://facebook.com/hairartistcomtr" target="_blank" class="footer-social-icon" title="Facebook">
+          <span style="background:#1877F2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Çalışma Saatleri -->
+    <div class="footer-hours-col">
+      <div class="footer-col-title">ÇALIŞMA SAATLERİ</div>
+      <div class="footer-hours-box" id="hoursBox"></div>
+    </div>
+
+    <!-- Harita -->
+    <div class="footer-book-col">
+      <div class="footer-col-title">Konum</div>
+      <iframe
+        class="footer-map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.917216214105!2d28.8978924!3d41.0489394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabbc1760a7371%3A0x14264c2fabb32a66!2s%C4%B0sa%20Kurt%20Hair%20Artist!5e0!3m2!1str!2str!4v1776620330004!5m2!1str!2str"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=41.0489394,28.8978924"
+         style="justify-content:center;text-decoration:none;margin-top:8px;display:flex;background:var(--blue);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:12px 20px;" target="_blank">YOL TARİFİ AL</a>
+    </div>
+  </div>
+
+  <div class="footer-mid">
+    <span class="footer-copy">© 2026 Hair Artist · branded by İsa Kurt</span>
+    <a href="https://www.vionasoft.com" class="footer-credit" target="_blank">Tasarım: Vionasoft</a>
+  </div>
+</footer>
+
+<script>
+// Mobile menu
+document.getElementById('ham').addEventListener('click', () => {
+  document.getElementById('mobMenu').classList.toggle('open');
+});
+
+// Seçili hizmet & saat
+let selectedService = '';
+let selectedTime = '';
+
+function selectService(el) {
+  document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedService = el.dataset.service;
+  updateSummary();
+}
+
+function selectTime(el) {
+  if (el.classList.contains('disabled')) return;
+  document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTime = el.dataset.time;
+  updateSummary();
+}
+
+// Özet paneli güncelle
+function updateSummary() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName  = document.getElementById('lastName').value.trim();
+  const date      = document.getElementById('rezDate').value;
+
+  const sumName = document.getElementById('sumName');
+  const sumService = document.getElementById('sumService');
+  const sumDate = document.getElementById('sumDate');
+  const sumTime = document.getElementById('sumTime');
+
+  const fullName = [firstName, lastName].filter(Boolean).join(' ');
+  sumName.textContent = fullName || '—';
+  sumName.className = 'summary-val' + (fullName ? '' : ' empty');
+
+  sumService.textContent = selectedService || 'Seçilmedi';
+  sumService.className = 'summary-val' + (selectedService ? '' : ' empty');
+
+  if (date) {
+    const d = new Date(date);
+    const days = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+    sumDate.textContent = days[d.getDay()] + ', ' + d.toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'});
+    sumDate.className = 'summary-val';
+  } else {
+    sumDate.textContent = 'Seçilmedi';
+    sumDate.className = 'summary-val empty';
+  }
+
+  sumTime.textContent = selectedTime || 'Seçilmedi';
+  sumTime.className = 'summary-val' + (selectedTime ? '' : ' empty');
+}
+
+// Minimum tarih = bugün
+document.getElementById('rezDate').min = new Date().toISOString().split('T')[0];
+
+// Salı günlerini disable et (kapalı gün)
+document.getElementById('rezDate').addEventListener('change', function() {
+  const d = new Date(this.value);
+  if (d.getDay() === 2) { // Salı
+    alert('Salonumuz Salı günleri kapalıdır. Lütfen başka bir gün seçin.');
+    this.value = '';
+    updateSummary();
+  } else {
+    updateSummary();
+  }
+});
+
+// Form gönder
+function submitForm() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const phone     = document.getElementById('phone').value.trim();
+  const kvkk      = document.getElementById('kvkk').checked;
+
+  if (!selectedService) { alert('Lütfen bir hizmet seçin.'); return; }
+  if (!document.getElementById('rezDate').value) { alert('Lütfen tarih seçin.'); return; }
+  if (!selectedTime) { alert('Lütfen saat seçin.'); return; }
+  if (!firstName) { alert('Lütfen adınızı girin.'); return; }
+  if (!phone) { alert('Lütfen telefon numaranızı girin.'); return; }
+  if (!kvkk) { alert('Lütfen aydınlatma metnini onaylayın.'); return; }
+
+  document.getElementById('formArea').style.display = 'none';
+  document.getElementById('successMsg').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Çalışma saatleri — footer & yan panel
+(function() {
+  const days = [
+    { name: 'Pazartesi', time: '09:00 – 20:00', closed: false },
+    { name: 'Salı',      time: 'Kapalı',         closed: true  },
+    { name: 'Çarşamba',  time: '09:00 – 20:00', closed: false },
+    { name: 'Perşembe',  time: '09:00 – 20:00', closed: false },
+    { name: 'Cuma',      time: '09:00 – 20:00', closed: false },
+    { name: 'Cumartesi', time: '09:00 – 20:00', closed: false },
+    { name: 'Pazar',     time: '09:00 – 20:00', closed: false },
+  ];
+  const jsDay = new Date().getDay();
+  const todayIdx = jsDay === 0 ? 6 : jsDay - 1;
+
+  // Footer
+  const box = document.getElementById('hoursBox');
+  if (box) {
+    days.forEach((d, i) => {
+      const row = document.createElement('div');
+      row.className = 'footer-hours-row' + (i === todayIdx ? ' today' : '') + (d.closed ? ' closed' : '');
+      row.innerHTML = `<span class="day">${d.name}</span><span class="time">${d.time}</span>`;
+      box.appendChild(row);
+    });
+  }
+
+  // Yan panel
+  const side = document.getElementById('sideHours');
+  if (side) {
+    days.forEach((d, i) => {
+      const row = document.createElement('div');
+      row.className = 'hours-row' + (i === todayIdx ? ' today' : '') + (d.closed ? ' closed' : '');
+      row.innerHTML = `<span class="hday">${d.name}</span><span class="htime">${d.time}</span>`;
+      side.appendChild(row);
+    });
+  }
+})();
+</script>
+</body>
+</html>
