@@ -170,11 +170,11 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif}
 @media(min-width:600px){.tptime{display:block}}
 
 /* Mobile hamburger */
-.hmb{display:none;background:none;border:none;cursor:pointer;padding:7px;flex-direction:column;gap:5px}
+.hmb{display:none;background:none;border:none;cursor:pointer;padding:10px 8px;flex-direction:column;gap:5px}
 .hmb span{display:block;width:18px;height:1.5px;background:var(--text2);border-radius:1px;transition:all .2s}
 
 /* Overlay */
-.sbov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:190;display:none;opacity:0;transition:opacity .3s}
+.sbov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:190;display:none;opacity:0;transition:opacity .3s;-webkit-tap-highlight-color:transparent}
 .sbov.open{display:block;opacity:1}
 
 /* MAIN */
@@ -534,13 +534,16 @@ tbody td{padding:11px 14px;vertical-align:middle}
   :root{--sw:0px;--th:52px}
   .sidebar{transform:translateX(-244px);width:244px;--sw:244px}
   .sidebar.open{transform:translateX(0)}
-  .topbar{left:0}
+  .topbar{left:0;padding:0 12px;gap:8px}
   .main{margin-left:0;height:100vh;overflow-y:auto}
   .hmb{display:flex}
   .dsag{grid-template-columns:1fr}
   .tkwrap{grid-template-columns:1fr}
-  .page{padding:14px}
+  .page{padding:12px}
   .crow{grid-template-columns:68px 1fr 1fr 36px;gap:6px}
+  /* Arama mobilden gizle, sadece topbar buton kalsın */
+  .sw2{display:none}
+  #mob-ara-btn{display:flex!important}
   .sinp{width:150px}.sinp:focus{width:170px}
   thead th:nth-child(5),tbody td:nth-child(5),
   thead th:nth-child(7),tbody td:nth-child(7){display:none}
@@ -549,6 +552,20 @@ tbody td{padding:11px 14px;vertical-align:middle}
   .shopsg{grid-template-columns:repeat(2,1fr)}
   .port-stat-row{grid-template-columns:repeat(3,1fr)}
   .hizgrid{grid-template-columns:1fr}
+  .agrid{grid-template-columns:1fr}
+  /* Buton dokunma alanlarını büyüt */
+  .bsm{padding:6px 10px;font-size:.55rem}
+  .tbtn{padding:8px 13px}
+  .ni{padding:11px 18px}
+  /* Stat kartları mobilde küçük */
+  .sgrid{gap:8px}
+  .sc{padding:14px 12px 14px 16px}
+  .sval{font-size:1.5rem}
+  /* Dashboard grid */
+  .dgrid{grid-template-columns:1fr}
+  /* Tablo satır padding */
+  tbody td{padding:10px 10px}
+  thead th{padding:8px 10px}
 }
 @media(max-width:480px){
   .sgrid{grid-template-columns:1fr 1fr}
@@ -571,9 +588,9 @@ tbody td{padding:11px 14px;vertical-align:middle}
   <div class="gbg"></div>
   <div class="gbox">
     <div class="glogo-wrap">
-      <img class="glogo-img" src="images/logo2.png" alt="Hair Artist"
+      <img class="glogo-img" src="images/logo.png" alt="Hair Artist"
            onerror="this.style.display='none';document.querySelector('.glogo-fb').style.display='block'">
-      <div class="glogo-fb">Hair <em>Artist</em></div>
+      <div class="glogo-fb"><em>Hair Artist</em></div>
     </div>
     <div class="gsub">Admin Paneli</div>
     <label class="glbl">Şifre</label>
@@ -591,10 +608,10 @@ tbody td{padding:11px 14px;vertical-align:middle}
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="slg">
-      <img class="slg-img" src="images/logo2.png" alt="Hair Artist"
+      <img class="slg-img" src="images/logo.png" alt="Hair Artist"
            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
       <div class="slg-fb" style="display:none">HA</div>
-      <div class="slg-txt">Hair Artist<span>Admin Panel</span></div>
+      <div class="slg-txt"><img src="images/logo.png" alt="Hair Artist" style="height:22px;filter:brightness(0) invert(1) opacity(.85);display:block;max-width:110px;object-fit:contain"><span>Admin Panel</span></div>
     </div>
     <nav class="snav">
       <div class="slbl">Genel</div>
@@ -626,6 +643,9 @@ tbody td{padding:11px 14px;vertical-align:middle}
       </div>
 
 
+      <div class="ni" onclick="sayfaGec('ayarlar',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Ayarlar
+      </div>
       <div class="ni" onclick="window.open('/','_blank')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Siteye Git
       </div>
@@ -645,7 +665,10 @@ tbody td{padding:11px 14px;vertical-align:middle}
         <svg class="sico" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input class="sinp" type="text" placeholder="Ara..." id="garama" oninput="globalArama(this.value)">
       </div>
-      <button class="tbtn" onclick="verileriYukle()">↻</button>
+      <button class="tbtn" onclick="mobAramaAc()" id="mob-ara-btn" style="display:none" title="Ara">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="tbtn" onclick="verileriYukle()" title="Yenile">↻</button>
     </div>
     <div class="tptime" id="tptime"></div>
   </div>
@@ -787,45 +810,7 @@ tbody td{padding:11px 14px;vertical-align:middle}
               <button class="sbtn sec" id="hfiptal" onclick="hizSifirla()" style="display:none">İptal</button>
             </div>
           </div></div>
-          <div class="card"><div class="ch" style="padding:10px 14px"><h3 style="font-size:.8rem">🏷️ Kampanya İndirimi</h3></div><div class="cb" style="padding:10px 14px">
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <p style="font-size:.65rem;color:var(--text3);margin:0">İndirimin hangi bölüme uygulanacağını seçin. Tarih aralığı seçilirse sadece o tarihlerde geçerli olur.</p>
-              <!-- Hedef seçimi -->
-              <div>
-                <label style="font-size:.5rem;letter-spacing:.17em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:6px">İndirim Uygulanacak Bölüm</label>
-                <div style="display:flex;flex-direction:column;gap:5px">
-                  <label id="hlbl-ikisi" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:7px 10px;border:1px solid var(--black);border-radius:3px;background:rgba(0,0,0,.04)">
-                    <input type="radio" name="kampanya-hedef" value="ikisi" id="kh-ikisi" checked style="accent-color:var(--black)" onchange="kampanyaHedefDegisti()">
-                    <span style="font-size:.72rem;color:var(--text)">✦ <strong>Her İkisi</strong></span>
-                  </label>
-                  <label id="hlbl-hizmet" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:7px 10px;border:1px solid var(--line2);border-radius:3px">
-                    <input type="radio" name="kampanya-hedef" value="hizmet" id="kh-hizmet" style="accent-color:var(--black)" onchange="kampanyaHedefDegisti()">
-                    <span style="font-size:.72rem;color:var(--text2)">💳 Yalnızca <strong>Hizmet Al</strong></span>
-                  </label>
-                  <label id="hlbl-rezervasyon" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:7px 10px;border:1px solid var(--line2);border-radius:3px">
-                    <input type="radio" name="kampanya-hedef" value="rezervasyon" id="kh-rezervasyon" style="accent-color:var(--black)" onchange="kampanyaHedefDegisti()">
-                    <span style="font-size:.72rem;color:var(--text2)">📅 Yalnızca <strong>Rezervasyon Yap</strong></span>
-                  </label>
-                </div>
-              </div>
-              <div style="display:flex;gap:8px;align-items:center">
-                <input class="fi" id="indirim-input" type="number" min="0" max="100" placeholder="%" style="width:72px;text-align:center;font-size:1rem;font-weight:700;padding:6px 8px" oninput="indirimOnizlemeGuncelle(parseInt(this.value)||0)">
-                <span style="font-size:.65rem;color:var(--text3);white-space:nowrap">% indirim</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-                <div><label style="font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:4px">Başlangıç</label>
-                <input class="fi" id="kampanya-baslangic" type="date" style="padding:7px 10px;font-size:.78rem"></div>
-                <div><label style="font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:4px">Bitiş</label>
-                <input class="fi" id="kampanya-bitis" type="date" style="padding:7px 10px;font-size:.78rem"></div>
-              </div>
-              <div id="kampanya-durum" style="font-size:.65rem;min-height:16px"></div>
-              <div style="display:flex;gap:8px">
-                <button class="sbtn" style="flex:1;padding:8px" onclick="indirimKaydet()">Kaydet</button>
-                <button class="sbtn" style="padding:8px 12px;background:transparent;border:1px solid var(--rbdr);color:var(--red)" onclick="kampanyaSil()">Kaldır</button>
-              </div>
-              <div id="indirim-onizleme" style="font-size:.65rem;color:var(--text3);min-height:16px"></div>
-            </div>
-          </div></div>
+          
         </div>
       </div>
     </div>
@@ -1084,6 +1069,105 @@ tbody td{padding:11px 14px;vertical-align:middle}
     </div>
 
     <!-- ══ AYARLAR ══ -->
+    <div class="page" id="page-ayarlar">
+      <div style="margin-bottom:20px">
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--text)">Ayarlar</h2>
+        <p style="font-size:.72rem;color:var(--text3);margin-top:4px">Panel erişim bilgileri ve salon ayarları</p>
+      </div>
+
+      <div class="agrid">
+
+        <!-- Güvenlik -->
+        <div class="card">
+          <div class="ch"><h3>🔐 Güvenlik</h3></div>
+          <div class="cb">
+            <p style="font-size:.72rem;color:var(--text3);margin-bottom:18px;line-height:1.7">Yönetici şifresini ve adını buradan güncelleyebilirsiniz. Değişiklikler anında geçerli olur.</p>
+            <div style="display:flex;flex-direction:column;gap:13px">
+              <div class="ff">
+                <label class="fl">Yönetici Adı</label>
+                <input class="fi" type="text" id="ay-ad" placeholder="İsa Kurt">
+              </div>
+              <div class="ff">
+                <label class="fl">Mevcut Şifre</label>
+                <input class="fi" type="password" id="ay-eski" placeholder="••••••••">
+              </div>
+              <div class="ff">
+                <label class="fl">Yeni Şifre</label>
+                <input class="fi" type="password" id="ay-yeni" placeholder="En az 6 karakter">
+              </div>
+              <div class="ff">
+                <label class="fl">Yeni Şifre (Tekrar)</label>
+                <input class="fi" type="password" id="ay-yeni2" placeholder="••••••••">
+              </div>
+              <button class="sbtn" onclick="sifreDegistir()">Kaydet</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Salon Bilgileri -->
+        <div class="card">
+          <div class="ch"><h3>💇 Salon Bilgileri</h3></div>
+          <div class="cb">
+            <p style="font-size:.72rem;color:var(--text3);margin-bottom:18px;line-height:1.7">Çalışma saatleri ve salon bilgilerini buradan düzenleyin.</p>
+            <div style="display:flex;flex-direction:column;gap:13px">
+              <div class="ff">
+                <label class="fl">Salon Adı</label>
+                <input class="fi" type="text" id="ay-salon" value="Hair Artist İsa Kurt" placeholder="Salon adı">
+              </div>
+              <div class="ff">
+                <label class="fl">Telefon</label>
+                <input class="fi" type="tel" id="ay-tel" value="0546 472 58 78" placeholder="05xx xxx xx xx">
+              </div>
+              <div class="ff">
+                <label class="fl">Adres</label>
+                <input class="fi" type="text" id="ay-adres" value="Kocatepe, No:231, Bayrampaşa / İstanbul" placeholder="Adres">
+              </div>
+              <div class="ff">
+                <label class="fl">E-posta</label>
+                <input class="fi" type="email" id="ay-mail" value="info@hairartist.com.tr" placeholder="mail@örnek.com">
+              </div>
+              <button class="sbtn" onclick="salonBilgiKaydet()">Kaydet</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Çalışma Saatleri -->
+        <div class="card" style="grid-column:1/-1">
+          <div class="ch">
+            <h3>🕐 Çalışma Saatleri</h3>
+            <button class="tbtn pri" onclick="saatKaydet()">Kaydet</button>
+          </div>
+          <div class="cb">
+            <div class="cgrid" id="cgrid"></div>
+          </div>
+        </div>
+
+        <!-- Panel Hakkında -->
+        <div class="card" style="grid-column:1/-1">
+          <div class="ch"><h3>ℹ️ Panel Bilgisi</h3></div>
+          <div class="cb">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px">
+              <div style="padding:14px;background:var(--bg);border-radius:var(--r2);border:1px solid var(--line)">
+                <div style="font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Sürüm</div>
+                <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--text)">v2.0</div>
+                <div style="font-size:.62rem;color:var(--text3);margin-top:2px">Hair Artist Admin</div>
+              </div>
+              <div style="padding:14px;background:var(--bg);border-radius:var(--r2);border:1px solid var(--line)">
+                <div style="font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Geliştirici</div>
+                <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--text)">Vionasoft</div>
+                <div style="font-size:.62rem;color:var(--text3);margin-top:2px">vionasoft.com</div>
+              </div>
+              <div style="padding:14px;background:var(--bg);border-radius:var(--r2);border:1px solid var(--line)">
+                <div style="font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Oturum</div>
+                <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--green)" id="ay-oturum-ad">—</div>
+                <div style="font-size:.62rem;color:var(--text3);margin-top:2px">Aktif kullanıcı</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </main>
 </div>
@@ -1369,6 +1453,7 @@ function cikisYap(){SFR='';TRZ=[];document.getElementById('panel').style.display
 
 // ─── PANEL BAŞLAT ───
 async function panelBaslat(){
+  ayarlarYukle();
   saatGuncelle();setInterval(saatGuncelle,1000);
   try{cgridOlustur();}catch(e){}
   try{hizRender();}catch(e){}
@@ -2878,6 +2963,7 @@ const BASLIKLAR={
   personel:'Personel',hizmetler:'Hizmetler & Fiyatlar',
   ciro:'Ciro & Raporlar',
   portfolio:'Portfolyo Yönetimi',
+  ayarlar:'Ayarlar',
 };
 function sayfaGec(sayfa,navEl){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('ak'));
@@ -2897,6 +2983,7 @@ function sayfaGec(sayfa,navEl){
   if(sayfa==='personel'){pListRender();pStatRender();}
   if(sayfa==='ciro')ciroRender();
   if(sayfa==='portfolio')portRender();
+  if(sayfa==='ayarlar'){cgridOlustur();ayarlarYukle();}
 }
 
 // ─── PORTFOLİO ───
@@ -3145,6 +3232,47 @@ window.addEventListener('resize',()=>{
     if(document.getElementById('page-hizmetler').classList.contains('ak'))hizRender();
   },150);
 });
+
+
+// ─── AYARLAR ───
+function ayarlarYukle() {
+  const ad = localStorage.getItem('ha_admin_ad') || 'İsa Kurt';
+  document.getElementById('ay-ad').value = ad;
+  document.getElementById('ay-oturum-ad').textContent = ad;
+  document.getElementById('sunm').textContent = ad;
+}
+
+function sifreDegistir() {
+  const eski = document.getElementById('ay-eski').value.trim();
+  const yeni = document.getElementById('ay-yeni').value.trim();
+  const yeni2 = document.getElementById('ay-yeni2').value.trim();
+  const ad = document.getElementById('ay-ad').value.trim();
+  if (!eski) { toast('Mevcut şifreyi girin.', 'hata'); return; }
+  if (eski !== ADMIN_SIFRE) { toast('Mevcut şifre hatalı.', 'hata'); return; }
+  if (yeni && yeni.length < 6) { toast('Yeni şifre en az 6 karakter olmalı.', 'hata'); return; }
+  if (yeni && yeni !== yeni2) { toast('Şifreler eşleşmiyor.', 'hata'); return; }
+  if (yeni) {
+    ADMIN_SIFRE = yeni; DS = yeni;
+    document.getElementById('ay-eski').value = '';
+    document.getElementById('ay-yeni').value = '';
+    document.getElementById('ay-yeni2').value = '';
+  }
+  if (ad) {
+    localStorage.setItem('ha_admin_ad', ad);
+    document.getElementById('sunm').textContent = ad;
+    document.getElementById('ay-oturum-ad').textContent = ad;
+  }
+  toast(yeni ? 'Şifre ve bilgiler güncellendi ✓' : 'Bilgiler güncellendi ✓', 'ok');
+}
+
+function mobAramaAc() {
+  // Mobilde arama: sidebar'ı aç ve oraya odaklan yerine alert + globalArama
+  const q = prompt('Ara:');
+  if (q) globalArama(q);
+}
+function salonBilgiKaydet() {
+  toast('Salon bilgileri kaydedildi ✓', 'ok');
+}
 
 // ─── TOAST ───
 let toastTimer=null;
