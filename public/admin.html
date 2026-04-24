@@ -1038,10 +1038,10 @@ tbody td{padding:11px 14px;vertical-align:middle}
 
 <script>
 // ─── SUPABASE ───
-const SUPA_URL='https://XXXXXX.supabase.co';
-const SUPA_KEY='XXXXXX';
+const SUPA_URL='https://dfjeiwjgxkhxyipvnsno.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmamVpd2pneGtoeHlpcHZuc25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTIyNzUsImV4cCI6MjA5MjYyODI3NX0.40V9bgG97_sEMpc3G0mg98a7uh1Q0OR8ln2e9d2SvbU';
 const CLAUDE_KEY = (typeof process !== 'undefined' && process.env && process.env.claude) ? process.env.claude : '';
-var ADMIN_SIFRE='emir5625';
+var ADMIN_SIFRE='XXXXXX';
 
 // UTC string'i yerel tarihe çevir (Türkiye +3 için)
 function utcToLocalDateStr(str){
@@ -1183,46 +1183,14 @@ async function panelBaslat(){
 function saatGuncelle(){document.getElementById('tptime').textContent=new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});}
 async function verileriYukle(showToast=true){
   try{
-    const [rezData, pData, hizData, sipData, ayarData] = await Promise.all([
+    const [rezData, pData, hizData, ayarData] = await Promise.all([
       sRest('rezervasyonlar?select=*&order=created_at.desc&limit=500'),
       sRest('personel?select=*&order=created_at.asc'),
       sRest('hizmetler?select=*&order=sira.asc,created_at.asc'),
-      sRest('siparisler?select=*&order=created_at.desc&limit=500').catch(()=>[]),
       sRest('ayarlar?select=*').catch(()=>[])
     ]);
-    // İndirim ayarını yükle
-    const indirimAyar = (ayarData||[]).find(a=>a.key==='indirim_yuzde');
-    const indirimYuzde = indirimAyar ? parseInt(indirimAyar.value)||0 : 0;
-    const basAyar = (ayarData||[]).find(a=>a.key==='kampanya_baslangic');
-    const bitAyar = (ayarData||[]).find(a=>a.key==='kampanya_bitis');
-    const hedefAyar = (ayarData||[]).find(a=>a.key==='kampanya_hedef');
-    const bas = basAyar ? basAyar.value : '';
-    const bit = bitAyar ? bitAyar.value : '';
-    const hedef = hedefAyar ? hedefAyar.value : 'ikisi';
-    if(document.getElementById('kampanya-baslangic')) document.getElementById('kampanya-baslangic').value = bas||'';
-    if(document.getElementById('kampanya-bitis')) document.getElementById('kampanya-bitis').value = bit||'';
-    // Hedef radio'yu ayarla
-    const khEl = document.getElementById('kh-'+hedef);
-    if(khEl){ khEl.checked = true; kampanyaHedefDegisti(); }
-    kampanyaDurumGuncelle(indirimYuzde, bas, bit, hedef);
-    const inp = document.getElementById('indirim-input');
-    if(inp) inp.value = indirimYuzde || '';
-    indirimOnizlemeGuncelle(indirimYuzde);
     TRZ=rezData.map(dbToLocal);
-    SIPARISLER=(sipData||[]).map(s=>({
-      id:s.id,
-      ad:s.musteri_adi||s.musteri_ad||s.ad||'Müşteri',
-      telefon:s.telefon||s.musteri_telefon||'',
-      hizmet:s.urun_adi||s.urun_ad||s.urun||s.hizmet||'Shop Ürünü',
-      tarih:utcToLocalDateStr(s.created_at||s.tarih||''), // created_at timestamp'i yerel tarihe çevir (tarih kolonu UTC tarih içeriyor)
-      saat:'',
-      durum:'onaylandi',
-      odemeAlindi:true,
-      fiyat:parseInt(s.toplam||s.fiyat||s.tutar||0)||0,
-      odemeYontemi:s.odeme_yontemi||s.odemeYontemi||'kart',
-      tip:'shop',
-      personelId:null
-    }));
+    SIPARISLER=[];
     personel=pData.map(p=>({id:p.id,ad:p.ad,rol:p.rol||'',tel:p.tel||'',durum:p.durum||'aktif',foto:p.foto||'',rezaktif:p.rez_aktif!==false}));
     if(hizData&&hizData.length){
       hizmetler=hizData.map(h=>({id:h.id,ad:h.ad,kat:h.kat||'Diğer',min:h.min_fiyat||0,max:h.max_fiyat||0,sure:h.sure||60,sira:h.sira||0}));
@@ -1234,23 +1202,19 @@ async function verileriYukle(showToast=true){
     if(showToast)toast('Veri yüklenemedi: '+e.message,'hata');
   }
   verileriRender();
-  // Portfolio ayrıca yükle (tablo yoksa hata vermesin)
   portYukle();
-  // shopYukle(); // Shop bu sürümde devre dışı
 }
 function verileriRender(){statsGuncelle();tabloRender(AKT_FILTRE);bugRandevu();sonRez();hDagitim();mustRender();aktRender();nbGuncelle();pStatRender();tkRender();ciroRender();}
 
 // ─── STATS ───
-function fHesapla(r){if(r.tip==='shop'){return r.fiyat||0;}if(r.odemeAlindi&&r.durum==='onaylandi'){if(r.fiyat)return r.fiyat;const h=FYT[r.hizmet];return h?Math.round((h.min+h.max)/2):0;}return 0;}
+function fHesapla(r){if(r.odemeAlindi&&r.durum==='onaylandi'){if(r.fiyat)return r.fiyat;const h=FYT[r.hizmet];return h?Math.round((h.min+h.max)/2):0;}return 0;}
 function statsGuncelle(){
   const t=TRZ.length,bek=TRZ.filter(r=>r.durum==='bekliyor').length;
-  const onay=TRZ.filter(r=>r.durum==='onaylandi'&&r.odemeAlindi&&r.tip!=='shop');
+  const onay=TRZ.filter(r=>r.durum==='onaylandi'&&r.odemeAlindi);
   const n=new Date();
   const buay=onay.filter(r=>{const d=new Date(r.tarih+'T12:00');return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();});
-  // Shop siparişleri de dahil et
-  const buayShop=SIPARISLER.filter(r=>{const d=new Date((r.tarih||'').substring(0,10)+'T12:00');return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();});
-  const tc=onay.reduce((s,r)=>s+fHesapla(r),0)+SIPARISLER.reduce((s,r)=>s+fHesapla(r),0);
-  const ac=buay.reduce((s,r)=>s+fHesapla(r),0)+buayShop.reduce((s,r)=>s+fHesapla(r),0);
+  const tc=onay.reduce((s,r)=>s+fHesapla(r),0);
+  const ac=buay.reduce((s,r)=>s+fHesapla(r),0);
   const AY=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
   document.getElementById('sttop').textContent=t;
   document.getElementById('stbek').textContent=bek;
@@ -2567,28 +2531,15 @@ async function ekstraCiroKaydet() {
 
 function ciroRender(){
   const {bas,bit}=ciroPeriyotAralik(CIRO_PERIYOT);
-  // Hizmet rezervasyonları (shop hariç — walk_in dahil)
-  let hizOdemeler=TRZ.filter(r=>{
-    if(r.tip==='shop')return false;
+  let odemeler=TRZ.filter(r=>{
     if(!r.odemeAlindi||r.durum!=='onaylandi')return false;
     const tarihStr=r.odemeTarihi ? utcToLocalDateStr(r.odemeTarihi) : (r.tarih||'').substring(0,10);
     if(!tarihStr)return false;
     const t=new Date(tarihStr+'T12:00');
     return t>=bas&&t<=bit;
-  }).map(r=>({...r,tip:'hizmet'}));
-  // Shop siparişleri
-  let shopOdemeler=SIPARISLER.filter(r=>{
-    const tarihStr=(r.tarih||'').substring(0,10);
-    if(!tarihStr)return false;
-    const t=new Date(tarihStr+'T12:00');
-    return t>=bas&&t<=bit;
   });
-  // Tip filtreleme
-  let odemeler=[];
-  if(CIRO_TIP==='hepsi') odemeler=[...hizOdemeler,...shopOdemeler];
-  else if(CIRO_TIP==='hizmet') odemeler=hizOdemeler.filter(r=>r.tip!=='walk_in');
-  else if(CIRO_TIP==='walk_in') odemeler=hizOdemeler.filter(r=>r.tip==='walk_in');
-  else if(CIRO_TIP==='shop') odemeler=shopOdemeler;
+  if(CIRO_TIP==='hizmet') odemeler=odemeler.filter(r=>r.tip!=='walk_in');
+  else if(CIRO_TIP==='walk_in') odemeler=odemeler.filter(r=>r.tip==='walk_in');
   if(CIRO_YONTEM!=='hepsi')odemeler=odemeler.filter(r=>(r.odemeYontemi||'nakit')===CIRO_YONTEM);
 
   const toplam=odemeler.reduce((s,r)=>s+fHesapla(r),0);
@@ -2617,9 +2568,9 @@ function ciroRender(){
     const p=personel.find(x=>x.id===r.personelId)||personel.find(x=>x.ad===r.personelId);
     const f=fHesapla(r);
     const yont=(r.odemeYontemi||'nakit')==='kart'?'💳 Kart':'💵 Nakit';
-    const tipBadge=r.tip==='shop'?'<span style="font-size:.44rem;background:var(--bbg);color:var(--blue);border:1px solid var(--bbdr);padding:2px 6px;border-radius:8px;font-weight:600">🛍 Shop</span>':r.tip==='walk_in'?'<span style="font-size:.44rem;background:var(--ybg);color:var(--yellow);border:1px solid var(--ybdr);padding:2px 6px;border-radius:8px;font-weight:600">🚶 Walk-in</span>':'<span style="font-size:.44rem;background:var(--gbg);color:var(--green);border:1px solid var(--gbdr);padding:2px 6px;border-radius:8px;font-weight:600">✂️ Hizmet</span>';
+    const tipBadge=r.tip==='walk_in'?'<span style="font-size:.44rem;background:var(--ybg);color:var(--yellow);border:1px solid var(--ybdr);padding:2px 6px;border-radius:8px;font-weight:600">🚶 Walk-in</span>':'<span style="font-size:.44rem;background:var(--gbg);color:var(--green);border:1px solid var(--gbdr);padding:2px 6px;border-radius:8px;font-weight:600">✂️ Hizmet</span>';
     const gosterTarih=r.odemeTarihi ? utcToLocalDateStr(r.odemeTarihi) : r.tarih;
-    return`<tr><td><div class="tad">${r.ad}</div></td><td class="thiz">${r.hizmet}</td><td class="tfyt">${f.toLocaleString('tr-TR')}₺</td><td style="font-size:.72rem">${yont}</td><td>${tipBadge}</td><td class="ttar">${gosterTarih}</td><td style="font-size:.7rem;color:var(--text2)">${r.tip==='shop'?'—':p?p.ad:'—'}</td></tr>`;
+    return`<tr><td><div class="tad">${r.ad}</div></td><td class="thiz">${r.hizmet}</td><td class="tfyt">${f.toLocaleString('tr-TR')}₺</td><td style="font-size:.72rem">${yont}</td><td>${tipBadge}</td><td class="ttar">${gosterTarih}</td><td style="font-size:.7rem;color:var(--text2)">${p?p.ad:'—'}</td></tr>`;
   }).join('');
 
   // Hizmet dağılım
