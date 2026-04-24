@@ -104,6 +104,28 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:88px; backgrou
 }
 .gallery-item.hidden { display:none; }
 
+/* LOADING */
+.gallery-loading {
+  grid-column: 1 / -1;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 16px;
+  padding: 80px 20px;
+  color: var(--muted); font-size: 0.85rem; font-weight: 300;
+}
+.loading-spinner {
+  width: 32px; height: 32px;
+  border: 2px solid var(--border);
+  border-top-color: var(--black);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.gallery-empty {
+  grid-column: 1 / -1;
+  text-align: center; padding: 80px 20px;
+  color: var(--muted); font-size: 0.85rem; font-weight: 300;
+}
+
 /* PLACEHOLDER renkleri fotoğraf olmayınca */
 .gallery-item:nth-child(6n+1) { background:#e8e0d8; }
 .gallery-item:nth-child(6n+2) { background:#d8dde8; }
@@ -260,8 +282,8 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   </div>
   <div class="page-hero-stats">
     <div class="page-hero-stat">
-      <div class="page-hero-stat-num">1000+</div>
-      <div class="page-hero-stat-lbl">Memnun Müşteri</div>
+      <div class="page-hero-stat-num" id="portfolyoSayi">—</div>
+      <div class="page-hero-stat-lbl">Portfolyo Çalışması</div>
     </div>
     <div class="page-hero-stat">
       <div class="page-hero-stat-num">★ 4.9</div>
@@ -283,67 +305,10 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 <!-- GALERİ -->
 <div class="gallery">
   <div class="gallery-grid" id="galleryGrid">
-
-    <div class="gallery-item" data-cat="boyama" data-index="0">
-      <img src="images/portfolio-1.jpg" alt="Balayage" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Balayage</span></div>
+    <div class="gallery-loading" id="galleryLoading">
+      <div class="loading-spinner"></div>
+      <span>Fotoğraflar yükleniyor...</span>
     </div>
-
-    <div class="gallery-item" data-cat="boyama" data-index="1">
-      <img src="images/portfolio-2.jpg" alt="Ombre" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Ombre</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="kesim" data-index="2">
-      <img src="images/portfolio-3.jpg" alt="Saç Kesimi" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Saç Kesimi</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="boyama" data-index="3">
-      <img src="images/portfolio-4.jpg" alt="Röfle" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Röfle</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="gelin" data-index="4">
-      <img src="images/portfolio-5.jpg" alt="Gelin Saçı" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Gelin Saçı</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="bakim" data-index="5">
-      <img src="images/portfolio-6.jpg" alt="Keratin Bakım" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Keratin Bakım</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="makyaj" data-index="6">
-      <img src="images/portfolio-7.jpg" alt="Makyaj" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Makyaj</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="boyama" data-index="7">
-      <img src="images/portfolio-8.jpg" alt="Freelights" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Freelights</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="kesim" data-index="8">
-      <img src="images/portfolio-9.jpg" alt="Kesim & Fön" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Kesim & Fön</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="gelin" data-index="9">
-      <img src="images/portfolio-10.jpg" alt="Özel Gün" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Özel Gün</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="boyama" data-index="10">
-      <img src="images/portfolio-11.jpg" alt="Ters Ombre" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Ters Ombre</span></div>
-    </div>
-
-    <div class="gallery-item" data-cat="bakim" data-index="11">
-      <img src="images/portfolio-12.jpg" alt="Protein Botoks" loading="lazy" onerror="this.style.display='none'">
-      <div class="gallery-item-overlay"><span class="gallery-item-label">Protein Botoks</span></div>
-    </div>
-
   </div>
 </div>
 
@@ -416,42 +381,107 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 </footer>
 
 <script>
-// Nav
-document.getElementById('ham').addEventListener('click', () => {
-  document.getElementById('mobMenu').classList.toggle('open');
-});
+// ─── SUPABASE ─────────────────────────────────────────────────────
+const SUPA_URL = 'https://dfjeiwjgxkhxyipvnsno.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmamVpd2pneGtoeHlpcHZuc25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTIyNzUsImV4cCI6MjA5MjYyODI3NX0.40V9bgG97_sEMpc3G0mg98a7uh1Q0OR8ln2e9d2SvbU';
 
-// Filtre
-const filterBtns = document.querySelectorAll('.filter-btn');
-const items = document.querySelectorAll('.gallery-item');
-filterBtns.forEach(btn => {
+// Supabase kategori → filtre kategori eşleşmesi
+const KAT_MAP = {
+  'balyaj':         'boyama',
+  'boya':           'boyama',
+  'kesim':          'kesim',
+  'sac-bakimi':     'bakim',
+  'sekillendirme':  'kesim',
+  'ozel':           'gelin',
+  'makyaj':         'makyaj',
+};
+
+const KAT_LABEL = {
+  'balyaj':        'Balyaj',
+  'boya':          'Saç Boyama',
+  'kesim':         'Saç Kesimi',
+  'sac-bakimi':    'Saç Bakımı',
+  'sekillendirme': 'Şekillendirme',
+  'ozel':          'Gelin & Özel Gün',
+  'makyaj':        'Makyaj',
+};
+
+// ─── VERİ ─────────────────────────────────────────────────────────
+let tumFotolar = [];
+let aktifKat = 'all';
+let lbIdx = 0;
+
+async function portfolyoYukle() {
+  try {
+    const res = await fetch(
+      `${SUPA_URL}/rest/v1/portfolio?yayinda=eq.true&order=sira.asc,created_at.desc`,
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY } }
+    );
+    if (!res.ok) throw new Error(await res.text());
+    tumFotolar = await res.json();
+    galeriRender();
+    sayilariGuncelle();
+  } catch(e) {
+    document.getElementById('galleryLoading').innerHTML =
+      '<span style="color:var(--muted)">Fotoğraflar yüklenemedi.</span>';
+    console.error(e);
+  }
+}
+
+function galeriRender() {
+  const grid = document.getElementById('galleryGrid');
+  const filtreli = aktifKat === 'all'
+    ? tumFotolar
+    : tumFotolar.filter(p => KAT_MAP[p.kategori] === aktifKat);
+
+  if (!filtreli.length) {
+    grid.innerHTML = '<div class="gallery-empty">Bu kategoride henüz fotoğraf yok.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtreli.map((p, i) => `
+    <div class="gallery-item" data-cat="${KAT_MAP[p.kategori] || 'diger'}" data-index="${i}" onclick="openLightbox(${i})">
+      <img src="${p.foto_url}" alt="${p.ad}" loading="lazy" onerror="this.style.opacity='.3'">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-label">${KAT_LABEL[p.kategori] || p.ad}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function sayilariGuncelle() {
+  const el = document.getElementById('portfolyoSayi');
+  if (el) el.textContent = tumFotolar.length + '+';
+}
+
+// ─── FİLTRE ───────────────────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const cat = btn.dataset.cat;
-    items.forEach(item => {
-      item.classList.toggle('hidden', cat !== 'all' && item.dataset.cat !== cat);
-    });
+    aktifKat = btn.dataset.cat;
+    galeriRender();
   });
 });
 
-// Lightbox
+// ─── LİGHTBOX ─────────────────────────────────────────────────────
 const lb = document.getElementById('lightbox');
 const lbImg = document.getElementById('lbImg');
 const lbCounter = document.getElementById('lbCounter');
-let currentIdx = 0;
 
 function getVisible() {
-  return Array.from(items).filter(i => !i.classList.contains('hidden'));
+  return aktifKat === 'all'
+    ? tumFotolar
+    : tumFotolar.filter(p => KAT_MAP[p.kategori] === aktifKat);
 }
 
 function openLightbox(idx) {
   const visible = getVisible();
-  currentIdx = idx;
-  const item = visible[idx];
-  const img = item.querySelector('img');
-  lbImg.src = img ? img.src : '';
-  lbImg.alt = img ? img.alt : '';
+  lbIdx = idx;
+  const p = visible[idx];
+  if (!p) return;
+  lbImg.src = p.foto_url;
+  lbImg.alt = p.ad;
   lbCounter.textContent = `${idx + 1} / ${visible.length}`;
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -462,22 +492,14 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 
-items.forEach((item, i) => {
-  item.addEventListener('click', () => {
-    const visible = getVisible();
-    const visIdx = visible.indexOf(item);
-    if (visIdx >= 0) openLightbox(visIdx);
-  });
-});
-
 document.getElementById('lbClose').addEventListener('click', closeLightbox);
 document.getElementById('lbPrev').addEventListener('click', () => {
-  const visible = getVisible();
-  openLightbox((currentIdx - 1 + visible.length) % visible.length);
+  const v = getVisible();
+  openLightbox((lbIdx - 1 + v.length) % v.length);
 });
 document.getElementById('lbNext').addEventListener('click', () => {
-  const visible = getVisible();
-  openLightbox((currentIdx + 1) % visible.length);
+  const v = getVisible();
+  openLightbox((lbIdx + 1) % v.length);
 });
 lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
 document.addEventListener('keydown', e => {
@@ -487,7 +509,12 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') document.getElementById('lbNext').click();
 });
 
-// Footer saatler
+// ─── NAV ──────────────────────────────────────────────────────────
+document.getElementById('ham').addEventListener('click', () => {
+  document.getElementById('mobMenu').classList.toggle('open');
+});
+
+// ─── FOOTER SAATLER ───────────────────────────────────────────────
 (function() {
   const days = [
     { name: 'Pazartesi', time: '09:00 – 20:00', closed: false },
@@ -509,6 +536,9 @@ document.addEventListener('keydown', e => {
     box.appendChild(row);
   });
 })();
+
+// ─── BAŞLAT ───────────────────────────────────────────────────────
+portfolyoYukle();
 </script>
 </body>
 </html>
