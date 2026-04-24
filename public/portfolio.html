@@ -21,7 +21,7 @@ body { font-family: 'Barlow', sans-serif; background: var(--white); color: var(-
 /* NAV */
 nav { position:fixed; top:0; left:0; right:0; z-index:200; height:88px; background:var(--white); display:flex; align-items:center; justify-content:space-between; padding:0 40px; border-bottom:1px solid var(--border); }
 .nav-logo { display:flex; align-items:center; text-decoration:none; flex-shrink:0; }
-.nav-logo img { height:52px; width:auto; display:block; }
+.nav-logo img { height:68px; width:auto; display:block; }
 .nav-logo-text { font-family:'Barlow Condensed',sans-serif; font-size:1.5rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--black); white-space:nowrap; }
 .nav-right { display:flex; align-items:center; gap:14px; }
 .nav-address { display:flex; align-items:center; gap:8px; border:1px solid var(--border); padding:11px 20px; font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--black); white-space:nowrap; text-decoration:none; transition:background 0.2s; }
@@ -163,6 +163,9 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 .footer-col-title { font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:20px; }
 .footer-left-col { display:flex; flex-direction:column; }
 .footer-brand-row { display:flex; align-items:center; justify-content:space-between; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1); }
+.footer-brand-heading { display:flex; align-items:baseline; gap:10px; margin-top:2px; }
+.footer-brand-bold { font-family:'Barlow Condensed',sans-serif; font-size:2.4rem; font-weight:800; letter-spacing:0.01em; color:var(--white); line-height:1; }
+.footer-brand-italic { font-family:'Playfair Display',serif; font-size:2.4rem; font-weight:700; font-style:italic; color:rgba(255,255,255,0.55); line-height:1; }
 .footer-contact-info { display:flex; flex-direction:column; gap:10px; }
 .footer-contact-info p { font-size:0.8rem; font-weight:300; color:rgba(255,255,255,0.55); line-height:1.7; }
 .footer-contact-info a { color:rgba(255,255,255,0.55); text-decoration:none; transition:color 0.2s; }
@@ -364,8 +367,18 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   <div class="footer-top">
     <div class="footer-left-col">
       <div class="footer-brand-row">
-        <div class="footer-col-title" style="margin-bottom:0">BİZE ULAŞIN</div>
-        <a href="/"><img src="images/logo.png" alt="Hair Artist" style="height:52px;filter:brightness(0) invert(1);display:block" onerror="this.style.display='none'"></a>
+        <div>
+          <div class="footer-col-title" style="margin-bottom:6px">İLETİŞİM</div>
+          <div class="footer-brand-heading">
+            <span class="footer-brand-bold">Bize</span>
+            <span class="footer-brand-italic">Ulaşın</span>
+          </div>
+        </div>
+        <a href="/" class="footer-logo-link">
+          <img src="images/logo.png" alt="Hair Artist"
+               style="height:72px;filter:brightness(0) invert(1);display:block"
+               onerror="this.style.display='none'">
+        </a>
       </div>
       <div class="footer-contact-info" style="margin-top:20px">
         <div class="footer-info-label">ADRES</div>
