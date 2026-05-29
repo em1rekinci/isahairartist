@@ -12,7 +12,7 @@
   --black: #0a0a0a;
   --gray:  #f2f2f2;
   --muted: #888;
-  --blue:  #1a6ff4;
+  --gold:  #d4af37;
   --border: #d8d8d8;
 }
 html { scroll-behavior: smooth; }
@@ -48,7 +48,7 @@ nav {
 .nav-address svg { width:13px; height:13px; flex-shrink:0; }
 .nav-book {
   display:inline-flex; align-items:center; gap:6px;
-  background:var(--blue); color:var(--white);
+  background:var(--gold); color:var(--black);
   font-family:'Barlow Condensed',sans-serif;
   font-size:0.72rem; font-weight:700; letter-spacing:0.14em;
   text-transform:uppercase; text-decoration:none;
@@ -60,9 +60,9 @@ nav {
 .mob-menu { display:none; position:fixed; inset:0; background:var(--white); z-index:190; flex-direction:column; align-items:center; justify-content:center; gap:28px; }
 .mob-menu.open { display:flex; }
 .mob-menu a { font-family:'Barlow Condensed',sans-serif; font-size:2.4rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--black); text-decoration:none; }
-.mob-menu a:hover { color:var(--blue); }
+.mob-menu a:hover { color:var(--gold); }
 .mob-close { position:absolute; top:20px; right:28px; background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--muted); }
-.mob-book { display:inline-flex; align-items:center; justify-content:center; background:var(--blue); color:var(--white); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; margin-top:12px; transition:opacity 0.2s; }
+.mob-book { display:inline-flex; align-items:center; justify-content:center; background:var(--gold); color:var(--black); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; margin-top:12px; transition:opacity 0.2s; }
 .mob-book:hover { opacity:0.88; }
 
 /* PAGE HERO */
@@ -92,7 +92,7 @@ nav {
   text-transform: uppercase; color: var(--muted);
   white-space: nowrap; text-align: right;
 }
-.page-hero-right a { color: var(--blue); text-decoration: none; }
+.page-hero-right a { color: var(--gold); text-decoration: none; }
 .page-hero-right a:hover { text-decoration: underline; }
 
 /* REZERVASYON LAYOUT */
@@ -122,7 +122,7 @@ nav {
 .rez-step-num {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em;
-  color: var(--blue); text-transform: uppercase;
+  color: var(--gold); text-transform: uppercase;
   background: rgba(26,111,244,0.08);
   padding: 4px 10px; border-radius: 2px;
 }
@@ -148,13 +148,13 @@ nav {
 }
 .service-card:hover { border-color: #aaa; background: var(--gray); }
 .service-card.selected {
-  border-color: var(--blue);
+  border-color: var(--gold);
   background: rgba(26,111,244,0.04);
 }
 .service-card.selected::after {
   content: '✓';
   position: absolute; top: 10px; right: 12px;
-  font-size: 0.75rem; color: var(--blue); font-weight: 700;
+  font-size: 0.75rem; color: var(--gold); font-weight: 700;
 }
 .service-card-icon { font-size: 1.4rem; margin-bottom: 8px; }
 .service-card-name {
@@ -188,7 +188,7 @@ nav {
   outline: none; transition: border-color 0.2s; appearance: none;
   width: 100%;
 }
-.form-input:focus, .form-select:focus { border-color: var(--blue); }
+.form-input:focus, .form-select:focus { border-color: var(--gold); }
 .form-input::placeholder { color: #bbb; }
 .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23888'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
 
@@ -208,7 +208,7 @@ nav {
   user-select: none;
 }
 .time-slot:hover { border-color: #aaa; background: var(--gray); }
-.time-slot.selected { border-color: var(--blue); background: rgba(26,111,244,0.06); color: var(--blue); }
+.time-slot.selected { border-color: var(--gold); background: rgba(212,175,55,0.10); color: var(--gold); }
 .time-slot.disabled { color: #ccc; border-color: #eee; cursor: not-allowed; background: #fafafa; }
 
 /* KİŞİSEL BİLGİLER */
@@ -225,7 +225,7 @@ nav {
   outline: none; transition: border-color 0.2s;
   width: 100%; resize: vertical; min-height: 80px;
 }
-.form-textarea:focus { border-color: var(--blue); }
+.form-textarea:focus { border-color: var(--gold); }
 .form-textarea::placeholder { color: #bbb; }
 
 /* KVKK */
@@ -235,15 +235,15 @@ nav {
   font-size: 0.78rem; font-weight: 300; color: var(--muted); line-height: 1.6;
 }
 .kvkk-row input[type="checkbox"] {
-  margin-top: 3px; accent-color: var(--blue); flex-shrink: 0;
+  margin-top: 3px; accent-color: var(--gold); flex-shrink: 0;
   width: 15px; height: 15px; cursor: pointer;
 }
-.kvkk-row a { color: var(--blue); text-decoration: none; }
+.kvkk-row a { color: var(--gold); text-decoration: none; }
 
 /* GÖNDER BUTONU */
 .rez-submit {
   margin-top: 28px;
-  width: 100%; background: var(--blue); color: var(--white); border: none;
+  width: 100%; background: var(--gold); color: var(--black); border: none;
   padding: 17px; font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.82rem; font-weight: 700; letter-spacing: 0.18em;
   text-transform: uppercase; cursor: pointer; transition: opacity 0.2s;
@@ -270,11 +270,11 @@ nav {
   margin-top: 8px; display: inline-flex; align-items: center; gap: 6px;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--blue); text-decoration: none;
+  text-transform: uppercase; color: var(--gold); text-decoration: none;
   border-bottom: 1px solid rgba(26,111,244,0.3); padding-bottom: 2px;
   transition: border-color 0.2s;
 }
-.success-back:hover { border-color: var(--blue); }
+.success-back:hover { border-color: var(--gold); }
 
 /* SAĞ: BİLGİ PANELİ */
 .rez-info-col {
@@ -318,7 +318,7 @@ nav {
   color: #666;
 }
 .hours-row.today { background: rgba(26,111,244,0.08); border: 1px solid rgba(26,111,244,0.25); color: var(--black); }
-.hours-row.today .hday { color: var(--blue); }
+.hours-row.today .hday { color: var(--gold); }
 .hours-row.closed { color: #bbb; }
 .hday { font-weight: 600; }
 .htime { font-weight: 300; font-size: 0.7rem; }
@@ -326,7 +326,7 @@ nav {
 /* İletişim */
 .contact-list { display: flex; flex-direction: column; gap: 12px; }
 .contact-item { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; font-weight: 300; color: #444; }
-.contact-item a { color: var(--blue); text-decoration: none; font-weight: 500; }
+.contact-item a { color: var(--gold); text-decoration: none; font-weight: 500; }
 .contact-item a:hover { text-decoration: underline; }
 .contact-icon { width: 30px; height: 30px; background: var(--white); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.85rem; }
 
@@ -366,7 +366,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 .footer-hours-row.closed { color:rgba(255,255,255,0.2); }
 .footer-hours-row .day { font-weight:600; }
 .footer-hours-row .time { font-weight:300; font-size:0.7rem; }
-.footer-hours-row.today .day { color:var(--blue); }
+.footer-hours-row.today .day { color:var(--gold); }
 .footer-book-col { display:flex; flex-direction:column; gap:12px; }
 .footer-map { width:100%; height:140px; border:none; display:block; margin-top:4px; }
 .footer-mid { padding:28px 0; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); }
@@ -701,7 +701,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
       </iframe>
       <a href="https://www.google.com/maps/dir/?api=1&destination=41.0489394,28.8978924"
-         style="justify-content:center;text-decoration:none;margin-top:8px;display:flex;background:var(--blue);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:12px 20px;" target="_blank">YOL TARİFİ AL</a>
+         style="justify-content:center;text-decoration:none;margin-top:8px;display:flex;background:var(--gold);color:#0a0a0a;font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:12px 20px;" target="_blank">YOL TARİFİ AL</a>
     </div>
   </div>
 

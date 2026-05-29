@@ -12,7 +12,7 @@
   --black: #0a0a0a;
   --gray:  #f2f2f2;
   --muted: #888;
-  --blue:  #1a6ff4;
+  --gold:  #d4af37;
   --border: #d8d8d8;
 }
 html { scroll-behavior: smooth; }
@@ -27,16 +27,16 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:88px; backgrou
 .nav-address { display:flex; align-items:center; gap:8px; border:1px solid var(--border); padding:11px 20px; font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--black); white-space:nowrap; text-decoration:none; transition:background 0.2s; }
 .nav-address:hover { background:var(--gray); }
 .nav-address svg { width:13px; height:13px; flex-shrink:0; }
-.nav-book { display:inline-flex; align-items:center; gap:6px; background:var(--blue); color:var(--white); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; transition:opacity 0.2s; white-space:nowrap; }
+.nav-book { display:inline-flex; align-items:center; gap:6px; background:var(--gold); color:var(--black); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; transition:opacity 0.2s; white-space:nowrap; }
 .nav-book:hover { opacity:0.88; }
 .nav-hamburger { display:flex; flex-direction:column; justify-content:center; gap:6px; background:none; border:none; cursor:pointer; padding:6px; flex-shrink:0; }
 .nav-hamburger span { display:block; width:26px; height:2px; background:var(--black); }
 .mob-menu { display:none; position:fixed; inset:0; background:var(--white); z-index:190; flex-direction:column; align-items:center; justify-content:center; gap:28px; }
 .mob-menu.open { display:flex; }
 .mob-menu a { font-family:'Barlow Condensed',sans-serif; font-size:2.4rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--black); text-decoration:none; }
-.mob-menu a:hover { color:var(--blue); }
+.mob-menu a:hover { color:var(--gold); }
 .mob-close { position:absolute; top:20px; right:28px; background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--muted); }
-.mob-book { display:inline-flex; align-items:center; justify-content:center; background:var(--blue); color:var(--white); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; margin-top:12px; }
+.mob-book { display:inline-flex; align-items:center; justify-content:center; background:var(--gold); color:var(--black); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; margin-top:12px; }
 
 /* PAGE HERO */
 .page-hero { margin-top:88px; padding:72px 60px 56px; border-bottom:1px solid var(--border); display:flex; align-items:flex-end; justify-content:space-between; gap:40px; }
@@ -66,7 +66,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:88px; backgrou
   margin-bottom:-1px;
 }
 .filter-btn:hover { color:var(--black); }
-.filter-btn.active { color:var(--blue); border-bottom-color:var(--blue); }
+.filter-btn.active { color:var(--gold); border-bottom-color:var(--gold); }
 
 /* GALERİ */
 .gallery {
@@ -176,8 +176,8 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:88px; backgrou
   display:flex; align-items:center; justify-content:space-between; gap:40px;
 }
 .portfolio-cta h2 { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:700; color:var(--white); }
-.btn-blue { display:inline-flex; align-items:center; gap:8px; background:var(--blue); color:var(--white); font-family:'Barlow Condensed',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; text-decoration:none; padding:14px 32px; transition:opacity 0.2s; }
-.btn-blue:hover { opacity:0.88; }
+.btn-gold { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--black); font-family:'Barlow Condensed',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; text-decoration:none; padding:14px 32px; transition:opacity 0.2s; }
+.btn-gold:hover { opacity:0.88; }
 
 /* FOOTER */
 footer { background:var(--black); color:var(--white); padding:64px 60px 0; overflow:hidden; border-top:1px solid rgba(255,255,255,0.08); }
@@ -204,7 +204,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 .footer-hours-row.closed { color:rgba(255,255,255,0.2); }
 .footer-hours-row .day { font-weight:600; }
 .footer-hours-row .time { font-weight:300; font-size:0.7rem; }
-.footer-hours-row.today .day { color:var(--blue); }
+.footer-hours-row.today .day { color:var(--gold); }
 .footer-book-col { display:flex; flex-direction:column; gap:12px; }
 .footer-map { width:100%; height:140px; border:none; display:block; margin-top:4px; }
 .footer-mid { padding:28px 0; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); }
@@ -324,7 +324,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 <!-- CTA -->
 <div class="portfolio-cta">
   <h2>Siz de bu dönüşümün<br>bir parçası olun.</h2>
-  <a href="/rezervasyon" class="btn-blue">RANDEVU AL +</a>
+  <a href="/rezervasyon" class="btn-gold">RANDEVU AL +</a>
 </div>
 
 <!-- FOOTER -->
@@ -371,7 +371,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <div class="footer-book-col">
       <div class="footer-col-title">Konum</div>
       <iframe class="footer-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.917216214105!2d28.8978924!3d41.0489394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabbc1760a7371%3A0x14264c2fabb32a66!2s%C4%B0sa%20Kurt%20Hair%20Artist!5e0!3m2!1str!2str!4v1776620330004!5m2!1str!2str" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <a href="https://www.google.com/maps/dir/?api=1&destination=41.0489394,28.8978924&destination_place_id=ChIJcXMKdse7yhQRZiqzK0MLhQ" class="btn-blue" style="justify-content:center;text-decoration:none;margin-top:8px;display:flex" target="_blank">YOL TARİFİ AL</a>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=41.0489394,28.8978924&destination_place_id=ChIJcXMKdse7yhQRZiqzK0MLhQ" class="btn-gold" style="justify-content:center;text-decoration:none;margin-top:8px;display:flex" target="_blank">YOL TARİFİ AL</a>
     </div>
   </div>
   <div class="footer-mid">

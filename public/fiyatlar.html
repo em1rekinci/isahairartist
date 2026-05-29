@@ -12,7 +12,7 @@
   --black: #0a0a0a;
   --gray:  #f2f2f2;
   --muted: #888;
-  --blue:  #1a6ff4;
+  --gold:  #d4af37;
   --border: #d8d8d8;
 }
 html { scroll-behavior: smooth; }
@@ -48,7 +48,7 @@ nav {
 .nav-address svg { width:13px; height:13px; flex-shrink:0; }
 .nav-book {
   display:inline-flex; align-items:center; gap:6px;
-  background:var(--blue); color:var(--white);
+  background:var(--gold); color:var(--black);
   font-family:'Barlow Condensed',sans-serif;
   font-size:0.72rem; font-weight:700; letter-spacing:0.14em;
   text-transform:uppercase; text-decoration:none;
@@ -60,9 +60,9 @@ nav {
 .mob-menu { display:none; position:fixed; inset:0; background:var(--white); z-index:190; flex-direction:column; align-items:center; justify-content:center; gap:28px; }
 .mob-menu.open { display:flex; }
 .mob-menu a { font-family:'Barlow Condensed',sans-serif; font-size:2.4rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--black); text-decoration:none; }
-.mob-menu a:hover { color:var(--blue); }
+.mob-menu a:hover { color:var(--gold); }
 .mob-close { position:absolute; top:20px; right:28px; background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--muted); }
-.mob-book { display:inline-flex; align-items:center; justify-content:center; background:var(--blue); color:var(--white); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; margin-top:12px; transition:opacity 0.2s; }
+.mob-book { display:inline-flex; align-items:center; justify-content:center; background:var(--gold); color:var(--black); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; margin-top:12px; transition:opacity 0.2s; }
 .mob-book:hover { opacity:0.88; }
 
 /* PAGE HERO */
@@ -93,7 +93,7 @@ nav {
   white-space: nowrap; text-align: right;
 }
 .page-hero-right a {
-  color: var(--blue); text-decoration: none;
+  color: var(--gold); text-decoration: none;
 }
 .page-hero-right a:hover { text-decoration: underline; }
 
@@ -153,7 +153,7 @@ nav {
 .price-cat-num {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em;
-  color: var(--blue); padding: 28px 0; margin-right: 28px;
+  color: var(--gold); padding: 28px 0; margin-right: 28px;
 }
 .price-cat-name {
   font-family: 'Barlow Condensed', sans-serif;
@@ -189,7 +189,7 @@ nav {
 .price-item-price {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em;
-  color: var(--blue); white-space: nowrap;
+  color: var(--gold); white-space: nowrap;
 }
 .price-item-price.call {
   color: var(--muted); font-weight: 400; font-size: 0.78rem;
@@ -219,14 +219,14 @@ nav {
   font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700;
   color: var(--black);
 }
-.btn-blue {
+.btn-gold {
   display:inline-flex; align-items:center; gap:8px;
-  background:var(--blue); color:var(--white);
+  background:var(--gold); color:var(--black);
   font-family:'Barlow Condensed',sans-serif;
   font-size:0.78rem; font-weight:700; letter-spacing:0.16em;
   text-transform:uppercase; text-decoration:none; padding:14px 32px; transition:opacity 0.2s;
 }
-.btn-blue:hover { opacity:0.88; }
+.btn-gold:hover { opacity:0.88; }
 
 /* FOOTER */
 footer { background:var(--black); color:var(--white); padding:64px 60px 0; overflow:hidden; }
@@ -253,7 +253,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 .footer-hours-row.closed { color:rgba(255,255,255,0.2); }
 .footer-hours-row .day { font-weight:600; }
 .footer-hours-row .time { font-weight:300; font-size:0.7rem; }
-.footer-hours-row.today .day { color:var(--blue); }
+.footer-hours-row.today .day { color:var(--gold); }
 .footer-book-col { display:flex; flex-direction:column; gap:12px; }
 .footer-map { width:100%; height:140px; border:none; display:block; margin-top:4px; }
 .footer-mid { padding:28px 0; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); }
@@ -446,13 +446,13 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 <!-- NOT -->
 <div class="price-note">
   <div class="price-note-icon">ℹ️</div>
-  <p><strong>Fiyatlar hakkında:</strong> Belirtilen fiyatlar başlangıç fiyatlarıdır. Saç uzunluğu, yoğunluğu ve işlem kapsamına göre değişiklik gösterebilir. Makyaj, gelin & özel gün ve saç kaynak hizmetleri için kesin fiyat teklifi almak amacıyla lütfen <a href="tel:+905464725878" style="color:var(--blue)">0546 472 58 78</a> numaralı hattı arayın veya <a href="/rezervasyon" style="color:var(--blue)">online randevu</a> oluşturun.</p>
+  <p><strong>Fiyatlar hakkında:</strong> Belirtilen fiyatlar başlangıç fiyatlarıdır. Saç uzunluğu, yoğunluğu ve işlem kapsamına göre değişiklik gösterebilir. Makyaj, gelin & özel gün ve saç kaynak hizmetleri için kesin fiyat teklifi almak amacıyla lütfen <a href="tel:+905464725878" style="color:var(--gold)">0546 472 58 78</a> numaralı hattı arayın veya <a href="/rezervasyon" style="color:var(--gold)">online randevu</a> oluşturun.</p>
 </div>
 
 <!-- CTA -->
 <div class="price-cta">
   <h2>Hemen randevu alın,<br>size özel fiyat teklifi alın.</h2>
-  <a href="/rezervasyon" class="btn-blue">RANDEVU AL +</a>
+  <a href="/rezervasyon" class="btn-gold">RANDEVU AL +</a>
 </div>
 
 <!-- FOOTER -->
@@ -499,7 +499,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <div class="footer-book-col">
       <div class="footer-col-title">Konum</div>
       <iframe class="footer-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.917216214105!2d28.8978924!3d41.0489394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabbc1760a7371%3A0x14264c2fabb32a66!2s%C4%B0sa%20Kurt%20Hair%20Artist!5e0!3m2!1str!2str!4v1776620330004!5m2!1str!2str" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <a href="https://www.google.com/maps/dir/?api=1&destination=41.0489394,28.8978924&destination_place_id=ChIJcXMKdse7yhQRZiqzK0MLhQ" class="btn-blue" style="justify-content:center;text-decoration:none;margin-top:8px;display:flex" target="_blank">YOL TARİFİ AL</a>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=41.0489394,28.8978924&destination_place_id=ChIJcXMKdse7yhQRZiqzK0MLhQ" class="btn-gold" style="justify-content:center;text-decoration:none;margin-top:8px;display:flex" target="_blank">YOL TARİFİ AL</a>
     </div>
   </div>
   <div class="footer-mid">
