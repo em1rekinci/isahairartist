@@ -907,8 +907,34 @@ function updateSummary() {
     sumPersonel.className = 'summary-val' + (selectedPersonelAd ? '' : ' empty');
   }
 
-  sumPrice.textContent = selectedPrice || '—';
-  sumPrice.className = 'summary-val' + (selectedPrice ? '' : ' empty');
+  // Toplam fiyat aralığı hesapla
+  let toplamMin = 0, toplamMax = 0, fiyatSorulacak = false;
+  selectedServices.forEach(s => {
+    if (!s.fiyat || s.fiyat === 'Fiyat için arayın') { fiyatSorulacak = true; return; }
+    // "1.250 – 1.750 TL" veya "1.500 TL" formatını parse et
+    const temiz = s.fiyat.replace(/\./g,'').replace(' TL','').trim();
+    if (temiz.includes('–')) {
+      const [mn, mx] = temiz.split('–').map(v => parseInt(v.trim()));
+      toplamMin += mn || 0;
+      toplamMax += mx || 0;
+    } else {
+      const v = parseInt(temiz);
+      toplamMin += v || 0;
+      toplamMax += v || 0;
+    }
+  });
+  let toplamFiyat = '—';
+  if (selectedServices.length) {
+    if (toplamMin === 0 && fiyatSorulacak) {
+      toplamFiyat = 'Fiyat için arayın';
+    } else if (toplamMin === toplamMax) {
+      toplamFiyat = toplamMin.toLocaleString('tr-TR') + ' TL' + (fiyatSorulacak ? ' + (fiyat sorulacak hizmetler)' : '');
+    } else {
+      toplamFiyat = toplamMin.toLocaleString('tr-TR') + ' – ' + toplamMax.toLocaleString('tr-TR') + ' TL' + (fiyatSorulacak ? ' +' : '');
+    }
+  }
+  sumPrice.textContent = toplamFiyat;
+  sumPrice.className = 'summary-val' + (selectedServices.length ? '' : ' empty');
 
   // Toplam süre
   const sumSure = document.getElementById('sumSure');
