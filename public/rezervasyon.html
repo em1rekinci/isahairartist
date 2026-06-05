@@ -930,7 +930,7 @@ let selectedPersonelAd = '';
 // Personelleri Supabase'den yükle
 async function personelYukle() {
   try {
-    const res = await fetch(`${SUPA_URL}/rest/v1/personel?select=id,ad,rol,durum,foto&order=created_at.asc`, {
+    const res = await fetch(`${SUPA_URL}/rest/v1/personel?select=id,ad,rol,durum,foto,rez_aktif&order=created_at.asc`, {
       headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
     });
     if (!res.ok) return;
@@ -948,12 +948,18 @@ async function personelYukle() {
       const avatarHtml = p.foto
         ? `<img class="personel-avatar" src="${p.foto}" alt="${p.ad}" onerror="this.outerHTML='<div class=\\'personel-avatar-placeholder\\'>${initials}</div>'">`
         : `<div class="personel-avatar-placeholder">${initials}</div>`;
-      return `<div class="custom-option" data-value="${p.ad}" data-personel-id="${p.id}" onclick="selectPersonelOption(this)">
-        <div class="personel-opt">
+      const disabled = p.rez_aktif === false;
+      return `<div class="custom-option${disabled ? ' personel-disabled' : ''}" 
+        data-value="${p.ad}" data-personel-id="${p.id}" 
+        onclick="${disabled ? 'alert(\\'Bu personel için şu an rezervasyon alınamamaktadır.\\')' : 'selectPersonelOption(this)'}">
+        <div class="personel-opt" style="${disabled ? 'opacity:0.45' : ''}">
           ${avatarHtml}
           <div class="personel-opt-info">
             <span class="personel-opt-ad">${p.ad}</span>
-            ${p.rol ? `<span class="personel-opt-rol">${p.rol}</span>` : ''}
+            ${disabled 
+              ? `<span class="personel-opt-rol" style="color:var(--gold)">Rezervasyon alınmıyor</span>`
+              : p.rol ? `<span class="personel-opt-rol">${p.rol}</span>` : ''
+            }
           </div>
         </div>
       </div>`;
