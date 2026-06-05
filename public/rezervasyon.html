@@ -555,18 +555,20 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
           <span class="rez-step-title">Hizmet Seçin</span>
         </div>
         <div class="form-group">
-          <!-- Seçilen hizmetler listesi -->
-          <div id="selectedServiceList"></div>
-          <!-- Hizmet ekle dropdown -->
-          <div class="custom-select-wrapper" id="serviceDropdown" style="margin-top:6px">
-            <div class="custom-select-trigger" onclick="toggleServiceDropdown()" id="serviceAddBtn">
-              <span class="trigger-text" id="triggerText" style="color:var(--gold)">+ HİZMET EKLE</span>
+          <!-- Dropdown -->
+          <div class="custom-select-wrapper" id="serviceDropdown">
+            <div class="custom-select-trigger" onclick="toggleServiceDropdown()">
+              <span class="trigger-text" id="triggerText">— Hizmet seçin —</span>
               <svg class="trigger-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div class="custom-select-dropdown" id="serviceDropdownList">
               <div style="padding:16px;text-align:center;color:#bbb;font-size:0.8rem">Yükleniyor...</div>
             </div>
           </div>
+          <!-- Seçilen hizmetler listesi -->
+          <div id="selectedServiceList"></div>
+          <!-- Hizmet ekle butonu (hizmet seçilince görünür) -->
+          <button id="hizmetEkleBtn" onclick="toggleServiceDropdown()" style="display:none;width:100%;margin-top:4px;padding:11px 16px;border:1px dashed var(--border);background:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-align:left;transition:background 0.15s">+ HİZMET EKLE</button>
         </div>
       </div>
 
@@ -811,6 +813,18 @@ function selectCustomOption(el) {
     el.classList.add('selected');
   }
 
+  // Dropdown'ı kapat
+  document.getElementById('serviceDropdown').classList.remove('open');
+
+  // Trigger güncelle
+  const t = document.getElementById('triggerText');
+  t.textContent = '— Hizmet seçin —';
+  t.classList.remove('has-value');
+
+  // "+ Hizmet Ekle" butonunu göster/gizle
+  const btn = document.getElementById('hizmetEkleBtn');
+  if (btn) btn.style.display = selectedServices.length ? 'block' : 'none';
+
   renderServiceTags();
   selectedService = selectedServices.map(s => s.ad).join(', ');
   updateSummary();
@@ -837,6 +851,8 @@ function hizmetKaldir(ad) {
   document.querySelectorAll('#serviceDropdownList .custom-option').forEach(el => {
     if (el.dataset.value === ad) el.classList.remove('selected');
   });
+  const btn = document.getElementById('hizmetEkleBtn');
+  if (btn) btn.style.display = selectedServices.length ? 'block' : 'none';
   renderServiceTags();
   selectedService = selectedServices.map(s => s.ad).join(', ');
   updateSummary();
