@@ -1080,16 +1080,13 @@ a[href*="elfsight.com/instagram-feed-instashow"] {
     <!-- Elfsight badge kaldır -->
 <script>
 function elfsightBadgeKaldir() {
-  // Badge anchor
-  document.querySelectorAll('a[href*="elfsight.com"]').forEach(el => el.remove());
+  // Sadece badge anchor'ı hedef al (utm_campaign=free-widget içeren)
+  document.querySelectorAll('a[href*="free-widget"], a[href*="utm_campaign=free-widget"]').forEach(el => el.remove());
   // Toolbar
   document.querySelectorAll('.eapps-widget-toolbar, [class*="eapps-widget-toolbar"]').forEach(el => el.remove());
 }
 
-// Sayfa yüklenince çalıştır
 elfsightBadgeKaldir();
-
-// Widget sonradan yüklenirse de yakala
 const observer = new MutationObserver(() => elfsightBadgeKaldir());
 observer.observe(document.body, { childList: true, subtree: true });
 </script>
