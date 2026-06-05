@@ -821,50 +821,61 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   .footer-book-col .btn-gold { font-size:0.7rem; padding:12px 20px; }
 }
 
-/* NAV SCROLL ANIMASYONU */
-nav.nav-transparent {
-  background: transparent;
-  border-bottom-color: transparent;
-}
-nav.nav-transparent .nav-logo img,
-nav.nav-transparent .nav-logo-text { opacity: 0; pointer-events: none; }
-nav.nav-transparent .nav-address { border-color: rgba(255,255,255,0.4); color: var(--white); }
-nav.nav-transparent .nav-address:hover { background: rgba(255,255,255,0.1); }
-nav.nav-transparent .nav-hamburger span { background: var(--white); }
-nav { transition: background 0.4s, border-color 0.4s; }
-.nav-logo img { transition: opacity 0.4s; }
-.nav-logo-text { transition: opacity 0.4s; }
-
-/* HERO LOGO — büyük ortada */
-.hero-logo-overlay {
-  position: absolute;
+/* ── SPLASH SCREEN ───────────────────────────────────── */
+#splash {
+  position: fixed;
   inset: 0;
-  z-index: 10;
+  z-index: 9999;
+  background: var(--black);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#splash.hidden {
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
-.hero-logo-img {
-  width: clamp(120px, 18vw, 240px);
+.splash-logo {
+  width: clamp(100px, 20vw, 200px);
   height: auto;
-  filter: brightness(0) invert(1);
   opacity: 0;
-  transform: translateY(0px) scale(1);
-  transition: opacity 0.5s, transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  transform: scale(0.85);
+  animation: splashLogoIn 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
 }
-.hero-logo-img.visible { opacity: 1; }
-.hero-logo-img.moving {
+.splash-tagline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 20px;
   opacity: 0;
-  transform: translateY(-60px) scale(0.35);
+  animation: splashTagIn 0.6s ease 0.7s forwards;
 }
+@keyframes splashLogoIn {
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes splashTagIn {
+  to { opacity: 1; }
+}
+/* Sayfa içeriği splash kapanana kadar gizli */
+body.splash-active { overflow: hidden; }
 </style>
 </head>
-<body>
+<body class="splash-active">
+
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <img src="images/logo.png" alt="Hair Artist" class="splash-logo"
+       onerror="this.style.filter='brightness(0) invert(1)'">
+</div>
 
 <!-- NAV -->
-<nav id="nav" class="nav-transparent">
+<nav id="nav">
   <a href="/" class="nav-logo">
     <img src="images/logo.png" alt="Hair Artist"
          onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
@@ -895,11 +906,7 @@ nav { transition: background 0.4s, border-color 0.4s; }
 
 <!-- HERO: sonsuz otomatik carousel, 3 panel görünür, birer birer kayıyor -->
 <section class="hero">
-  <!-- Büyük hero logo -->
-  <div class="hero-logo-overlay">
-    <img src="images/logo.png" alt="Hair Artist" class="hero-logo-img" id="heroLogo"
-         onerror="this.style.filter='none';this.style.opacity='0'">
-  </div>
+
   <div class="hero-track" id="heroTrack">
 
     <div class="hero-panel" style="background:linear-gradient(160deg,#2a2018,#1a1610)">
@@ -1507,36 +1514,16 @@ function toggleService(btn) {
     .catch(function() { /* hata olursa mevcut değer kalır */ });
 })();
 
-// Hero logo → nav logo animasyonu
+
+// Splash screen
 (function() {
-  const heroLogo = document.getElementById('heroLogo');
-  const nav      = document.getElementById('nav');
-  const navLogoImg  = nav ? nav.querySelector('.nav-logo img') : null;
-  if (!heroLogo || !nav) return;
-
-  // Sayfa açılınca hero logo belir
-  setTimeout(() => heroLogo.classList.add('visible'), 100);
-
-  let scrolled = false;
-  window.addEventListener('scroll', function() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-    const heroBottom = hero.getBoundingClientRect().bottom;
-    const threshold  = window.innerHeight * 0.5;
-
-    if (heroBottom < threshold && !scrolled) {
-      scrolled = true;
-      // Hero logo küçülüp uçsun
-      heroLogo.classList.add('moving');
-      // Nav belirsin
-      nav.classList.remove('nav-transparent');
-    } else if (heroBottom >= threshold && scrolled) {
-      scrolled = false;
-      heroLogo.classList.remove('moving');
-      heroLogo.classList.add('visible');
-      nav.classList.add('nav-transparent');
-    }
-  }, { passive: true });
+  var splash = document.getElementById('splash');
+  if (!splash) return;
+  // 1.8 saniye sonra kapat
+  setTimeout(function() {
+    splash.classList.add('hidden');
+    document.body.classList.remove('splash-active');
+  }, 1800);
 })();
 
 </script>
