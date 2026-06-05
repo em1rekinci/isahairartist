@@ -820,12 +820,51 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   .footer-top { gap:28px; }
   .footer-book-col .btn-gold { font-size:0.7rem; padding:12px 20px; }
 }
+
+/* NAV SCROLL ANIMASYONU */
+nav.nav-transparent {
+  background: transparent;
+  border-bottom-color: transparent;
+}
+nav.nav-transparent .nav-logo img,
+nav.nav-transparent .nav-logo-text { opacity: 0; pointer-events: none; }
+nav.nav-transparent .nav-address { border-color: rgba(255,255,255,0.4); color: var(--white); }
+nav.nav-transparent .nav-address:hover { background: rgba(255,255,255,0.1); }
+nav.nav-transparent .nav-hamburger span { background: var(--white); }
+nav { transition: background 0.4s, border-color 0.4s; }
+.nav-logo img { transition: opacity 0.4s; }
+.nav-logo-text { transition: opacity 0.4s; }
+
+/* HERO LOGO — büyük ortada */
+.hero-logo-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.hero-logo-img {
+  width: clamp(120px, 18vw, 240px);
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0;
+  transform: translateY(0px) scale(1);
+  transition: opacity 0.5s, transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.hero-logo-img.visible { opacity: 1; }
+.hero-logo-img.moving {
+  opacity: 0;
+  transform: translateY(-60px) scale(0.35);
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav id="nav">
+<nav id="nav" class="nav-transparent">
   <a href="/" class="nav-logo">
     <img src="images/logo.png" alt="Hair Artist"
          onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
@@ -856,6 +895,11 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 
 <!-- HERO: sonsuz otomatik carousel, 3 panel görünür, birer birer kayıyor -->
 <section class="hero">
+  <!-- Büyük hero logo -->
+  <div class="hero-logo-overlay">
+    <img src="images/logo.png" alt="Hair Artist" class="hero-logo-img" id="heroLogo"
+         onerror="this.style.filter='none';this.style.opacity='0'">
+  </div>
   <div class="hero-track" id="heroTrack">
 
     <div class="hero-panel" style="background:linear-gradient(160deg,#2a2018,#1a1610)">
@@ -959,7 +1003,6 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       </a>
     </div>
 
-    <a href="/portfolio" class="btn-outline-black">TÜMÜNÜ GÖR →</a>
   </div>
 
   <div class="intro-right">
@@ -971,6 +1014,9 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <div class="mosaic-cell"><div class="mosaic-num">06</div><img src="images/portfolio-6.jpg" alt="" onerror="this.style.display='none'"></div>
   </div>
 </section>
+<div style="text-align:right;padding:0 60px 40px;border-bottom:1px solid var(--border);margin-top:-20px;">
+    <a href="/portfolio" class="btn-outline-black">TÜMÜNÜ GÖR →</a>
+  </div>
 
 <!-- WHY US -->
 <section class="why">
@@ -1058,7 +1104,6 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 <section class="services" id="services">
   <div class="services-head">
     <h2 class="section-title">HİZMETLERİMİZ</h2>
-    <a href="/fiyatlar" class="btn-outline-black">FİYAT LİSTESİ →</a>
   </div>
   <div class="services-grid">
 
@@ -1126,23 +1171,22 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <img src="images/salon.jpg" alt="Salon" onerror="this.style.display='none'">
   </div>
   <div class="salon-content">
+    <h2>HAIR ARTIST · BRANDED BY İSA KURT</h2>
     <div class="salon-rating">
       <span class="salon-rating-g" id="google-rating-2">4,9</span>
       <span class="salon-stars">★★★★★</span>
     </div>
-    <h2>İSA KURT HAIR ARTIST</h2>
     <p>Her müşterimize bireysel yaklaşım sağlayan, saçından makyajına kadar kapsamlı bakım sunan premium bir güzellik stüdyosu.</p>
     <p>Tek randevuyla saç, makyaj ve bakım hizmetlerinizi aynı anda alabilirsiniz. Uzman ekibimiz birlikte çalışarak hem zaman hem kalite sunar.</p>
     <div class="salon-features">
       <div class="salon-feat"><h4>Aynı Anda Bakım</h4><p>Saç ve makyajınızı paralel olarak yapabilirsiniz. Zamandan tasarruf edin.</p></div>
       <div class="salon-feat"><h4>Merkezi Konum</h4><p>Ulaşımı kolay lokasyonumuzda sizi bekliyoruz.</p></div>
     </div>
-    <a href="#rezervasyon" class="btn-outline-black">DAHA FAZLA OKU</a>
   </div>
 </section>
 
 <!-- REZERVASYON -->
-<section class="rezervasyon" id="rezervasyon">
+<section class="rezervasyon" id="rezervasyon" style="display:none">
   <div class="rez-left">
     <h2>ONLİNE RANDEVU ALIN</h2>
     <p>Sizi en kısa sürede ağırlamak için hazırız. Formu doldurun, sizinle iletişime geçelim.</p>
@@ -1462,6 +1506,39 @@ function toggleService(btn) {
     })
     .catch(function() { /* hata olursa mevcut değer kalır */ });
 })();
+
+// Hero logo → nav logo animasyonu
+(function() {
+  const heroLogo = document.getElementById('heroLogo');
+  const nav      = document.getElementById('nav');
+  const navLogoImg  = nav ? nav.querySelector('.nav-logo img') : null;
+  if (!heroLogo || !nav) return;
+
+  // Sayfa açılınca hero logo belir
+  setTimeout(() => heroLogo.classList.add('visible'), 100);
+
+  let scrolled = false;
+  window.addEventListener('scroll', function() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    const threshold  = window.innerHeight * 0.5;
+
+    if (heroBottom < threshold && !scrolled) {
+      scrolled = true;
+      // Hero logo küçülüp uçsun
+      heroLogo.classList.add('moving');
+      // Nav belirsin
+      nav.classList.remove('nav-transparent');
+    } else if (heroBottom >= threshold && scrolled) {
+      scrolled = false;
+      heroLogo.classList.remove('moving');
+      heroLogo.classList.add('visible');
+      nav.classList.add('nav-transparent');
+    }
+  }, { passive: true });
+})();
+
 </script>
 </body>
 </html>
