@@ -1912,8 +1912,9 @@ function zamOnizlemeGuncelle() {
   if (!yuzde) { el.textContent = ''; return; }
   const ornekler = hizmetler.slice(0,3);
   el.innerHTML = ornekler.map(h => {
-    const yeniMin = Math.round((h.min_fiyat||0) * (1 + yuzde/100));
-    return `${h.ad}: ${(h.min_fiyat||0).toLocaleString('tr-TR')} → <strong>${yeniMin.toLocaleString('tr-TR')} TL</strong>`;
+    const min = h.min_fiyat || h.min || 0;
+    const yeniMin = Math.round(min * (1 + yuzde/100));
+    return `${h.ad}: ${min.toLocaleString('tr-TR')} → <strong>${yeniMin.toLocaleString('tr-TR')} TL</strong>`;
   }).join('<br>') + (hizmetler.length > 3 ? '<br>...' : '');
 }
 
@@ -1991,18 +1992,20 @@ async function zamUygula() {
   if (!yuzde) { toast('Zam yüzdesi girin.', 'hata'); return; }
   const hedef = document.querySelector('input[name="zam-hedef"]:checked')?.value || 'hepsi';
   let hedefHizmetler = hedef === 'secili'
-    ? Array.from(document.querySelectorAll('#zam-hiz-checkler input:checked')).map(c => hizmetler.find(h => h.id == c.value)).filter(Boolean)
+    ? Array.from(document.querySelectorAll('#zam-hiz-checkler input:checked')).map(c => hizmetler.find(h => String(h.id) == c.value)).filter(Boolean)
     : [...hizmetler];
   if (!hedefHizmetler.length) { toast(hedef==='secili'?'Hizmet seçin.':'Hizmet bulunamadı.', 'hata'); return; }
   if (!confirm(`${hedefHizmetler.length} hizmete %${yuzde} zam uygulanacak. Onaylıyor musunuz?`)) return;
   let basarili = 0;
   for (const h of hedefHizmetler) {
-    const yeniMin = h.min_fiyat ? Math.round(h.min_fiyat * (1 + yuzde/100)) : null;
-    const yeniMax = h.max_fiyat ? Math.round(h.max_fiyat * (1 + yuzde/100)) : null;
+    const minFiyat = h.min_fiyat || h.min || 0;
+    const maxFiyat = h.max_fiyat || h.max || 0;
+    const yeniMin = minFiyat ? Math.round(minFiyat * (1 + yuzde/100)) : null;
+    const yeniMax = maxFiyat ? Math.round(maxFiyat * (1 + yuzde/100)) : null;
     try {
       await sRest(`hizmetler?id=eq.${h.id}`, { method: 'PATCH', body: JSON.stringify({ min_fiyat: yeniMin, max_fiyat: yeniMax }) });
       basarili++;
-    } catch(e) {}
+    } catch(e) { console.error('Zam hatası:', h.ad, e); }
   }
   toast(`${basarili} hizmete %${yuzde} zam uygulandı ✓`, 'ok');
   document.getElementById('zam-yuzde').value = '';
