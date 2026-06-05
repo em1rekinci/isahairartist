@@ -499,10 +499,32 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 
     <div id="formArea">
 
-      <!-- ADIM 1: HİZMET -->
+      <!-- ADIM 1: PERSONEL -->
       <div class="rez-step">
         <div class="rez-step-header">
           <span class="rez-step-num">Adım 01</span>
+          <span class="rez-step-title">Personel Seçin</span>
+        </div>
+        <div class="form-group">
+          <div class="custom-select-wrapper" id="personelDropdown">
+            <div class="custom-select-trigger" onclick="togglePersonelDropdown()">
+              <span class="trigger-text" id="personelTriggerText">— Fark etmez / Uygun personel —</span>
+              <svg class="trigger-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="custom-select-dropdown" id="personelDropdownList">
+              <div class="custom-option" data-value="" data-personel-id="" onclick="selectPersonelOption(this)">
+                <span>Fark etmez — Uygun personel</span>
+              </div>
+              <!-- Personeller Supabase'den yüklenecek -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADIM 2: HİZMET -->
+      <div class="rez-step">
+        <div class="rez-step-header">
+          <span class="rez-step-num">Adım 02</span>
           <span class="rez-step-title">Hizmet Seçin</span>
         </div>
         <div class="form-group">
@@ -545,10 +567,10 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         </div>
       </div>
 
-      <!-- ADIM 2: TARİH & SAAT -->
+      <!-- ADIM 3: TARİH & SAAT -->
       <div class="rez-step">
         <div class="rez-step-header">
-          <span class="rez-step-num">Adım 02</span>
+          <span class="rez-step-num">Adım 03</span>
           <span class="rez-step-title">Tarih & Saat</span>
         </div>
 
@@ -587,10 +609,10 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         </div>
       </div>
 
-      <!-- ADIM 3: KİŞİSEL BİLGİLER -->
+      <!-- ADIM 4: KİŞİSEL BİLGİLER -->
       <div class="rez-step">
         <div class="rez-step-header">
-          <span class="rez-step-num">Adım 03</span>
+          <span class="rez-step-num">Adım 04</span>
           <span class="rez-step-title">Kişisel Bilgiler</span>
         </div>
         <div class="personal-grid">
@@ -645,6 +667,10 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <div class="summary-row">
           <span class="summary-label">Ad Soyad</span>
           <span class="summary-val empty" id="sumName">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Personel</span>
+          <span class="summary-val empty" id="sumPersonel">Fark etmez</span>
         </div>
         <div class="summary-row">
           <span class="summary-label">Hizmet</span>
@@ -775,8 +801,10 @@ function selectCustomOption(el) {
 }
 
 document.addEventListener('click', function(e) {
-  const w = document.getElementById('serviceDropdown');
-  if (w && !w.contains(e.target)) w.classList.remove('open');
+  const sw = document.getElementById('serviceDropdown');
+  if (sw && !sw.contains(e.target)) sw.classList.remove('open');
+  const pw = document.getElementById('personelDropdown');
+  if (pw && !pw.contains(e.target)) pw.classList.remove('open');
 });
 
 function selectTime(el) {
@@ -815,6 +843,12 @@ function updateSummary() {
   sumService.textContent = selectedService || 'Seçilmedi';
   sumService.className = 'summary-val' + (selectedService ? '' : ' empty');
 
+  const sumPersonel = document.getElementById('sumPersonel');
+  if (sumPersonel) {
+    sumPersonel.textContent = selectedPersonelAd || 'Fark etmez';
+    sumPersonel.className = 'summary-val' + (selectedPersonelAd ? '' : ' empty');
+  }
+
   sumPrice.textContent = selectedPrice || '—';
   sumPrice.className = 'summary-val' + (selectedPrice ? '' : ' empty');
 
@@ -847,22 +881,119 @@ document.getElementById('rezDate').addEventListener('change', function() {
   }
 });
 
+// ─── SUPABASE CONFIG ───
+const SUPA_URL = 'https://dfjeiwjgxkhxyipvnsno.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmamVpd2pneGtoeHlpcHZuc25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTIyNzUsImV4cCI6MjA5MjYyODI3NX0.40V9bgG97_sEMpc3G0mg98a7uh1Q0OR8ln2e9d2SvbU';
+
+// Seçili personel
+let selectedPersonelId = '';
+let selectedPersonelAd = '';
+
+// Personelleri Supabase'den yükle
+async function personelYukle() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/personel?select=id,ad,rol,durum&order=created_at.asc`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    });
+    if (!res.ok) return;
+    const liste = await res.json();
+    const aktif = liste.filter(p => p.durum !== 'pasif');
+    const dropdown = document.getElementById('personelDropdownList');
+    // Mevcut "fark etmez" seçeneğini koru, personelleri ekle
+    aktif.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'custom-option';
+      div.dataset.value = p.ad;
+      div.dataset.personelId = p.id;
+      div.onclick = function() { selectPersonelOption(this); };
+      div.innerHTML = `<span>${p.ad}</span>${p.rol ? `<span class="opt-price">${p.rol}</span>` : ''}`;
+      dropdown.appendChild(div);
+    });
+  } catch(e) {
+    console.warn('Personel yüklenemedi:', e);
+  }
+}
+
+function togglePersonelDropdown() {
+  const w = document.getElementById('personelDropdown');
+  document.getElementById('serviceDropdown').classList.remove('open');
+  w.classList.toggle('open');
+}
+
+function selectPersonelOption(el) {
+  selectedPersonelId = el.dataset.personelId || '';
+  selectedPersonelAd = el.dataset.value || '';
+  const t = document.getElementById('personelTriggerText');
+  t.textContent = selectedPersonelAd || 'Fark etmez — Uygun personel';
+  t.classList.toggle('has-value', !!selectedPersonelAd);
+  document.querySelectorAll('#personelDropdownList .custom-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('personelDropdown').classList.remove('open');
+  updateSummary();
+}
+
+// Sayfa yüklenince personelleri çek
+window.addEventListener('DOMContentLoaded', personelYukle);
+
 // Form gönder
-function submitForm() {
+async function submitForm() {
   const firstName = document.getElementById('firstName').value.trim();
+  const lastName  = document.getElementById('lastName').value.trim();
   const phone     = document.getElementById('phone').value.trim();
+  const note      = document.getElementById('note') ? document.getElementById('note').value.trim() : '';
+  const date      = document.getElementById('rezDate').value;
   const kvkk      = document.getElementById('kvkk').checked;
 
   if (!selectedService) { alert('Lütfen bir hizmet seçin.'); return; }
-  if (!document.getElementById('rezDate').value) { alert('Lütfen tarih seçin.'); return; }
+  if (!date) { alert('Lütfen tarih seçin.'); return; }
   if (!selectedTime) { alert('Lütfen saat seçin.'); return; }
   if (!firstName) { alert('Lütfen adınızı girin.'); return; }
   if (!phone) { alert('Lütfen telefon numaranızı girin.'); return; }
   if (!kvkk) { alert('Lütfen aydınlatma metnini onaylayın.'); return; }
 
-  document.getElementById('formArea').style.display = 'none';
-  document.getElementById('successMsg').classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const submitBtn = document.querySelector('.rez-submit');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Gönderiliyor...'; }
+
+  try {
+    const fullName = [firstName, lastName].filter(Boolean).join(' ');
+
+    const res = await fetch(`${SUPA_URL}/rest/v1/rezervasyonlar`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        ad: fullName,
+        telefon: phone,
+        hizmet: selectedService,
+        tarih: date,
+        saat: selectedTime,
+        musteri_notu: note || '',
+        durum: 'bekliyor',
+        tip: 'normal',
+        odeme_alindi: false,
+        personel_id: selectedPersonelId || null
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(err);
+    }
+
+    // Başarılı
+    document.getElementById('formArea').style.display = 'none';
+    document.getElementById('successMsg').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  } catch (e) {
+    console.error('Rezervasyon hatası:', e);
+    alert('Rezervasyon gönderilemedi. Lütfen tekrar deneyin veya WhatsApp ile ulaşın.');
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'REZERVASYONu ONAYLA'; }
+  }
 }
 
 // Çalışma saatleri — footer & yan panel
