@@ -1571,11 +1571,10 @@ function removeBadge() {
     } catch(e) {}
   });
 }
-setTimeout(removeBadge, 500);
-setTimeout(removeBadge, 1500);
-setTimeout(removeBadge, 3000);
-setTimeout(removeBadge, 5000);
-setTimeout(removeBadge, 8000);
+// Her 2 saniyede bir çalıştır, 5 dakika boyunca
+var _badgeInterval = setInterval(removeBadge, 2000);
+setTimeout(function() { clearInterval(_badgeInterval); }, 300000);
+removeBadge();
 </script>
 </body>
 </html>
