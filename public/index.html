@@ -1077,19 +1077,8 @@ a[href*="elfsight.com/instagram-feed-instashow"] {
     </a>
   </div>
   <div class="insta-widget-wrap">
-    <!-- Elfsight badge kaldır -->
-<script>
-function elfsightBadgeKaldir() {
-  // Sadece badge anchor'ı hedef al (utm_campaign=free-widget içeren)
-  document.querySelectorAll('a[href*="free-widget"], a[href*="utm_campaign=free-widget"]').forEach(el => el.remove());
-  // Toolbar
-  document.querySelectorAll('.eapps-widget-toolbar, [class*="eapps-widget-toolbar"]').forEach(el => el.remove());
-}
-
-elfsightBadgeKaldir();
-const observer = new MutationObserver(() => elfsightBadgeKaldir());
-observer.observe(document.body, { childList: true, subtree: true });
-</script>
+    <!-- Elfsight Instagram Feed -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
     <div class="elfsight-app-e63a12f7-a922-43fe-86f1-47ad97000748" data-elfsight-app-lazy></div>
   </div>
 </section>
