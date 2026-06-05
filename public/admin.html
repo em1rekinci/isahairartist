@@ -1221,6 +1221,14 @@ function cikisYap(){SFR='';TRZ=[];document.getElementById('panel').style.display
 
 // ─── PANEL BAŞLAT ───
 async function panelBaslat(){
+  // Şifreyi Supabase'den yükle
+  try{
+    const res=await sRest('ayarlar?key=eq.admin_sifre&select=value');
+    if(res&&res.length&&res[0].value){
+      ADMIN_SIFRE=res[0].value;
+      DS=res[0].value;
+    }
+  }catch(e){}
   ayarlarYukle();
   saatGuncelle();setInterval(saatGuncelle,1000);
   try{cgridOlustur();}catch(e){}
@@ -3040,7 +3048,7 @@ function ayarlarYukle(){
   document.getElementById('ay-ad').value=ad;
   document.getElementById('sunm').textContent=ad;
 }
-function sifreDegistir(){
+async function sifreDegistir(){
   const eski=document.getElementById('ay-eski').value.trim();
   const yeni=document.getElementById('ay-yeni').value.trim();
   const yeni2=document.getElementById('ay-yeni2').value.trim();
@@ -3049,7 +3057,18 @@ function sifreDegistir(){
   if(eski!==ADMIN_SIFRE){toast('Mevcut şifre hatalı.','hata');return;}
   if(yeni&&yeni.length<6){toast('Yeni şifre en az 6 karakter olmalı.','hata');return;}
   if(yeni&&yeni!==yeni2){toast('Şifreler eşleşmiyor.','hata');return;}
-  if(yeni){ADMIN_SIFRE=yeni;DS=yeni;}
+  if(yeni){
+    ADMIN_SIFRE=yeni;DS=yeni;
+    // Supabase'e kaydet
+    try{
+      const check=await sRest('ayarlar?key=eq.admin_sifre&select=key');
+      if(check&&check.length){
+        await sRest('ayarlar?key=eq.admin_sifre',{method:'PATCH',body:JSON.stringify({value:yeni})});
+      } else {
+        await sRest('ayarlar',{method:'POST',body:JSON.stringify({key:'admin_sifre',value:yeni})});
+      }
+    }catch(e){toast('Şifre kaydedilemedi: '+e.message,'hata');return;}
+  }
   if(ad){localStorage.setItem('ha_admin_ad',ad);document.getElementById('sunm').textContent=ad;}
   document.getElementById('ay-eski').value='';
   document.getElementById('ay-yeni').value='';

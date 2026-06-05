@@ -949,17 +949,13 @@ async function personelYukle() {
         ? `<img class="personel-avatar" src="${p.foto}" alt="${p.ad}" onerror="this.outerHTML='<div class=\\'personel-avatar-placeholder\\'>${initials}</div>'">`
         : `<div class="personel-avatar-placeholder">${initials}</div>`;
       const disabled = p.rez_aktif === false;
-      return `<div class="custom-option${disabled ? ' personel-disabled' : ''}" 
-        data-value="${p.ad}" data-personel-id="${p.id}" 
-        onclick="${disabled ? 'alert(\\'Bu personel için şu an rezervasyon alınamamaktadır.\\')' : 'selectPersonelOption(this)'}">
+      const onclickAttr = disabled ? 'personelDisabledUyari()' : 'selectPersonelOption(this)';
+      return `<div class="custom-option" style="${disabled ? 'cursor:not-allowed' : ''}" data-value="${p.ad}" data-personel-id="${p.id}" onclick="${onclickAttr}">
         <div class="personel-opt" style="${disabled ? 'opacity:0.45' : ''}">
           ${avatarHtml}
           <div class="personel-opt-info">
             <span class="personel-opt-ad">${p.ad}</span>
-            ${disabled 
-              ? `<span class="personel-opt-rol" style="color:var(--gold)">Rezervasyon alınmıyor</span>`
-              : p.rol ? `<span class="personel-opt-rol">${p.rol}</span>` : ''
-            }
+            ${disabled ? '<span class="personel-opt-rol" style="color:var(--gold)">Rezervasyon alınmıyor</span>' : (p.rol ? `<span class="personel-opt-rol">${p.rol}</span>` : '')}
           </div>
         </div>
       </div>`;
@@ -967,6 +963,10 @@ async function personelYukle() {
   } catch(e) {
     console.warn('Personel yüklenemedi:', e);
   }
+}
+
+function personelDisabledUyari() {
+  alert('Bu personel için şu an rezervasyon alınamamaktadır.');
 }
 
 function togglePersonelDropdown() {
