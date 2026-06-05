@@ -889,6 +889,16 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 }
 /* Sayfa içeriği splash kapanana kadar gizli */
 body.splash-active { overflow: hidden; }
+/* Elfsight badge gizle */
+.eapps-instagram-feed-title-container,
+.eapps-link,
+.eapps-widget-toolbar,
+[class*="eapps-link"],
+[class*="eapps-widget-toolbar"] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
 </style>
 </head>
 <body class="splash-active">
