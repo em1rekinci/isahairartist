@@ -229,22 +229,45 @@ nav {
 .form-textarea:focus { border-color: var(--gold); }
 .form-textarea::placeholder { color: #bbb; }
 
-/* LİSTBOX */
-.service-listbox {
-  height: 220px;
-  padding: 0;
-  overflow-y: auto;
+/* LİSTBOX — özel açılır/kapanır dropdown */
+.custom-select-wrapper { position: relative; user-select: none; }
+.custom-select-trigger {
+  border: 1px solid var(--border); background: var(--white);
+  padding: 13px 40px 13px 16px; font-family: 'Barlow', sans-serif;
+  font-size: 0.88rem; font-weight: 300; color: var(--black);
+  cursor: pointer; display: flex; align-items: center;
+  position: relative; transition: border-color 0.2s;
 }
-.service-listbox option, .service-listbox optgroup {
-  padding: 8px 14px;
-  font-size: 0.88rem;
+.custom-select-trigger:hover,
+.custom-select-wrapper.open .custom-select-trigger { border-color: var(--gold); }
+.trigger-text { color: #bbb; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trigger-text.has-value { color: var(--black); font-weight: 400; }
+.trigger-arrow {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  pointer-events: none; transition: transform 0.25s; color: var(--muted);
 }
-.service-listbox optgroup {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--muted);
+.custom-select-wrapper.open .trigger-arrow { transform: translateY(-50%) rotate(180deg); }
+.custom-select-dropdown {
+  position: absolute; top: calc(100% + 2px); left: 0; right: 0;
+  background: var(--white); border: 1px solid var(--gold); border-top: none;
+  z-index: 100; max-height: 0; overflow-y: auto;
+  transition: max-height 0.3s ease, opacity 0.25s ease; opacity: 0;
 }
+.custom-select-wrapper.open .custom-select-dropdown { max-height: 280px; opacity: 1; }
+.custom-optgroup-label {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+  padding: 9px 14px 5px; background: var(--gray);
+  border-bottom: 1px solid var(--border); cursor: default;
+}
+.custom-option {
+  padding: 10px 18px; font-size: 0.88rem; font-weight: 300; color: var(--black);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid #f5f5f5; transition: background 0.15s;
+}
+.custom-option:hover { background: rgba(212,175,55,0.08); }
+.custom-option.selected { background: rgba(212,175,55,0.12); font-weight: 500; }
+.opt-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.04em; color: var(--muted); margin-left: 8px; white-space: nowrap; }
 .kvkk-row {
   display: flex; align-items: flex-start; gap: 10px;
   margin-top: 20px;
@@ -483,43 +506,42 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
           <span class="rez-step-title">Hizmet Seçin</span>
         </div>
         <div class="form-group">
-          <select class="form-select service-listbox" id="serviceSelect" size="8" onchange="selectServiceFromList(this)">
-            <option value="">— Hizmet seçin —</option>
-            <optgroup label="✂️  Kesim &amp; Şekillendirme">
-              <option value="Yönetici Saç Kesimi" data-price="1.500 TL">Yönetici Saç Kesimi</option>
-              <option value="Saç Kesimi" data-price="750 TL">Saç Kesimi</option>
-              <option value="Fön" data-price="450 TL">Fön</option>
-              <option value="Maşa" data-price="1.500 TL">Maşa</option>
-              <option value="Topuz" data-price="2.500 TL">Topuz</option>
-            </optgroup>
-            <optgroup label="🎨  Renklendirme &amp; Açma">
-              <option value="Ombre / Sombre" data-price="5.000–7.000 TL">Ombre / Sombre</option>
-              <option value="Freelights" data-price="7.500–10.000 TL">Freelights</option>
-              <option value="Facelight" data-price="4.000 TL">Facelight</option>
-              <option value="Röfle / Gölge" data-price="5.000 TL">Röfle / Gölge</option>
-              <option value="Ters Ombre" data-price="4.000–6.000 TL">Ters Ombre</option>
-              <option value="Açma + Boyama" data-price="8.000 TL">Açma + Boyama</option>
-              <option value="Bütün Boyama" data-price="1.900 TL">Bütün Boyama</option>
-              <option value="Dip Boyama" data-price="900 TL">Dip Boyama</option>
-              <option value="Pigmentasyon" data-price="2.500 TL">Pigmentasyon</option>
-              <option value="Transparan Boyama" data-price="2.200 TL">Transparan Boyama</option>
-              <option value="Cila Renklendirme" data-price="2.000 TL">Cila Renklendirme</option>
-            </optgroup>
-            <optgroup label="✨  Bakım &amp; Onarım">
-              <option value="Keratin Botoks" data-price="1.500 TL">Keratin Botoks</option>
-              <option value="Protein Botoks" data-price="2.500 TL">Protein Botoks</option>
-              <option value="Salon Bakımı (Maske)" data-price="750 TL">Salon Bakımı (Maske)</option>
-            </optgroup>
-            <optgroup label="💄  Makyaj">
-              <option value="Makyaj" data-price="Fiyat için arayın">Makyaj</option>
-            </optgroup>
-            <optgroup label="👰  Gelin &amp; Özel Gün">
-              <option value="Gelin &amp; Özel Gün" data-price="Fiyat için arayın">Gelin &amp; Özel Gün</option>
-            </optgroup>
-            <optgroup label="💇  Saç Kaynak">
-              <option value="Saç Kaynak" data-price="Fiyat için arayın">Saç Kaynak</option>
-            </optgroup>
-          </select>
+          <div class="custom-select-wrapper" id="serviceDropdown">
+            <div class="custom-select-trigger" onclick="toggleServiceDropdown()">
+              <span class="trigger-text" id="triggerText">— Hizmet seçin —</span>
+              <svg class="trigger-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="custom-select-dropdown" id="serviceDropdownList">
+              <div class="custom-optgroup-label">✂️  Kesim &amp; Şekillendirme</div>
+              <div class="custom-option" data-value="Yönetici Saç Kesimi" data-price="1.500 TL" onclick="selectCustomOption(this)"><span>Yönetici Saç Kesimi</span><span class="opt-price">1.500 TL</span></div>
+              <div class="custom-option" data-value="Saç Kesimi" data-price="750 TL" onclick="selectCustomOption(this)"><span>Saç Kesimi</span><span class="opt-price">750 TL</span></div>
+              <div class="custom-option" data-value="Fön" data-price="450 TL" onclick="selectCustomOption(this)"><span>Fön</span><span class="opt-price">450 TL</span></div>
+              <div class="custom-option" data-value="Maşa" data-price="1.500 TL" onclick="selectCustomOption(this)"><span>Maşa</span><span class="opt-price">1.500 TL</span></div>
+              <div class="custom-option" data-value="Topuz" data-price="2.500 TL" onclick="selectCustomOption(this)"><span>Topuz</span><span class="opt-price">2.500 TL</span></div>
+              <div class="custom-optgroup-label">🎨  Renklendirme &amp; Açma</div>
+              <div class="custom-option" data-value="Ombre / Sombre" data-price="5.000–7.000 TL" onclick="selectCustomOption(this)"><span>Ombre / Sombre</span><span class="opt-price">5.000–7.000 TL</span></div>
+              <div class="custom-option" data-value="Freelights" data-price="7.500–10.000 TL" onclick="selectCustomOption(this)"><span>Freelights</span><span class="opt-price">7.500–10.000 TL</span></div>
+              <div class="custom-option" data-value="Facelight" data-price="4.000 TL" onclick="selectCustomOption(this)"><span>Facelight</span><span class="opt-price">4.000 TL</span></div>
+              <div class="custom-option" data-value="Röfle / Gölge" data-price="5.000 TL" onclick="selectCustomOption(this)"><span>Röfle / Gölge</span><span class="opt-price">5.000 TL</span></div>
+              <div class="custom-option" data-value="Ters Ombre" data-price="4.000–6.000 TL" onclick="selectCustomOption(this)"><span>Ters Ombre</span><span class="opt-price">4.000–6.000 TL</span></div>
+              <div class="custom-option" data-value="Açma + Boyama" data-price="8.000 TL" onclick="selectCustomOption(this)"><span>Açma + Boyama</span><span class="opt-price">8.000 TL</span></div>
+              <div class="custom-option" data-value="Bütün Boyama" data-price="1.900 TL" onclick="selectCustomOption(this)"><span>Bütün Boyama</span><span class="opt-price">1.900 TL</span></div>
+              <div class="custom-option" data-value="Dip Boyama" data-price="900 TL" onclick="selectCustomOption(this)"><span>Dip Boyama</span><span class="opt-price">900 TL</span></div>
+              <div class="custom-option" data-value="Pigmentasyon" data-price="2.500 TL" onclick="selectCustomOption(this)"><span>Pigmentasyon</span><span class="opt-price">2.500 TL</span></div>
+              <div class="custom-option" data-value="Transparan Boyama" data-price="2.200 TL" onclick="selectCustomOption(this)"><span>Transparan Boyama</span><span class="opt-price">2.200 TL</span></div>
+              <div class="custom-option" data-value="Cila Renklendirme" data-price="2.000 TL" onclick="selectCustomOption(this)"><span>Cila Renklendirme</span><span class="opt-price">2.000 TL</span></div>
+              <div class="custom-optgroup-label">✨  Bakım &amp; Onarım</div>
+              <div class="custom-option" data-value="Keratin Botoks" data-price="1.500 TL" onclick="selectCustomOption(this)"><span>Keratin Botoks</span><span class="opt-price">1.500 TL</span></div>
+              <div class="custom-option" data-value="Protein Botoks" data-price="2.500 TL" onclick="selectCustomOption(this)"><span>Protein Botoks</span><span class="opt-price">2.500 TL</span></div>
+              <div class="custom-option" data-value="Salon Bakımı (Maske)" data-price="750 TL" onclick="selectCustomOption(this)"><span>Salon Bakımı (Maske)</span><span class="opt-price">750 TL</span></div>
+              <div class="custom-optgroup-label">💄  Makyaj</div>
+              <div class="custom-option" data-value="Makyaj" data-price="Fiyat için arayın" onclick="selectCustomOption(this)"><span>Makyaj</span><span class="opt-price">Fiyat için arayın</span></div>
+              <div class="custom-optgroup-label">👰  Gelin &amp; Özel Gün</div>
+              <div class="custom-option" data-value="Gelin &amp; Özel Gün" data-price="Fiyat için arayın" onclick="selectCustomOption(this)"><span>Gelin &amp; Özel Gün</span><span class="opt-price">Fiyat için arayın</span></div>
+              <div class="custom-optgroup-label">💇  Saç Kaynak</div>
+              <div class="custom-option" data-value="Saç Kaynak" data-price="Fiyat için arayın" onclick="selectCustomOption(this)"><span>Saç Kaynak</span><span class="opt-price">Fiyat için arayın</span></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -736,12 +758,26 @@ let selectedService = '';
 let selectedPrice   = '';
 let selectedTime    = '';
 
-function selectServiceFromList(sel) {
-  const opt = sel.options[sel.selectedIndex];
-  selectedService = sel.value;
-  selectedPrice   = opt.dataset.price || '';
+function toggleServiceDropdown() {
+  document.getElementById('serviceDropdown').classList.toggle('open');
+}
+
+function selectCustomOption(el) {
+  selectedService = el.dataset.value;
+  selectedPrice   = el.dataset.price || '';
+  const t = document.getElementById('triggerText');
+  t.textContent = selectedService;
+  t.classList.add('has-value');
+  document.querySelectorAll('.custom-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('serviceDropdown').classList.remove('open');
   updateSummary();
 }
+
+document.addEventListener('click', function(e) {
+  const w = document.getElementById('serviceDropdown');
+  if (w && !w.contains(e.target)) w.classList.remove('open');
+});
 
 function selectTime(el) {
   if (el.classList.contains('disabled')) return;
