@@ -839,28 +839,18 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   pointer-events: none;
 }
 .splash-logo {
-  width: clamp(100px, 20vw, 200px);
+  width: clamp(120px, 22vw, 220px);
   height: auto;
   opacity: 0;
-  transform: scale(0.85);
-  animation: splashLogoIn 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
-}
-.splash-tagline {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(0.65rem, 1.2vw, 0.85rem);
-  font-weight: 600;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-top: 20px;
-  opacity: 0;
-  animation: splashTagIn 0.6s ease 0.7s forwards;
+  transform: scale(0.6);
+  animation: splashLogoIn 1.8s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+  filter: brightness(0) invert(1);
 }
 @keyframes splashLogoIn {
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes splashTagIn {
-  to { opacity: 1; }
+  0%   { opacity: 0; transform: scale(0.6); }
+  30%  { opacity: 1; }
+  85%  { opacity: 1; transform: scale(1.6); }
+  100% { opacity: 0; transform: scale(2.4); }
 }
 /* Sayfa içeriği splash kapanana kadar gizli */
 body.splash-active { overflow: hidden; }
@@ -1523,7 +1513,7 @@ function toggleService(btn) {
   setTimeout(function() {
     splash.classList.add('hidden');
     document.body.classList.remove('splash-active');
-  }, 1800);
+  }, 2200);
 })();
 
 </script>
