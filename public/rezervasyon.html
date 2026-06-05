@@ -534,34 +534,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
               <svg class="trigger-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div class="custom-select-dropdown" id="serviceDropdownList">
-              <div class="custom-optgroup-label">✂️  Kesim &amp; Şekillendirme</div>
-              <div class="custom-option" data-value="Yönetici Saç Kesimi" data-price="1.500 TL" onclick="selectCustomOption(this)"><span>Yönetici Saç Kesimi</span><span class="opt-price">1.500 TL</span></div>
-              <div class="custom-option" data-value="Saç Kesimi" data-price="750 TL" onclick="selectCustomOption(this)"><span>Saç Kesimi</span><span class="opt-price">750 TL</span></div>
-              <div class="custom-option" data-value="Fön" data-price="450 TL" onclick="selectCustomOption(this)"><span>Fön</span><span class="opt-price">450 TL</span></div>
-              <div class="custom-option" data-value="Maşa" data-price="1.500 TL" onclick="selectCustomOption(this)"><span>Maşa</span><span class="opt-price">1.500 TL</span></div>
-              <div class="custom-option" data-value="Topuz" data-price="2.500 TL" onclick="selectCustomOption(this)"><span>Topuz</span><span class="opt-price">2.500 TL</span></div>
-              <div class="custom-optgroup-label">🎨  Renklendirme &amp; Açma</div>
-              <div class="custom-option" data-value="Ombre / Sombre" data-price="5.000–7.000 TL" onclick="selectCustomOption(this)"><span>Ombre / Sombre</span><span class="opt-price">5.000–7.000 TL</span></div>
-              <div class="custom-option" data-value="Freelights" data-price="7.500–10.000 TL" onclick="selectCustomOption(this)"><span>Freelights</span><span class="opt-price">7.500–10.000 TL</span></div>
-              <div class="custom-option" data-value="Facelight" data-price="4.000 TL" onclick="selectCustomOption(this)"><span>Facelight</span><span class="opt-price">4.000 TL</span></div>
-              <div class="custom-option" data-value="Röfle / Gölge" data-price="5.000 TL" onclick="selectCustomOption(this)"><span>Röfle / Gölge</span><span class="opt-price">5.000 TL</span></div>
-              <div class="custom-option" data-value="Ters Ombre" data-price="4.000–6.000 TL" onclick="selectCustomOption(this)"><span>Ters Ombre</span><span class="opt-price">4.000–6.000 TL</span></div>
-              <div class="custom-option" data-value="Açma + Boyama" data-price="8.000 TL" onclick="selectCustomOption(this)"><span>Açma + Boyama</span><span class="opt-price">8.000 TL</span></div>
-              <div class="custom-option" data-value="Bütün Boyama" data-price="1.900 TL" onclick="selectCustomOption(this)"><span>Bütün Boyama</span><span class="opt-price">1.900 TL</span></div>
-              <div class="custom-option" data-value="Dip Boyama" data-price="900 TL" onclick="selectCustomOption(this)"><span>Dip Boyama</span><span class="opt-price">900 TL</span></div>
-              <div class="custom-option" data-value="Pigmentasyon" data-price="2.500 TL" onclick="selectCustomOption(this)"><span>Pigmentasyon</span><span class="opt-price">2.500 TL</span></div>
-              <div class="custom-option" data-value="Transparan Boyama" data-price="2.200 TL" onclick="selectCustomOption(this)"><span>Transparan Boyama</span><span class="opt-price">2.200 TL</span></div>
-              <div class="custom-option" data-value="Cila Renklendirme" data-price="2.000 TL" onclick="selectCustomOption(this)"><span>Cila Renklendirme</span><span class="opt-price">2.000 TL</span></div>
-              <div class="custom-optgroup-label">✨  Bakım &amp; Onarım</div>
-              <div class="custom-option" data-value="Keratin Botoks" data-price="1.500 TL" onclick="selectCustomOption(this)"><span>Keratin Botoks</span><span class="opt-price">1.500 TL</span></div>
-              <div class="custom-option" data-value="Protein Botoks" data-price="2.500 TL" onclick="selectCustomOption(this)"><span>Protein Botoks</span><span class="opt-price">2.500 TL</span></div>
-              <div class="custom-option" data-value="Salon Bakımı (Maske)" data-price="750 TL" onclick="selectCustomOption(this)"><span>Salon Bakımı (Maske)</span><span class="opt-price">750 TL</span></div>
-              <div class="custom-optgroup-label">💄  Makyaj</div>
-              <div class="custom-option" data-value="Makyaj" data-price="Fiyat için arayın" onclick="selectCustomOption(this)"><span>Makyaj</span><span class="opt-price">Fiyat için arayın</span></div>
-              <div class="custom-optgroup-label">👰  Gelin &amp; Özel Gün</div>
-              <div class="custom-option" data-value="Gelin &amp; Özel Gün" data-price="Fiyat için arayın" onclick="selectCustomOption(this)"><span>Gelin &amp; Özel Gün</span><span class="opt-price">Fiyat için arayın</span></div>
-              <div class="custom-optgroup-label">💇  Saç Kaynak</div>
-              <div class="custom-option" data-value="Saç Kaynak" data-price="Fiyat için arayın" onclick="selectCustomOption(this)"><span>Saç Kaynak</span><span class="opt-price">Fiyat için arayın</span></div>
+              <div style="padding:16px;text-align:center;color:#bbb;font-size:0.8rem">Yükleniyor...</div>
             </div>
           </div>
         </div>
@@ -932,8 +905,56 @@ function selectPersonelOption(el) {
   updateSummary();
 }
 
-// Sayfa yüklenince personelleri çek
-window.addEventListener('DOMContentLoaded', personelYukle);
+// Hizmetleri Supabase'den yükle
+async function hizmetleriYukle() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/hizmetler?select=*&order=sira.asc,created_at.asc`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    });
+    if (!res.ok) throw new Error();
+    const liste = await res.json();
+    if (!liste.length) return;
+
+    // Kategorilere göre grupla
+    const gruplar = {};
+    liste.forEach(h => {
+      const kat = h.kat || 'Diğer';
+      if (!gruplar[kat]) gruplar[kat] = [];
+      gruplar[kat].push(h);
+    });
+
+    const katEmoji = {
+      'Renk': '🎨', 'Kesim': '✂️', 'Şekillendirme': '💇',
+      'Bakım': '✨', 'Makyaj': '💄', 'Özel': '👰',
+      'Kaynak': '💫', 'Diğer': '◾'
+    };
+
+    let html = '';
+    for (const [kat, hizler] of Object.entries(gruplar)) {
+      const emoji = katEmoji[kat] || '◾';
+      html += `<div class="custom-optgroup-label">${emoji} ${kat}</div>`;
+      hizler.forEach(h => {
+        const fiyat = !h.min_fiyat && !h.max_fiyat
+          ? 'Fiyat için arayın'
+          : h.min_fiyat === h.max_fiyat || !h.max_fiyat
+            ? `${h.min_fiyat.toLocaleString('tr-TR')} TL`
+            : `${h.min_fiyat.toLocaleString('tr-TR')} – ${h.max_fiyat.toLocaleString('tr-TR')} TL`;
+        html += `<div class="custom-option" data-value="${h.ad}" data-price="${fiyat}" onclick="selectCustomOption(this)">
+          <span>${h.ad}</span><span class="opt-price">${fiyat}</span>
+        </div>`;
+      });
+    }
+    document.getElementById('serviceDropdownList').innerHTML = html;
+  } catch(e) {
+    console.warn('Hizmetler yüklenemedi:', e);
+  }
+}
+
+// Sayfa yüklenince hem personel hem hizmetleri çek
+window.addEventListener('DOMContentLoaded', () => {
+  personelYukle();
+  hizmetleriYukle();
+});
 
 // Form gönder
 async function submitForm() {
