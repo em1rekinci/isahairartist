@@ -6,8 +6,8 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // ─── CONFIG ───────────────────────────────────────────────
-const SCRAPER_API_KEY = process.env.SCRAPER_API_KEY || '1577e89d7df1e17c8f6236a42460d9fd';
-const PLACE_ID        = process.env.GOOGLE_PLACE_ID || 'ChIJcXMKdsG7yhQRZiqzqy9MJhQ';
+const SERPAPI_KEY = process.env.SERPAPI_KEY || '03c94f5f1085187e9222bcb72e2a7dd2999460340ae87181388f4c0d4b69367d';
+const PLACE_ID    = process.env.GOOGLE_PLACE_ID || 'ChIJcXMKdsG7yhQRZiqzqy9MJhQ';
 // ──────────────────────────────────────────────────────────
 
 // Cache (24 saat)
@@ -19,54 +19,60 @@ async function fetchGoogleRating() {
   if (cache.puan && (now - cache.ts) < CACHE_MS) return cache;
 
   try {
-    // ScraperAPI Google Maps scrape — structured data döndürür
-    const targetUrl = `https://www.google.com/maps/place/?q=place_id:${PLACE_ID}&hl=tr`;
-    const url = `http://api.scraperapi.com/?api_key=${SCRAPER_API_KEY}&url=${encodeURIComponent(targetUrl)}&render=true`;
+    // SerpAPI Google Maps place details
+    const url = `https://serpapi.com/search.json?engine=google_maps&place_id=${PLACE_ID}&api_key=${SERPAPI_KEY}`;
+    const res  = await fetch(url, { timeout: 15000 });
+    const data = await res.json();
 
-    const res  = await fetch(url, { timeout: 20000 });
-    const html = await res.text();
+    console.log('SerpAPI yanıtı:', JSON.stringify(data).substring(0, 300));
 
-    // Google Maps HTML'den rating parse
-    // Örnek: 4,9 yıldız / 4.9 stars
-    let puan = null;
-    let yorumSayisi = null;
+    // SerpAPI yanıt yapısı: data.place_results veya data.local_results[0]
+    const place = data.place_results
+                || (data.local_results && data.local_results[0])
+                || null;
 
-    // Yöntem 1: JSON-LD veya meta
-    const jsonMatch = html.match(/"aggregateRating"[^}]*"ratingValue"\s*:\s*"?([\d,\.]+)"?/);
-    if (jsonMatch) puan = jsonMatch[1].replace(',', '.');
-
-    // Yöntem 2: aria-label içinde
-    if (!puan) {
-      const ariaMatch = html.match(/aria-label="([\d,\.]+)\s*yıldız/i);
-      if (ariaMatch) puan = ariaMatch[1].replace(',', '.');
-    }
-
-    // Yöntem 3: genel pattern
-    if (!puan) {
-      const m = html.match(/>([\d],[0-9])</) || html.match(/>([\d]\.[0-9])</);
-      if (m) puan = m[1].replace(',', '.');
-    }
-
-    // Yorum sayısı
-    const yorumMatch = html.match(/([\d\.]+)\s*(?:yorum|değerlendirme|review)/i);
-    if (yorumMatch) yorumSayisi = yorumMatch[1].replace('.', '');
-
-    if (puan) {
-      cache = { puan, yorumSayisi, ts: now };
-      console.log(`⭐ Rating güncellendi: ${puan} (${yorumSayisi || '?'} yorum)`);
+    if (place && place.rating) {
+      cache = {
+        puan:        String(place.rating),
+        yorumSayisi: place.reviews ? String(place.reviews) : null,
+        ts:          now
+      };
+      console.log(`⭐ Rating güncellendi: ${cache.puan} (${cache.yorumSayisi || '?'} yorum)`);
     }
   } catch (err) {
-    console.error('Rating fetch hatası:', err.message);
+    console.error('SerpAPI hatası:', err.message);
   }
 
   return cache;
 }
 
-// ─── API ──────────────────────────────────────────────────
+// ─── MIDDLEWARE ───────────────────────────────────────────
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ─── STATIC FILES ─────────────────────────────────────────
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ─── PAGE ROUTES ──────────────────────────────────────────
+const pages = ['rezervasyon', 'fiyatlar', 'portfolio', 'admin'];
+
+pages.forEach(page => {
+  app.get(`/${page}`, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', `${page}.html`));
+  });
+  app.get(`/${page}.html`, (req, res) => {
+    res.redirect(`/${page}`);
+  });
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// ─── API ROUTES ───────────────────────────────────────────
 
 app.get('/api/google-rating', async (req, res) => {
   const data = await fetchGoogleRating();
-  // Hata olursa veya cache boşsa fallback 4.9
   res.json({
     puan:        data.puan        || '4.9',
     yorumSayisi: data.yorumSayisi || null
@@ -74,18 +80,12 @@ app.get('/api/google-rating', async (req, res) => {
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', cached: !!cache.puan, ts: new Date().toISOString() });
+  res.json({ status: 'ok', cached: !!cache.puan, cachedPuan: cache.puan, ts: new Date().toISOString() });
 });
 
-// ─── STATIC ───────────────────────────────────────────────
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('*', (req, res) => {
-  const file = req.path.replace(/^\//, '') || 'index.html';
-  const safePath = path.join(__dirname, 'public', file);
-  res.sendFile(safePath, err => {
-    if (err) res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  });
+// ─── 404 ──────────────────────────────────────────────────
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // ─── START ────────────────────────────────────────────────
