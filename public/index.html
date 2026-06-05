@@ -263,6 +263,42 @@ nav {
   font-size:3rem; font-weight:800; color:rgba(0,0,0,0.1); pointer-events:none;
 }
 
+/* ── INSTAGRAM SECTION ── */
+.insta-section {
+  padding: 80px 60px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+.insta-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 36px;
+}
+.insta-header-left { display: flex; flex-direction: column; gap: 6px; }
+.insta-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--gold);
+}
+.insta-title {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700; color: var(--black); line-height: 1;
+}
+.insta-follow-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--border); padding: 10px 20px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--black);
+  text-decoration: none; transition: all 0.2s;
+}
+.insta-follow-btn:hover { border-color: var(--gold); color: var(--gold); }
+.insta-widget-wrap { width: 100%; }
+@media (max-width: 768px) {
+  .insta-section { padding: 48px 16px; }
+  .insta-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
 /* WHY US — Slider */
 .why {
   padding: 80px 0;
@@ -1014,71 +1050,22 @@ body.splash-active { overflow: hidden; }
     <a href="/portfolio" class="btn-outline-black">TÜMÜNÜ GÖR →</a>
   </div>
 
-<!-- WHY US -->
-<section class="why">
-  <div class="why-header">
-    <h2 class="why-main-title">Neden Biz?</h2>
-  </div>
-  <div class="why-slider-wrap">
-    <div class="why-slider" id="whySlider">
-
-      <div class="why-card">
-        <div class="why-card-img"><div class="why-num-bg">01</div><img src="images/about.jpg" alt="" onerror="this.style.display='none'"></div>
-        <div class="why-card-body">
-          <div class="why-card-num">01</div>
-          <h3 class="why-card-title">İhtiyaçlarınıza uyum sağlarız</h3>
-          <p class="why-card-desc">Erken uçuşunuz mu var? Salonu erkenden açabiliriz. Önemli bir etkinliğiniz mi? Sizi daha geç saate kadar bekliyoruz. Tüm hizmetlerimiz size özel planlanır.</p>
-        </div>
-      </div>
-
-      <div class="why-card">
-        <div class="why-card-img"><div class="why-num-bg">02</div><img src="images/portfolio-2.jpg" alt="" onerror="this.style.display='none'"></div>
-        <div class="why-card-body">
-          <div class="why-card-num">02</div>
-          <h3 class="why-card-title">Zamanınızı kurtarırız</h3>
-          <p class="why-card-desc">Saç ve makyajınızı aynı anda yaptırabilirsiniz. Uzman ekibimiz birlikte çalışarak tek randevuda komple bakım sağlar.</p>
-        </div>
-      </div>
-
-      <div class="why-card">
-        <div class="why-card-img"><div class="why-num-bg">03</div><img src="images/portfolio-3.jpg" alt="" onerror="this.style.display='none'"></div>
-        <div class="why-card-body">
-          <div class="why-card-num">03</div>
-          <h3 class="why-card-title">Uzman ekibimiz</h3>
-          <p class="why-card-desc">Her stilist sertifikalı ve deneyimlidir. Sürekli eğitimle güncel teknikler uygulanır. Sanatını icra eden bir ekip.</p>
-        </div>
-      </div>
-
-      <div class="why-card">
-        <div class="why-card-img"><div class="why-num-bg">04</div></div>
-        <div class="why-card-body">
-          <div class="why-card-num">04</div>
-          <h3 class="why-card-title">Kalite standartları</h3>
-          <p class="why-card-desc">Premium ve güvenilir ürünler kullanılır. Her işlem öncesi kalite kontrolü yapılır. Sonuçlardan memnun kalmazsanız tekrar yapıyoruz.</p>
-        </div>
-      </div>
-
-      <div class="why-card">
-        <div class="why-card-img"><div class="why-num-bg">05</div></div>
-        <div class="why-card-body">
-          <div class="why-card-num">05</div>
-          <h3 class="why-card-title">Tıbbi sterilizasyon</h3>
-          <p class="why-card-desc">Tüm aletlerimiz tıbbi standartlarda sterilize edilir. Hijyen tartışılmaz bir önceliktir. Güvenli ortamda hizmet alırsınız.</p>
-        </div>
-      </div>
-
-      <div class="why-card">
-        <div class="why-card-img"><div class="why-num-bg">06</div></div>
-        <div class="why-card-body">
-          <div class="why-card-num">06</div>
-          <h3 class="why-card-title">Modern ekipman</h3>
-          <p class="why-card-desc">En son teknoloji ekipmanlarla donanmış salonumuzda en iyi sonuçları elde edersiniz. Profesyonel araçlar, profesyonel sonuçlar.</p>
-        </div>
-      </div>
-
+<!-- INSTAGRAM FEED -->
+<section class="insta-section">
+  <div class="insta-header">
+    <div class="insta-header-left">
+      <span class="insta-label">Instagram</span>
+      <h2 class="insta-title">Son Çalışmalarımız</h2>
     </div>
-    <!-- Dots -->
-    <div class="why-dots" id="whyDots"></div>
+    <a href="https://www.instagram.com/isakurthairartist" target="_blank" class="insta-follow-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @isakurthairartist
+    </a>
+  </div>
+  <div class="insta-widget-wrap">
+    <!-- Elfsight Instagram Feed -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-e63a12f7-a922-43fe-86f1-47ad97000748" data-elfsight-app-lazy></div>
   </div>
 </section>
 

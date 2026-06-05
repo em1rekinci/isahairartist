@@ -248,7 +248,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 .footer-social-icon:hover { opacity:0.8; }
 .footer-social-icon span { width:32px; height:32px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .footer-hours-col { display:flex; flex-direction:column; }
-.footer-hours-box { display:flex; flex-direction:column; gap:4px; }
+.footer-hours-box { display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; padding:8px; background:rgba(255,255,255,0.03); }
 .footer-hours-row { display:flex; justify-content:space-between; align-items:center; padding:7px 10px; border-radius:4px; font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:0.06em; color:rgba(255,255,255,0.45); }
 .footer-hours-row.today { background:rgba(26,111,244,0.18); border:1px solid rgba(26,111,244,0.5); color:var(--white); }
 .footer-hours-row.closed { color:rgba(255,255,255,0.2); }
@@ -346,10 +346,100 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   </div>
 </div>
 
-<!-- Dinamik fiyat listesi — Supabase'den yüklenir -->
-<div id="price-container">
-  <div style="text-align:center;padding:80px 20px;color:var(--muted);font-size:0.9rem">
-    Fiyatlar yükleniyor...
+<!-- 01 RENKLENDİRME -->
+<div class="price-section">
+  <div class="price-cat-header">
+    <div class="price-cat-num">01</div>
+    <div class="price-cat-name">Renklendirme & Açma</div>
+    <div class="price-cat-desc">Ombre, sombre, freelights, facelight, röfle ve daha fazlası</div>
+  </div>
+  <div class="price-grid">
+    <div class="price-item"><span class="price-item-name">Ombre / Sombre</span><span class="price-item-price">5.000 – 7.000 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Freelights</span><span class="price-item-price">7.500 – 10.000 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Facelight</span><span class="price-item-price">4.000 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Röfle / Gölge</span><span class="price-item-price">5.000 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Ters Ombre</span><span class="price-item-price">4.000 – 6.000 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Açma + Boyama</span><span class="price-item-price">8.000 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Bütün Boyama</span><span class="price-item-price">1.900 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Dip Boyama</span><span class="price-item-price">900 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Pigmentasyon</span><span class="price-item-price">2.500 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Transparan Boyama</span><span class="price-item-price">2.200 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Cila Renklendirme</span><span class="price-item-price">2.000 TL</span></div>
+  </div>
+</div>
+
+<!-- 02 KESİM -->
+<div class="price-section">
+  <div class="price-cat-header">
+    <div class="price-cat-num">02</div>
+    <div class="price-cat-name">Kesim & Şekillendirme</div>
+    <div class="price-cat-desc">Yüz şeklinize uygun profesyonel kesim ve şekillendirme</div>
+  </div>
+  <div class="price-grid">
+    <div class="price-item"><span class="price-item-name">Yönetici Saç Kesimi</span><span class="price-item-price">1.500 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Saç Kesimi</span><span class="price-item-price">750 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Fön</span><span class="price-item-price">450 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Maşa</span><span class="price-item-price">1.500 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Topuz</span><span class="price-item-price">2.500 TL</span></div>
+  </div>
+</div>
+
+<!-- 03 BAKIM -->
+<div class="price-section">
+  <div class="price-cat-header">
+    <div class="price-cat-num">03</div>
+    <div class="price-cat-name">Bakım & Onarım</div>
+    <div class="price-cat-desc">Keratin, botoks ve derin bakım uygulamaları</div>
+  </div>
+  <div class="price-grid">
+    <div class="price-item"><span class="price-item-name">Keratin Botoks</span><span class="price-item-price">1.500 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Protein Botoks</span><span class="price-item-price">2.500 TL</span></div>
+    <div class="price-item"><span class="price-item-name">Salon Bakımı (Maske)</span><span class="price-item-price">750 TL</span></div>
+  </div>
+</div>
+
+<!-- 04 MAKYAJ -->
+<div class="price-section">
+  <div class="price-cat-header">
+    <div class="price-cat-num">04</div>
+    <div class="price-cat-name">Makyaj</div>
+    <div class="price-cat-desc">Günlük, gece, airbrush ve kalıcı makyaj</div>
+  </div>
+  <div class="price-grid">
+    <div class="price-item"><span class="price-item-name">Günlük Makyaj</span><span class="price-item-price call">Fiyat için arayın</span></div>
+    <div class="price-item"><span class="price-item-name">Gece Makyajı</span><span class="price-item-price call">Fiyat için arayın</span></div>
+    <div class="price-item"><span class="price-item-name">Airbrush Makyaj</span><span class="price-item-price call">Fiyat için arayın</span></div>
+    <div class="price-item"><span class="price-item-name">Kalıcı Makyaj</span><span class="price-item-price call">Fiyat için arayın</span></div>
+  </div>
+</div>
+
+<!-- 05 GELİN -->
+<div class="price-section">
+  <div class="price-cat-header">
+    <div class="price-cat-num">05</div>
+    <div class="price-cat-name">Gelin & Özel Gün</div>
+    <div class="price-cat-desc">Saç ve makyaj paketi, prova dahil</div>
+  </div>
+  <div class="price-grid">
+    <div class="price-item"><span class="price-item-name">Gelin Saçı</span><span class="price-item-price call">Fiyat için arayın</span></div>
+    <div class="price-item"><span class="price-item-name">Gelin Makyajı</span><span class="price-item-price call">Fiyat için arayın</span></div>
+    <div class="price-item"><span class="price-item-name">Prova Paketi</span><span class="price-item-price call">Fiyat için arayın</span></div>
+    <div class="price-item"><span class="price-item-name">Özel Gün Tasarımı</span><span class="price-item-price call">Fiyat için arayın</span></div>
+  </div>
+</div>
+
+<!-- 06 KAYNAK -->
+<div class="price-section">
+  <div class="price-cat-header">
+    <div class="price-cat-num">06</div>
+    <div class="price-cat-name">Saç Kaynak</div>
+    <div class="price-cat-desc">Kalıcı ve geçici kaynak uygulamaları</div>
+  </div>
+  <div class="price-grid">
+    <div class="price-item"><span class="price-item-name">Kalıcı Kaynak</span><span class="price-item-price call">Fiyat için arayın</span></div>
+    <div class="price-item"><span class="price-item-name">Geçici Kaynak</span><span class="price-item-price call">Fiyat için arayın</span></div>
+    <div class="price-item"><span class="price-item-name">Bant Kaynak</span><span class="price-item-price call">Fiyat için arayın</span></div>
+    <div class="price-item"><span class="price-item-name">Nano Kaynak</span><span class="price-item-price call">Fiyat için arayın</span></div>
   </div>
 </div>
 
@@ -419,84 +509,9 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 </footer>
 
 <script>
-const SUPA_URL = 'https://dfjeiwjgxkhxyipvnsno.supabase.co';
-const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmamVpd2pneGtoeHlpcHZuc25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTIyNzUsImV4cCI6MjA5MjYyODI3NX0.40V9bgG97_sEMpc3G0mg98a7uh1Q0OR8ln2e9d2SvbU';
-
 document.getElementById('ham').addEventListener('click', () => {
   document.getElementById('mobMenu').classList.toggle('open');
 });
-
-// Fiyat formatla
-function fiyatStr(min, max) {
-  if (!min && !max) return '<span class="price-item-price call">Fiyat için arayın</span>';
-  if (min === max || !max) return `<span class="price-item-price">${min.toLocaleString('tr-TR')} TL</span>`;
-  return `<span class="price-item-price">${min.toLocaleString('tr-TR')} – ${max.toLocaleString('tr-TR')} TL</span>`;
-}
-
-// Kategori açıklamaları
-const katDesc = {
-  'Renk':          'Ombre, sombre, freelights, facelight, röfle ve daha fazlası',
-  'Kesim':         'Yüz şeklinize uygun profesyonel kesim ve şekillendirme',
-  'Şekillendirme': 'Fön, maşa, topuz ve özel şekillendirme',
-  'Bakım':         'Keratin, botoks ve derin bakım uygulamaları',
-  'Makyaj':        'Günlük, gece ve özel gün makyajı',
-  'Özel':          'Saç ve makyaj paketi, prova dahil',
-  'Kaynak':        'Kalıcı ve geçici kaynak uygulamaları',
-  'Diğer':         '',
-};
-
-async function fiyatlariYukle() {
-  const container = document.getElementById('price-container');
-  try {
-    const res = await fetch(`${SUPA_URL}/rest/v1/hizmetler?select=*&order=sira.asc,created_at.asc`, {
-      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
-    });
-    if (!res.ok) throw new Error('Sunucu hatası');
-    const hizmetler = await res.json();
-
-    if (!hizmetler.length) {
-      container.innerHTML = '<div style="text-align:center;padding:80px 20px;color:var(--muted)">Fiyat listesi henüz eklenmemiş.</div>';
-      return;
-    }
-
-    // Kategorilere göre grupla
-    const gruplar = {};
-    hizmetler.forEach(h => {
-      const kat = h.kat || 'Diğer';
-      if (!gruplar[kat]) gruplar[kat] = [];
-      gruplar[kat].push(h);
-    });
-
-    let html = '';
-    let i = 1;
-    for (const [kat, liste] of Object.entries(gruplar)) {
-      html += `
-      <div class="price-section">
-        <div class="price-cat-header">
-          <div class="price-cat-num">${String(i).padStart(2,'0')}</div>
-          <div class="price-cat-name">${kat}</div>
-          ${katDesc[kat] ? `<div class="price-cat-desc">${katDesc[kat]}</div>` : ''}
-        </div>
-        <div class="price-grid">
-          ${liste.map(h => `
-          <div class="price-item">
-            <span class="price-item-name">${h.ad}</span>
-            ${fiyatStr(h.min_fiyat, h.max_fiyat)}
-          </div>`).join('')}
-        </div>
-      </div>`;
-      i++;
-    }
-    container.innerHTML = html;
-  } catch(e) {
-    console.error('Fiyat yükleme hatası:', e);
-    container.innerHTML = '<div style="text-align:center;padding:80px 20px;color:var(--muted)">Fiyatlar yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.</div>';
-  }
-}
-
-fiyatlariYukle();
-
-// Footer çalışma saatleri
 (function() {
   const days = [
     { name: 'Pazartesi', time: '09:00 – 20:00', closed: false },
