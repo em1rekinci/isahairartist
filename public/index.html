@@ -903,7 +903,6 @@ a[href*="utm_campaign=free-widget"],
 a[href*="removeBranding"] {
   display: none !important;
 }
-/* Load more butonu stilini değiştir */
 .eapps-instagram-feed-posts-grid-load-more {
   background: var(--black) !important;
   color: #fff !important;
@@ -917,23 +916,27 @@ a[href*="removeBranding"] {
   padding: 13px 40px !important;
   cursor: pointer !important;
   transition: opacity 0.2s !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 220px !important;
 }
 .eapps-instagram-feed-posts-grid-load-more:hover {
   opacity: 0.85 !important;
 }
-.eapps-instagram-feed-posts-grid-load-more-text::after {
+.eapps-instagram-feed-posts-grid-load-more-text {
+  display: none !important;
+}
+.eapps-instagram-feed-posts-grid-load-more::after {
   content: 'DAHA FAZLA GÖSTER' !important;
   color: #ffffff !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
   font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
 }
-.eapps-instagram-feed-posts-grid-load-more-text {
-  font-size: 0 !important;
-  color: transparent !important;
-}
-/* Badge sonrası boşluğu kapat */
 .eapps-instagram-feed-posts-grid-load-more-container {
   margin-bottom: 0 !important;
-  text-align: center !important;
   display: flex !important;
   justify-content: center !important;
 }
