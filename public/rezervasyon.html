@@ -229,7 +229,22 @@ nav {
 .form-textarea:focus { border-color: var(--gold); }
 .form-textarea::placeholder { color: #bbb; }
 
-/* KVKK */
+/* LİSTBOX */
+.service-listbox {
+  height: 220px;
+  padding: 0;
+  overflow-y: auto;
+}
+.service-listbox option, .service-listbox optgroup {
+  padding: 8px 14px;
+  font-size: 0.88rem;
+}
+.service-listbox optgroup {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
 .kvkk-row {
   display: flex; align-items: flex-start; gap: 10px;
   margin-top: 20px;
@@ -467,37 +482,44 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
           <span class="rez-step-num">Adım 01</span>
           <span class="rez-step-title">Hizmet Seçin</span>
         </div>
-        <div class="service-grid">
-          <div class="service-card" data-service="Saç Kesimi" onclick="selectService(this)">
-            <div class="service-card-icon">✂️</div>
-            <div class="service-card-name">Saç Kesimi</div>
-            <div class="service-card-sub">Kesim & şekillendirme</div>
-          </div>
-          <div class="service-card" data-service="Boyama / Balayage" onclick="selectService(this)">
-            <div class="service-card-icon">🎨</div>
-            <div class="service-card-name">Boyama</div>
-            <div class="service-card-sub">Röfle, ombre, balayage</div>
-          </div>
-          <div class="service-card" data-service="Makyaj" onclick="selectService(this)">
-            <div class="service-card-icon">💄</div>
-            <div class="service-card-name">Makyaj</div>
-            <div class="service-card-sub">Günlük, gece, airbrush</div>
-          </div>
-          <div class="service-card" data-service="Gelin & Özel Gün" onclick="selectService(this)">
-            <div class="service-card-icon">👰</div>
-            <div class="service-card-name">Gelin & Özel Gün</div>
-            <div class="service-card-sub">Saç + makyaj paketi</div>
-          </div>
-          <div class="service-card" data-service="Bakım & Keratin" onclick="selectService(this)">
-            <div class="service-card-icon">✨</div>
-            <div class="service-card-name">Bakım</div>
-            <div class="service-card-sub">Keratin, botoks, maske</div>
-          </div>
-          <div class="service-card" data-service="Saç Kaynak" onclick="selectService(this)">
-            <div class="service-card-icon">💇</div>
-            <div class="service-card-name">Saç Kaynak</div>
-            <div class="service-card-sub">Kalıcı & geçici kaynak</div>
-          </div>
+        <div class="form-group">
+          <select class="form-select service-listbox" id="serviceSelect" size="8" onchange="selectServiceFromList(this)">
+            <option value="">— Hizmet seçin —</option>
+            <optgroup label="✂️  Kesim &amp; Şekillendirme">
+              <option value="Yönetici Saç Kesimi" data-price="1.500 TL">Yönetici Saç Kesimi</option>
+              <option value="Saç Kesimi" data-price="750 TL">Saç Kesimi</option>
+              <option value="Fön" data-price="450 TL">Fön</option>
+              <option value="Maşa" data-price="1.500 TL">Maşa</option>
+              <option value="Topuz" data-price="2.500 TL">Topuz</option>
+            </optgroup>
+            <optgroup label="🎨  Renklendirme &amp; Açma">
+              <option value="Ombre / Sombre" data-price="5.000–7.000 TL">Ombre / Sombre</option>
+              <option value="Freelights" data-price="7.500–10.000 TL">Freelights</option>
+              <option value="Facelight" data-price="4.000 TL">Facelight</option>
+              <option value="Röfle / Gölge" data-price="5.000 TL">Röfle / Gölge</option>
+              <option value="Ters Ombre" data-price="4.000–6.000 TL">Ters Ombre</option>
+              <option value="Açma + Boyama" data-price="8.000 TL">Açma + Boyama</option>
+              <option value="Bütün Boyama" data-price="1.900 TL">Bütün Boyama</option>
+              <option value="Dip Boyama" data-price="900 TL">Dip Boyama</option>
+              <option value="Pigmentasyon" data-price="2.500 TL">Pigmentasyon</option>
+              <option value="Transparan Boyama" data-price="2.200 TL">Transparan Boyama</option>
+              <option value="Cila Renklendirme" data-price="2.000 TL">Cila Renklendirme</option>
+            </optgroup>
+            <optgroup label="✨  Bakım &amp; Onarım">
+              <option value="Keratin Botoks" data-price="1.500 TL">Keratin Botoks</option>
+              <option value="Protein Botoks" data-price="2.500 TL">Protein Botoks</option>
+              <option value="Salon Bakımı (Maske)" data-price="750 TL">Salon Bakımı (Maske)</option>
+            </optgroup>
+            <optgroup label="💄  Makyaj">
+              <option value="Makyaj" data-price="Fiyat için arayın">Makyaj</option>
+            </optgroup>
+            <optgroup label="👰  Gelin &amp; Özel Gün">
+              <option value="Gelin &amp; Özel Gün" data-price="Fiyat için arayın">Gelin &amp; Özel Gün</option>
+            </optgroup>
+            <optgroup label="💇  Saç Kaynak">
+              <option value="Saç Kaynak" data-price="Fiyat için arayın">Saç Kaynak</option>
+            </optgroup>
+          </select>
         </div>
       </div>
 
@@ -517,15 +539,27 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
             <label class="form-label">Tercih Edilen Saat</label>
             <div class="time-slots" id="timeSlots">
               <div class="time-slot" onclick="selectTime(this)" data-time="09:00">09:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="09:30">09:30</div>
               <div class="time-slot" onclick="selectTime(this)" data-time="10:00">10:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="10:30">10:30</div>
               <div class="time-slot" onclick="selectTime(this)" data-time="11:00">11:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="11:30">11:30</div>
               <div class="time-slot" onclick="selectTime(this)" data-time="12:00">12:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="12:30">12:30</div>
               <div class="time-slot" onclick="selectTime(this)" data-time="13:00">13:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="13:30">13:30</div>
               <div class="time-slot" onclick="selectTime(this)" data-time="14:00">14:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="14:30">14:30</div>
               <div class="time-slot" onclick="selectTime(this)" data-time="15:00">15:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="15:30">15:30</div>
               <div class="time-slot" onclick="selectTime(this)" data-time="16:00">16:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="16:30">16:30</div>
               <div class="time-slot" onclick="selectTime(this)" data-time="17:00">17:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="17:30">17:30</div>
               <div class="time-slot" onclick="selectTime(this)" data-time="18:00">18:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="18:30">18:30</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="19:00">19:00</div>
+              <div class="time-slot" onclick="selectTime(this)" data-time="19:30">19:30</div>
             </div>
           </div>
         </div>
@@ -548,11 +582,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
           </div>
           <div class="form-group">
             <label class="form-label">Telefon</label>
-            <input type="tel" class="form-input" id="phone" placeholder="05XX XXX XX XX">
-          </div>
-          <div class="form-group">
-            <label class="form-label">E-posta</label>
-            <input type="email" class="form-input" id="email" placeholder="ornek@mail.com">
+            <input type="tel" class="form-input" id="phone" placeholder="05XX XXX XX XX" oninput="autoPhone(this)">
           </div>
           <div class="form-group full">
             <label class="form-label">Notlar (isteğe bağlı)</label>
@@ -599,6 +629,10 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
           <span class="summary-val empty" id="sumService">Seçilmedi</span>
         </div>
         <div class="summary-row">
+          <span class="summary-label">Ücret</span>
+          <span class="summary-val empty" id="sumPrice">—</span>
+        </div>
+        <div class="summary-row">
           <span class="summary-label">Tarih</span>
           <span class="summary-val empty" id="sumDate">Seçilmedi</span>
         </div>
@@ -612,31 +646,11 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
     <!-- Çalışma saatleri -->
     <div class="info-block">
       <div class="info-block-title">Çalışma Saatleri</div>
-      <div class="hours-list" id="sideHours"></div>
+      <div style="border:1px solid var(--border);padding:12px 10px;background:var(--white);">
+        <div class="hours-list" id="sideHours"></div>
+      </div>
     </div>
 
-    <!-- İletişim -->
-    <div class="info-block">
-      <div class="info-block-title">Doğrudan İletişim</div>
-      <div class="contact-list">
-        <div class="contact-item">
-          <div class="contact-icon">📞</div>
-          <div><a href="tel:+905464725878">0546 472 58 78</a></div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">✉️</div>
-          <div><a href="mailto:info@hairartist.com.tr">info@hairartist.com.tr</a></div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">📍</div>
-          <div>Kocatepe, No:231<br>Bayrampaşa / İstanbul</div>
-        </div>
-      </div>
-      <a href="https://wa.me/905464725878?text=Merhaba,%20randevu%20almak%20istiyorum." target="_blank" class="wa-btn" style="margin-top:16px">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp ile Yaz
-      </a>
-    </div>
 
   </div><!-- /rez-info-col -->
 
@@ -719,12 +733,13 @@ document.getElementById('ham').addEventListener('click', () => {
 
 // Seçili hizmet & saat
 let selectedService = '';
-let selectedTime = '';
+let selectedPrice   = '';
+let selectedTime    = '';
 
-function selectService(el) {
-  document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedService = el.dataset.service;
+function selectServiceFromList(sel) {
+  const opt = sel.options[sel.selectedIndex];
+  selectedService = sel.value;
+  selectedPrice   = opt.dataset.price || '';
   updateSummary();
 }
 
@@ -736,16 +751,26 @@ function selectTime(el) {
   updateSummary();
 }
 
+// Telefon: 5 ile başlıyorsa önüne 0 ekle
+function autoPhone(input) {
+  let val = input.value.replace(/\D/g, '');
+  if (val.startsWith('5') && !val.startsWith('05')) {
+    val = '0' + val;
+    input.value = val;
+  }
+}
+
 // Özet paneli güncelle
 function updateSummary() {
   const firstName = document.getElementById('firstName').value.trim();
   const lastName  = document.getElementById('lastName').value.trim();
   const date      = document.getElementById('rezDate').value;
 
-  const sumName = document.getElementById('sumName');
+  const sumName    = document.getElementById('sumName');
   const sumService = document.getElementById('sumService');
-  const sumDate = document.getElementById('sumDate');
-  const sumTime = document.getElementById('sumTime');
+  const sumPrice   = document.getElementById('sumPrice');
+  const sumDate    = document.getElementById('sumDate');
+  const sumTime    = document.getElementById('sumTime');
 
   const fullName = [firstName, lastName].filter(Boolean).join(' ');
   sumName.textContent = fullName || '—';
@@ -753,6 +778,9 @@ function updateSummary() {
 
   sumService.textContent = selectedService || 'Seçilmedi';
   sumService.className = 'summary-val' + (selectedService ? '' : ' empty');
+
+  sumPrice.textContent = selectedPrice || '—';
+  sumPrice.className = 'summary-val' + (selectedPrice ? '' : ' empty');
 
   if (date) {
     const d = new Date(date);
@@ -768,7 +796,7 @@ function updateSummary() {
   sumTime.className = 'summary-val' + (selectedTime ? '' : ' empty');
 }
 
-// Minimum tarih = bugün
+// Minimum tarih = bugün (eski tarih seçilemesin)
 document.getElementById('rezDate').min = new Date().toISOString().split('T')[0];
 
 // Salı günlerini disable et (kapalı gün)
