@@ -268,6 +268,23 @@ nav {
 .custom-option:hover { background: rgba(212,175,55,0.08); }
 .custom-option.selected { background: rgba(212,175,55,0.12); font-weight: 500; }
 .opt-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.04em; color: var(--muted); margin-left: 8px; white-space: nowrap; }
+
+/* Personel option avatar */
+.personel-opt { display: flex; align-items: center; gap: 11px; flex: 1; }
+.personel-avatar {
+  width: 32px; height: 32px; border-radius: 50%; object-fit: cover;
+  border: 1px solid var(--border); flex-shrink: 0; background: var(--gray);
+}
+.personel-avatar-placeholder {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: var(--gray); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem;
+  font-weight: 700; color: var(--muted); text-transform: uppercase;
+}
+.personel-opt-info { display: flex; flex-direction: column; gap: 1px; }
+.personel-opt-ad { font-size: 0.88rem; font-weight: 400; color: var(--black); }
+.personel-opt-rol { font-size: 0.68rem; color: var(--muted); font-weight: 300; }
 .kvkk-row {
   display: flex; align-items: flex-start; gap: 10px;
   margin-top: 20px;
@@ -508,14 +525,11 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <div class="form-group">
           <div class="custom-select-wrapper" id="personelDropdown">
             <div class="custom-select-trigger" onclick="togglePersonelDropdown()">
-              <span class="trigger-text" id="personelTriggerText">— Fark etmez / Uygun personel —</span>
+              <span class="trigger-text" id="personelTriggerText">— Personel seçin —</span>
               <svg class="trigger-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div class="custom-select-dropdown" id="personelDropdownList">
-              <div class="custom-option" data-value="" data-personel-id="" onclick="selectPersonelOption(this)">
-                <span>Fark etmez — Uygun personel</span>
-              </div>
-              <!-- Personeller Supabase'den yüklenecek -->
+              <div style="padding:16px;text-align:center;color:#bbb;font-size:0.8rem">Yükleniyor...</div>
             </div>
           </div>
         </div>
@@ -865,23 +879,34 @@ let selectedPersonelAd = '';
 // Personelleri Supabase'den yükle
 async function personelYukle() {
   try {
-    const res = await fetch(`${SUPA_URL}/rest/v1/personel?select=id,ad,rol,durum&order=created_at.asc`, {
+    const res = await fetch(`${SUPA_URL}/rest/v1/personel?select=id,ad,rol,durum,foto&order=created_at.asc`, {
       headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
     });
     if (!res.ok) return;
     const liste = await res.json();
     const aktif = liste.filter(p => p.durum !== 'pasif');
     const dropdown = document.getElementById('personelDropdownList');
-    // Mevcut "fark etmez" seçeneğini koru, personelleri ekle
-    aktif.forEach(p => {
-      const div = document.createElement('div');
-      div.className = 'custom-option';
-      div.dataset.value = p.ad;
-      div.dataset.personelId = p.id;
-      div.onclick = function() { selectPersonelOption(this); };
-      div.innerHTML = `<span>${p.ad}</span>${p.rol ? `<span class="opt-price">${p.rol}</span>` : ''}`;
-      dropdown.appendChild(div);
-    });
+
+    if (!aktif.length) {
+      dropdown.innerHTML = '<div style="padding:16px;text-align:center;color:#bbb;font-size:0.8rem">Personel bulunamadı.</div>';
+      return;
+    }
+
+    dropdown.innerHTML = aktif.map(p => {
+      const initials = p.ad.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+      const avatarHtml = p.foto
+        ? `<img class="personel-avatar" src="${p.foto}" alt="${p.ad}" onerror="this.outerHTML='<div class=\\'personel-avatar-placeholder\\'>${initials}</div>'">`
+        : `<div class="personel-avatar-placeholder">${initials}</div>`;
+      return `<div class="custom-option" data-value="${p.ad}" data-personel-id="${p.id}" onclick="selectPersonelOption(this)">
+        <div class="personel-opt">
+          ${avatarHtml}
+          <div class="personel-opt-info">
+            <span class="personel-opt-ad">${p.ad}</span>
+            ${p.rol ? `<span class="personel-opt-rol">${p.rol}</span>` : ''}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
   } catch(e) {
     console.warn('Personel yüklenemedi:', e);
   }
@@ -897,8 +922,19 @@ function selectPersonelOption(el) {
   selectedPersonelId = el.dataset.personelId || '';
   selectedPersonelAd = el.dataset.value || '';
   const t = document.getElementById('personelTriggerText');
-  t.textContent = selectedPersonelAd || 'Fark etmez — Uygun personel';
-  t.classList.toggle('has-value', !!selectedPersonelAd);
+
+  // Trigger'da fotoğraf + isim göster
+  const avatar = el.querySelector('.personel-avatar');
+  const placeholder = el.querySelector('.personel-avatar-placeholder');
+  const imgHtml = avatar
+    ? `<img src="${avatar.src}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;border:1px solid var(--border);margin-right:8px;vertical-align:middle;flex-shrink:0">`
+    : placeholder
+      ? `<span style="width:24px;height:24px;border-radius:50%;background:var(--gray);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:var(--muted);margin-right:8px;flex-shrink:0;vertical-align:middle">${placeholder.textContent}</span>`
+      : '';
+
+  t.innerHTML = `<span style="display:flex;align-items:center">${imgHtml}${selectedPersonelAd}</span>`;
+  t.classList.add('has-value');
+
   document.querySelectorAll('#personelDropdownList .custom-option').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
   document.getElementById('personelDropdown').classList.remove('open');
