@@ -963,9 +963,11 @@ function updateSummary() {
 let _calismaData = null;
 let _ozelGunler = [];
 
+let _indirimData = null;
+
 async function calismaVerisiYukle() {
   try {
-    const res = await fetch(`${SUPA_URL}/rest/v1/ayarlar?key=in.(calisma_saatleri,ozel_gunler)&select=key,value`, {
+    const res = await fetch(`${SUPA_URL}/rest/v1/ayarlar?key=in.(calisma_saatleri,ozel_gunler,kampanya_indirim)&select=key,value`, {
       headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
     });
     const data = await res.json();
@@ -975,6 +977,16 @@ async function calismaVerisiYukle() {
       }
       if (row.key === 'ozel_gunler') {
         try { _ozelGunler = JSON.parse(row.value); } catch(e) {}
+      }
+      if (row.key === 'kampanya_indirim') {
+        try {
+          const d = JSON.parse(row.value);
+          const bugun = new Date().toISOString().split('T')[0];
+          // Tarih aralığında mı kontrol et
+          if (d && d.yuzde && d.bas <= bugun && d.bit >= bugun) {
+            _indirimData = d;
+          }
+        } catch(e) {}
       }
     });
   } catch(e) { console.warn('Çalışma verisi yüklenemedi:', e); }
@@ -1136,11 +1148,29 @@ async function hizmetleriYukle() {
             ? `${h.min_fiyat.toLocaleString('tr-TR')} TL`
             : `${h.min_fiyat.toLocaleString('tr-TR')} – ${h.max_fiyat.toLocaleString('tr-TR')} TL`;
         const sure = h.sure || '';
-        html += `<div class="custom-option" data-value="${h.ad}" data-price="${fiyat}" data-sure="${sure}" onclick="selectCustomOption(this)">
+
+        // İndirim hesapla
+        let fiyatGoster = fiyat;
+        let indirimliHtml = '';
+        if (_indirimData && _indirimData.yuzde) {
+          const hedefUygun = _indirimData.hedef === 'hepsi' || (_indirimData.seciliIds && _indirimData.seciliIds.includes(String(h.id)));
+          if (hedefUygun && h.min_fiyat) {
+            const yuzde = _indirimData.yuzde;
+            const indMin = Math.round(h.min_fiyat * (1 - yuzde/100));
+            const indMax = h.max_fiyat ? Math.round(h.max_fiyat * (1 - yuzde/100)) : null;
+            const indFiyat = indMax && indMax !== indMin
+              ? `${indMin.toLocaleString('tr-TR')} – ${indMax.toLocaleString('tr-TR')} TL`
+              : `${indMin.toLocaleString('tr-TR')} TL`;
+            indirimliHtml = `<span style="font-size:0.62rem;color:#bbb;text-decoration:line-through">${fiyat}</span> <span style="color:var(--gold);font-weight:600">${indFiyat}</span> <span style="font-size:0.55rem;background:var(--gold);color:#000;padding:1px 4px;border-radius:2px;font-weight:700">-%${yuzde}</span>`;
+            fiyatGoster = indFiyat;
+          }
+        }
+
+        html += `<div class="custom-option" data-value="${h.ad}" data-price="${fiyatGoster}" data-sure="${sure}" onclick="selectCustomOption(this)">
           <span>${h.ad}</span>
-          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;text-align:right">
             ${sure ? `<span style="font-size:0.62rem;color:var(--muted)">⏱ ${sure} dk</span>` : ''}
-            <span class="opt-price">${fiyat}</span>
+            ${indirimliHtml || `<span class="opt-price">${fiyat}</span>`}
           </div>
         </div>`;
       });
@@ -1152,10 +1182,10 @@ async function hizmetleriYukle() {
 }
 
 // Sayfa yüklenince hem personel hem hizmetleri çek
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   personelYukle();
+  await calismaVerisiYukle();
   hizmetleriYukle();
-  calismaVerisiYukle();
 });
 
 // Form gönder
