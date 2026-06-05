@@ -173,15 +173,17 @@ nav { position:fixed; top:0; left:0; right:0; z-index:200; height:88px; backgrou
 /* CTA */
 .portfolio-cta {
   padding:80px 60px;
-  background:var(--black);
+  background: linear-gradient(to bottom, #f2f2f2, #1a1a1a);
   display:flex; align-items:center; justify-content:space-between; gap:40px;
 }
-.portfolio-cta h2 { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:700; color:var(--white); }
+.portfolio-cta h2 { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:700; color:var(--black); }
+.portfolio-cta-sig { display:block; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.4); margin-bottom:14px; }
+.portfolio-cta h2 em { color:var(--gold); }
 .btn-gold { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--black); font-family:'Barlow Condensed',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; text-decoration:none; padding:14px 32px; transition:opacity 0.2s; }
 .btn-gold:hover { opacity:0.88; }
 
 /* FOOTER */
-footer { background:var(--black); color:var(--white); padding:64px 60px 0; overflow:hidden; border-top:1px solid rgba(255,255,255,0.08); }
+footer { background:var(--black); color:var(--white); padding:64px 60px 0; overflow:hidden; }
 .footer-top { display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:48px; padding-bottom:48px; border-bottom:1px solid rgba(255,255,255,0.1); }
 .footer-col-title { font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:20px; }
 .footer-left-col { display:flex; flex-direction:column; }
@@ -199,7 +201,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 .footer-social-icon:hover { opacity:0.8; }
 .footer-social-icon span { width:32px; height:32px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .footer-hours-col { display:flex; flex-direction:column; }
-.footer-hours-box { display:flex; flex-direction:column; gap:4px; border:1px solid rgba(255,255,255,0.12); border-radius:6px; padding:8px; background:rgba(255,255,255,0.03); }
+.footer-hours-box { display:flex; flex-direction:column; gap:4px; }
 .footer-hours-row { display:flex; justify-content:space-between; align-items:center; padding:7px 10px; border-radius:4px; font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:0.06em; color:rgba(255,255,255,0.45); }
 .footer-hours-row.today { background:rgba(26,111,244,0.18); border:1px solid rgba(26,111,244,0.5); color:var(--white); }
 .footer-hours-row.closed { color:rgba(255,255,255,0.2); }
@@ -322,7 +324,10 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 
 <!-- CTA -->
 <div class="portfolio-cta">
-  <h2>Siz de bu dönüşümün<br>bir parçası olun.</h2>
+  <div>
+    <span class="portfolio-cta-sig">— İsa Kurt imzasıyla</span>
+    <h2>Siz de bu dönüşümün<br>bir parçası <em>olun.</em></h2>
+  </div>
   <a href="/rezervasyon" class="btn-gold">REZERVASYON YAP</a>
 </div>
 
