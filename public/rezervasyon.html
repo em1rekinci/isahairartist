@@ -1055,6 +1055,7 @@ document.getElementById('rezDate').addEventListener('change', function() {
     this.value = '';
     updateSummary();
   } else {
+    hizmetleriYukle(); // tarihe göre indirimli fiyatları göster
     updateSummary();
   }
 });
@@ -1174,12 +1175,14 @@ async function hizmetleriYukle() {
             : `${h.min_fiyat.toLocaleString('tr-TR')} – ${h.max_fiyat.toLocaleString('tr-TR')} TL`;
         const sure = h.sure || '';
 
-        // İndirim hesapla
+        // İndirim hesapla — sadece tarih seçilmişse göster
+        const rezTarihSecili = document.getElementById('rezDate').value;
         let fiyatGoster = fiyat;
         let indirimliHtml = '';
-        if (_indirimData && _indirimData.yuzde) {
+        if (_indirimData && _indirimData.yuzde && rezTarihSecili) {
+          const indAktif = (!_indirimData.bas || _indirimData.bas <= rezTarihSecili) && (!_indirimData.bit || _indirimData.bit >= rezTarihSecili);
           const hedefUygun = _indirimData.hedef === 'hepsi' || (_indirimData.seciliIds && _indirimData.seciliIds.includes(String(h.id)));
-          if (hedefUygun && h.min_fiyat) {
+          if (indAktif && hedefUygun && h.min_fiyat) {
             const yuzde = _indirimData.yuzde;
             const indMin = Math.round(h.min_fiyat * (1 - yuzde/100));
             const indMax = h.max_fiyat ? Math.round(h.max_fiyat * (1 - yuzde/100)) : null;
