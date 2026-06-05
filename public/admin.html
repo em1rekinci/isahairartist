@@ -606,6 +606,67 @@ tbody td{padding:11px 14px;vertical-align:middle}
               <button class="sbtn sec" id="hfiptal" onclick="hizSifirla()" style="display:none">İptal</button>
             </div>
           </div></div>
+
+          <!-- İNDİRİM KARTI -->
+          <div class="card" style="margin-top:12px">
+            <div class="ch">
+              <h3>🏷️ Kampanya & İndirim</h3>
+              <div id="indirim-durum-badge" style="font-size:.6rem;padding:3px 8px;border-radius:20px;background:var(--bg);color:var(--text3);border:1px solid var(--line)">Pasif</div>
+            </div>
+            <div class="cb">
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <div class="ff">
+                  <label class="fl">İndirim Yüzdesi (%)</label>
+                  <input class="fi" id="ind-yuzde" type="number" min="1" max="99" placeholder="ör. 20" style="max-width:120px">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                  <div class="ff"><label class="fl">Başlangıç</label><input class="fi" id="ind-bas" type="date"></div>
+                  <div class="ff"><label class="fl">Bitiş</label><input class="fi" id="ind-bit" type="date"></div>
+                </div>
+                <div class="ff">
+                  <label class="fl">Hangi Hizmetlere</label>
+                  <div style="display:flex;gap:12px;margin-top:4px">
+                    <label style="display:flex;align-items:center;gap:5px;font-size:.75rem;cursor:pointer"><input type="radio" name="ind-hedef" value="hepsi" checked onchange="indHedefDegisti()"> Tüm Hizmetler</label>
+                    <label style="display:flex;align-items:center;gap:5px;font-size:.75rem;cursor:pointer"><input type="radio" name="ind-hedef" value="secili" onchange="indHedefDegisti()"> Seçili Hizmetler</label>
+                  </div>
+                </div>
+                <div id="ind-secili-wrap" style="display:none">
+                  <div id="ind-hiz-checkler" style="display:flex;flex-direction:column;gap:4px;max-height:160px;overflow-y:auto;padding:8px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r2)"></div>
+                </div>
+                <div id="ind-onizleme" style="font-size:.72rem;padding:8px 12px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r2);color:var(--text2);min-height:32px"></div>
+                <div style="display:flex;gap:8px">
+                  <button class="tbtn pri" onclick="indKaydet()">Kaydet</button>
+                  <button class="tbtn" onclick="indSil()" style="background:transparent;border-color:var(--rbdr);color:var(--red)">Kaldır</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ZAM KARTI -->
+          <div class="card" style="margin-top:12px">
+            <div class="ch"><h3>📈 Fiyat Zammı</h3></div>
+            <div class="cb">
+              <p style="font-size:.72rem;color:var(--text3);margin-bottom:12px;line-height:1.6">Seçili veya tüm hizmet fiyatlarına kalıcı zam uygular. Onayladıktan sonra fiyatlar güncellenir.</p>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <div class="ff">
+                  <label class="fl">Zam Yüzdesi (%)</label>
+                  <input class="fi" id="zam-yuzde" type="number" min="1" max="200" placeholder="ör. 15" style="max-width:120px">
+                </div>
+                <div class="ff">
+                  <label class="fl">Hangi Hizmetlere</label>
+                  <div style="display:flex;gap:12px;margin-top:4px">
+                    <label style="display:flex;align-items:center;gap:5px;font-size:.75rem;cursor:pointer"><input type="radio" name="zam-hedef" value="hepsi" checked onchange="zamHedefDegisti()"> Tüm Hizmetler</label>
+                    <label style="display:flex;align-items:center;gap:5px;font-size:.75rem;cursor:pointer"><input type="radio" name="zam-hedef" value="secili" onchange="zamHedefDegisti()"> Seçili Hizmetler</label>
+                  </div>
+                </div>
+                <div id="zam-secili-wrap" style="display:none">
+                  <div id="zam-hiz-checkler" style="display:flex;flex-direction:column;gap:4px;max-height:160px;overflow-y:auto;padding:8px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r2)"></div>
+                </div>
+                <div id="zam-onizleme" style="font-size:.72rem;padding:8px 12px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r2);color:var(--text2);min-height:32px"></div>
+                <button class="tbtn pri" onclick="zamUygula()" style="background:var(--red);border-color:var(--red)">⚠️ Zammı Uygula</button>
+              </div>
+            </div>
+          </div>
           
         </div>
       </div>
@@ -870,9 +931,7 @@ tbody td{padding:11px 14px;vertical-align:middle}
         <h2 style="font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--text)">Ayarlar</h2>
         <p style="font-size:.72rem;color:var(--text3);margin-top:4px">Yönetici erişim bilgilerini buradan güncelleyin</p>
       </div>
-      <div style="display:flex;flex-direction:column;gap:14px;max-width:680px">
-
-        <!-- Şifre -->
+      <div style="max-width:480px">
         <div class="card">
           <div class="ch"><h3>🔐 Şifre Değiştir</h3></div>
           <div class="cb">
@@ -886,54 +945,6 @@ tbody td{padding:11px 14px;vertical-align:middle}
             </div>
           </div>
         </div>
-
-        <!-- Haftalık Çalışma Saatleri -->
-        <div class="card">
-          <div class="ch">
-            <h3>🕐 Haftalık Çalışma Saatleri</h3>
-            <button class="tbtn pri" onclick="saatKaydet()">Kaydet</button>
-          </div>
-          <div class="cb">
-            <p style="font-size:.72rem;color:var(--text3);margin-bottom:16px;line-height:1.7">Salonun haftalık çalışma saatlerini ve kapalı günlerini ayarlayın. Kapalı günlerde rezervasyon alınamaz.</p>
-            <div class="cgrid" id="cgrid"></div>
-          </div>
-        </div>
-
-        <!-- Özel Günler -->
-        <div class="card">
-          <div class="ch">
-            <h3>📅 Özel Gün & İstisna</h3>
-          </div>
-          <div class="cb">
-            <p style="font-size:.72rem;color:var(--text3);margin-bottom:16px;line-height:1.7">Normalde kapalı olan bir günü geçici açın (bayram, özel gün) veya açık olan bir günü tatil için kapatın.</p>
-
-            <!-- Ekle formu -->
-            <div style="display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:end;margin-bottom:16px">
-              <div class="ff">
-                <label class="fl">Tarih</label>
-                <input class="fi" type="date" id="ozel-tarih" style="background:var(--bg)">
-              </div>
-              <div class="ff">
-                <label class="fl">Durum</label>
-                <select class="fsel" id="ozel-durum" style="background:var(--bg)">
-                  <option value="acik">✅ Bu gün açık</option>
-                  <option value="kapali">🔴 Bu gün kapalı</option>
-                </select>
-              </div>
-              <div class="ff">
-                <label class="fl">Not (opsiyonel)</label>
-                <input class="fi" type="text" id="ozel-not" placeholder="ör. Bayram tatili" style="background:var(--bg)">
-              </div>
-              <button class="tbtn pri" onclick="ozelGunEkle()" style="white-space:nowrap;height:40px;margin-bottom:1px">+ Ekle</button>
-            </div>
-
-            <!-- Liste -->
-            <div id="ozel-gun-liste" style="display:flex;flex-direction:column;gap:6px">
-              <div class="bos" style="padding:20px">Henüz özel gün eklenmedi.</div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
 
@@ -1221,14 +1232,6 @@ function cikisYap(){SFR='';TRZ=[];document.getElementById('panel').style.display
 
 // ─── PANEL BAŞLAT ───
 async function panelBaslat(){
-  // Şifreyi Supabase'den yükle
-  try{
-    const res=await sRest('ayarlar?key=eq.admin_sifre&select=value');
-    if(res&&res.length&&res[0].value){
-      ADMIN_SIFRE=res[0].value;
-      DS=res[0].value;
-    }
-  }catch(e){}
   ayarlarYukle();
   saatGuncelle();setInterval(saatGuncelle,1000);
   try{cgridOlustur();}catch(e){}
@@ -1862,6 +1865,151 @@ function personelSifirla(){
 
 }
 
+// ─── İNDİRİM & ZAM ───
+
+function indHedefDegisti() {
+  const secili = document.querySelector('input[name="ind-hedef"]:checked')?.value === 'secili';
+  document.getElementById('ind-secili-wrap').style.display = secili ? 'block' : 'none';
+  if (secili) indHizChecklerDoldur('ind-hiz-checkler');
+  indOnizlemeGuncelle();
+}
+
+function zamHedefDegisti() {
+  const secili = document.querySelector('input[name="zam-hedef"]:checked')?.value === 'secili';
+  document.getElementById('zam-secili-wrap').style.display = secili ? 'block' : 'none';
+  if (secili) indHizChecklerDoldur('zam-hiz-checkler');
+  zamOnizlemeGuncelle();
+}
+
+function indHizChecklerDoldur(elId) {
+  const el = document.getElementById(elId);
+  if (!el || el.children.length > 0) return;
+  hizmetler.forEach(h => {
+    const div = document.createElement('label');
+    div.style.cssText = 'display:flex;align-items:center;gap:6px;font-size:.73rem;cursor:pointer;padding:2px 0';
+    const cb = elId === 'ind-hiz-checkler' ? 'indOnizlemeGuncelle()' : 'zamOnizlemeGuncelle()';
+    div.innerHTML = `<input type="checkbox" value="${h.id}" data-ad="${h.ad}" data-min="${h.min_fiyat||0}" data-max="${h.max_fiyat||0}" onchange="${cb}"> ${h.ad} <span style="color:var(--text3);font-size:.65rem">${h.min_fiyat?h.min_fiyat.toLocaleString('tr-TR')+' TL':''}</span>`;
+    el.appendChild(div);
+  });
+}
+
+function indOnizlemeGuncelle() {
+  const el = document.getElementById('ind-onizleme');
+  if (!el) return;
+  const yuzde = parseInt(document.getElementById('ind-yuzde').value) || 0;
+  if (!yuzde) { el.textContent = ''; return; }
+  const hedef = document.querySelector('input[name="ind-hedef"]:checked')?.value;
+  const hedefMetin = hedef === 'secili'
+    ? Array.from(document.querySelectorAll('#ind-hiz-checkler input:checked')).map(c=>c.dataset.ad).join(', ') || 'Seçili hizmetler'
+    : 'Tüm hizmetler';
+  el.innerHTML = `<strong>%${yuzde} indirim</strong> uygulanacak → ${hedefMetin}`;
+}
+
+function zamOnizlemeGuncelle() {
+  const el = document.getElementById('zam-onizleme');
+  if (!el) return;
+  const yuzde = parseInt(document.getElementById('zam-yuzde').value) || 0;
+  if (!yuzde) { el.textContent = ''; return; }
+  const ornekler = hizmetler.slice(0,3);
+  el.innerHTML = ornekler.map(h => {
+    const yeniMin = Math.round((h.min_fiyat||0) * (1 + yuzde/100));
+    return `${h.ad}: ${(h.min_fiyat||0).toLocaleString('tr-TR')} → <strong>${yeniMin.toLocaleString('tr-TR')} TL</strong>`;
+  }).join('<br>') + (hizmetler.length > 3 ? '<br>...' : '');
+}
+
+async function indKaydet() {
+  const yuzde = parseInt(document.getElementById('ind-yuzde').value) || 0;
+  const bas = document.getElementById('ind-bas').value;
+  const bit = document.getElementById('ind-bit').value;
+  const hedef = document.querySelector('input[name="ind-hedef"]:checked')?.value || 'hepsi';
+  const seciliIds = hedef === 'secili'
+    ? Array.from(document.querySelectorAll('#ind-hiz-checkler input:checked')).map(c => c.value)
+    : [];
+  if (!yuzde) { toast('İndirim yüzdesi girin.', 'hata'); return; }
+  if (!bas || !bit) { toast('Başlangıç ve bitiş tarihini girin.', 'hata'); return; }
+  const data = { yuzde, bas, bit, hedef, seciliIds };
+  try {
+    const check = await sRest('ayarlar?key=eq.kampanya_indirim&select=key');
+    if (check?.length) {
+      await sRest('ayarlar?key=eq.kampanya_indirim', { method: 'PATCH', body: JSON.stringify({ value: JSON.stringify(data) }) });
+    } else {
+      await sRest('ayarlar', { method: 'POST', body: JSON.stringify({ key: 'kampanya_indirim', value: JSON.stringify(data) }) });
+    }
+    indDurumGuncelle(data);
+    toast(`%${yuzde} kampanya kaydedildi ✓`, 'ok');
+  } catch(e) { toast('Kayıt hatası: ' + e.message, 'hata'); }
+}
+
+async function indSil() {
+  if (!confirm('Kampanya kaldırılsın mı?')) return;
+  try {
+    await sRest('ayarlar?key=eq.kampanya_indirim', { method: 'PATCH', body: JSON.stringify({ value: '' }) });
+    document.getElementById('ind-yuzde').value = '';
+    document.getElementById('ind-bas').value = '';
+    document.getElementById('ind-bit').value = '';
+    document.getElementById('ind-onizleme').textContent = '';
+    indDurumGuncelle(null);
+    toast('Kampanya kaldırıldı.', 'ok');
+  } catch(e) { toast('Hata: ' + e.message, 'hata'); }
+}
+
+function indDurumGuncelle(data) {
+  const badge = document.getElementById('indirim-durum-badge');
+  if (!badge) return;
+  if (!data || !data.yuzde) {
+    badge.textContent = 'Pasif';
+    badge.style.cssText = 'font-size:.6rem;padding:3px 8px;border-radius:20px;background:var(--bg);color:var(--text3);border:1px solid var(--line)';
+    return;
+  }
+  const bugun = new Date().toISOString().split('T')[0];
+  const aktif = (!data.bas || data.bas <= bugun) && (!data.bit || data.bit >= bugun);
+  badge.textContent = aktif ? `✓ Aktif %${data.yuzde}` : `Bekliyor %${data.yuzde}`;
+  badge.style.cssText = `font-size:.6rem;padding:3px 8px;border-radius:20px;background:${aktif?'rgba(0,180,80,.12)':'var(--bg)'};color:${aktif?'var(--green)':'var(--text3)'};border:1px solid ${aktif?'var(--green)':'var(--line)'}`;
+}
+
+async function indYukle() {
+  try {
+    const res = await sRest('ayarlar?key=eq.kampanya_indirim&select=value');
+    if (res?.length && res[0].value) {
+      const data = JSON.parse(res[0].value);
+      if (data.yuzde) {
+        document.getElementById('ind-yuzde').value = data.yuzde;
+        document.getElementById('ind-bas').value = data.bas || '';
+        document.getElementById('ind-bit').value = data.bit || '';
+        if (data.hedef === 'secili') {
+          document.querySelector('input[name="ind-hedef"][value="secili"]').checked = true;
+          indHedefDegisti();
+        }
+        indDurumGuncelle(data);
+      }
+    }
+  } catch(e) {}
+}
+
+async function zamUygula() {
+  const yuzde = parseInt(document.getElementById('zam-yuzde').value) || 0;
+  if (!yuzde) { toast('Zam yüzdesi girin.', 'hata'); return; }
+  const hedef = document.querySelector('input[name="zam-hedef"]:checked')?.value || 'hepsi';
+  let hedefHizmetler = hedef === 'secili'
+    ? Array.from(document.querySelectorAll('#zam-hiz-checkler input:checked')).map(c => hizmetler.find(h => h.id == c.value)).filter(Boolean)
+    : [...hizmetler];
+  if (!hedefHizmetler.length) { toast(hedef==='secili'?'Hizmet seçin.':'Hizmet bulunamadı.', 'hata'); return; }
+  if (!confirm(`${hedefHizmetler.length} hizmete %${yuzde} zam uygulanacak. Onaylıyor musunuz?`)) return;
+  let basarili = 0;
+  for (const h of hedefHizmetler) {
+    const yeniMin = h.min_fiyat ? Math.round(h.min_fiyat * (1 + yuzde/100)) : null;
+    const yeniMax = h.max_fiyat ? Math.round(h.max_fiyat * (1 + yuzde/100)) : null;
+    try {
+      await sRest(`hizmetler?id=eq.${h.id}`, { method: 'PATCH', body: JSON.stringify({ min_fiyat: yeniMin, max_fiyat: yeniMax }) });
+      basarili++;
+    } catch(e) {}
+  }
+  toast(`${basarili} hizmete %${yuzde} zam uygulandı ✓`, 'ok');
+  document.getElementById('zam-yuzde').value = '';
+  document.getElementById('zam-onizleme').textContent = '';
+  hizYukle();
+}
+
 // ─── HİZMETLER ───
 function hizRender(){
   const e=document.getElementById('hizbody');
@@ -2439,23 +2587,12 @@ function kapaliToggle(i,kapali){
   document.getElementById(`ac-${i}`).disabled=kapali;
   document.getElementById(`kp-${i}`).disabled=kapali;
 }
-async function saatKaydet(){
+function saatKaydet(){
   calisma.forEach((c,i)=>{
     c.ac=document.getElementById(`ac-${i}`).value||c.ac;
     c.kp=document.getElementById(`kp-${i}`).value||c.kp;
   });
-  try {
-    const val = JSON.stringify(calisma);
-    const check = await sRest('ayarlar?key=eq.calisma_saatleri&select=key');
-    if (check && check.length) {
-      await sRest('ayarlar?key=eq.calisma_saatleri', {method:'PATCH', body:JSON.stringify({value:val})});
-    } else {
-      await sRest('ayarlar', {method:'POST', body:JSON.stringify({key:'calisma_saatleri', value:val})});
-    }
-    toast('Çalışma saatleri kaydedildi ✓','ok');
-  } catch(e) {
-    toast('Kayıt hatası: '+e.message,'hata');
-  }
+  toast('Çalışma saatleri kaydedildi.','ok');
 }
 
 // ─── HİZMET SIRALAMA ───
@@ -2714,13 +2851,13 @@ function sayfaGec(sayfa,navEl){
   document.body.scrollTop=0;
   const mainEl=document.querySelector('.main');if(mainEl)mainEl.scrollTop=0;
   sidebarKapat();
-  if(sayfa==='hizmetler')hizRender();
+  if(sayfa==='hizmetler'){hizRender();indYukle();}
   if(sayfa==='musteriler')mustRender();
   if(sayfa==='takvim')tkRender();
   if(sayfa==='personel'){pListRender();pStatRender();}
   if(sayfa==='ciro')ciroRender();
   if(sayfa==='portfolio')portRender();
-  if(sayfa==='ayarlar'){cgridOlustur();ayarlarYukle();ozelGunleriYukle();}
+  if(sayfa==='ayarlar'){cgridOlustur();ayarlarYukle();}
 }
 
 // ─── PORTFOLİO ───
@@ -2971,84 +3108,13 @@ window.addEventListener('resize',()=>{
 });
 
 
-// ─── ÖZEL GÜNLER ───
-let ozelGunler = [];
-
-async function ozelGunleriYukle() {
-  try {
-    const res = await sRest('ayarlar?key=eq.ozel_gunler&select=value');
-    if (res && res.length && res[0].value) {
-      ozelGunler = JSON.parse(res[0].value);
-    }
-  } catch(e) { ozelGunler = []; }
-  ozelGunRender();
-}
-
-function ozelGunRender() {
-  const el = document.getElementById('ozel-gun-liste');
-  if (!el) return;
-  if (!ozelGunler.length) {
-    el.innerHTML = '<div class="bos" style="padding:20px">Henüz özel gün eklenmedi.</div>';
-    return;
-  }
-  const sorted = [...ozelGunler].sort((a,b) => a.tarih.localeCompare(b.tarih));
-  el.innerHTML = sorted.map(g => {
-    const d = new Date(g.tarih + 'T12:00');
-    const tarihStr = d.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-    const gecmis = new Date(g.tarih) < new Date(new Date().toISOString().split('T')[0]);
-    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--line);border-radius:var(--r2);background:var(--white);${gecmis?'opacity:.45':''}">
-      <span style="font-size:1rem">${g.durum==='acik'?'✅':'🔴'}</span>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:.76rem;font-weight:600;color:var(--text)">${tarihStr}</div>
-        <div style="font-size:.65rem;color:var(--text3);margin-top:2px">${g.durum==='acik'?'Bu gün açık':'Bu gün kapalı'}${g.not?' · '+g.not:''}</div>
-      </div>
-      ${gecmis?'<span style="font-size:.52rem;color:var(--text3);letter-spacing:.1em">GEÇMİŞ</span>':''}
-      <button class="bsm bsil" onclick="ozelGunSil('${g.tarih}')">✕</button>
-    </div>`;
-  }).join('');
-}
-
-async function ozelGunEkle() {
-  const tarih = document.getElementById('ozel-tarih').value;
-  const durum = document.getElementById('ozel-durum').value;
-  const not   = document.getElementById('ozel-not').value.trim();
-  if (!tarih) { toast('Lütfen tarih seçin.', 'hata'); return; }
-  if (ozelGunler.find(g => g.tarih === tarih)) {
-    toast('Bu tarih zaten ekli.', 'hata'); return;
-  }
-  ozelGunler.push({ tarih, durum, not });
-  await ozelGunKaydet();
-  document.getElementById('ozel-tarih').value = '';
-  document.getElementById('ozel-not').value = '';
-  ozelGunRender();
-  toast('Özel gün eklendi.', 'ok');
-}
-
-async function ozelGunSil(tarih) {
-  ozelGunler = ozelGunler.filter(g => g.tarih !== tarih);
-  await ozelGunKaydet();
-  ozelGunRender();
-  toast('Silindi.', 'ok');
-}
-
-async function ozelGunKaydet() {
-  try {
-    const check = await sRest('ayarlar?key=eq.ozel_gunler&select=key');
-    if (check && check.length) {
-      await sRest('ayarlar?key=eq.ozel_gunler', { method: 'PATCH', body: JSON.stringify({ value: JSON.stringify(ozelGunler) }) });
-    } else {
-      await sRest('ayarlar', { method: 'POST', body: JSON.stringify({ key: 'ozel_gunler', value: JSON.stringify(ozelGunler) }) });
-    }
-  } catch(e) { toast('Kayıt hatası: ' + e.message, 'hata'); }
-}
-
 // ─── AYARLAR ───
 function ayarlarYukle(){
   const ad=localStorage.getItem('ha_admin_ad')||'İsa Kurt';
   document.getElementById('ay-ad').value=ad;
   document.getElementById('sunm').textContent=ad;
 }
-async function sifreDegistir(){
+function sifreDegistir(){
   const eski=document.getElementById('ay-eski').value.trim();
   const yeni=document.getElementById('ay-yeni').value.trim();
   const yeni2=document.getElementById('ay-yeni2').value.trim();
@@ -3057,18 +3123,7 @@ async function sifreDegistir(){
   if(eski!==ADMIN_SIFRE){toast('Mevcut şifre hatalı.','hata');return;}
   if(yeni&&yeni.length<6){toast('Yeni şifre en az 6 karakter olmalı.','hata');return;}
   if(yeni&&yeni!==yeni2){toast('Şifreler eşleşmiyor.','hata');return;}
-  if(yeni){
-    ADMIN_SIFRE=yeni;DS=yeni;
-    // Supabase'e kaydet
-    try{
-      const check=await sRest('ayarlar?key=eq.admin_sifre&select=key');
-      if(check&&check.length){
-        await sRest('ayarlar?key=eq.admin_sifre',{method:'PATCH',body:JSON.stringify({value:yeni})});
-      } else {
-        await sRest('ayarlar',{method:'POST',body:JSON.stringify({key:'admin_sifre',value:yeni})});
-      }
-    }catch(e){toast('Şifre kaydedilemedi: '+e.message,'hata');return;}
-  }
+  if(yeni){ADMIN_SIFRE=yeni;DS=yeni;}
   if(ad){localStorage.setItem('ha_admin_ad',ad);document.getElementById('sunm').textContent=ad;}
   document.getElementById('ay-eski').value='';
   document.getElementById('ay-yeni').value='';
