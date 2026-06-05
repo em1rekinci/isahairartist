@@ -982,8 +982,8 @@ async function calismaVerisiYukle() {
         try {
           const d = JSON.parse(row.value);
           const bugun = new Date().toISOString().split('T')[0];
-          // Sadece bitiş tarihi geçmemişse aktif
-          if (d && d.yuzde && (!d.bit || d.bit >= bugun)) {
+          // Başlangıç ≤ bugün ≤ bitiş
+          if (d && d.yuzde && d.bas <= bugun && d.bit >= bugun) {
             _indirimData = d;
           }
         } catch(e) {}
