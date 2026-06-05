@@ -1539,5 +1539,19 @@ function toggleService(btn) {
 })();
 
 </script>
+<!-- Elfsight badge kaldır -->
+<script>
+function removeBadge() {
+  document.querySelectorAll('a').forEach(a => {
+    if (a.href && (a.href.includes('free-widget') || a.href.includes('removeBranding') || a.href.includes('utm_campaign=free'))) {
+      a.style.cssText = 'display:none!important';
+    }
+  });
+}
+// Hem hemen hem gecikmeli çalıştır
+setTimeout(removeBadge, 500);
+setTimeout(removeBadge, 1500);
+setTimeout(removeBadge, 3000);
+</script>
 </body>
 </html>
