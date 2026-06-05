@@ -799,17 +799,19 @@ function toggleServiceDropdown() {
 }
 
 function selectCustomOption(el) {
-  const val   = el.dataset.value;
-  const price = el.dataset.price || '';
-  const sure  = el.dataset.sure || '';
-  const idx   = selectedServices.findIndex(s => s.ad === val);
+  const val    = el.dataset.value;
+  const price  = el.dataset.price || '';
+  const sure   = el.dataset.sure || '';
+  const rawMin = parseInt(el.dataset.rawMin) || 0;
+  const rawMax = parseInt(el.dataset.rawMax) || 0;
+  const idx    = selectedServices.findIndex(s => s.ad === val);
 
   if (idx > -1) {
     // Zaten seçiliyse kaldır
     selectedServices.splice(idx, 1);
     el.classList.remove('selected');
   } else {
-    selectedServices.push({ ad: val, fiyat: price, sure: sure });
+    selectedServices.push({ ad: val, fiyat: price, sure: sure, rawMin, rawMax });
     el.classList.add('selected');
   }
 
@@ -907,31 +909,56 @@ function updateSummary() {
     sumPersonel.className = 'summary-val' + (selectedPersonelAd ? '' : ' empty');
   }
 
-  // Toplam fiyat aralığı hesapla
+  // İndirim tarihe göre aktif mi?
+  function indirimAktifMi(tarih) {
+    if (!_indirimData || !_indirimData.yuzde) return false;
+    if (!tarih) return false;
+    const t = tarih;
+    return (!_indirimData.bas || _indirimData.bas <= t) && (!_indirimData.bit || _indirimData.bit >= t);
+  }
+
+  // Toplam fiyat aralığı hesapla (rezervasyon tarihine göre indirim uygula)
+  const rezTarih = document.getElementById('rezDate').value;
+  const indAktif = _indirimData && _indirimData.yuzde &&
+    rezTarih &&
+    (!_indirimData.bas || _indirimData.bas <= rezTarih) &&
+    (!_indirimData.bit || _indirimData.bit >= rezTarih);
+
   let toplamMin = 0, toplamMax = 0, fiyatSorulacak = false;
   selectedServices.forEach(s => {
-    if (!s.fiyat || s.fiyat === 'Fiyat için arayın') { fiyatSorulacak = true; return; }
-    // "1.250 – 1.750 TL" veya "1.500 TL" formatını parse et
-    const temiz = s.fiyat.replace(/\./g,'').replace(' TL','').trim();
-    if (temiz.includes('–')) {
-      const [mn, mx] = temiz.split('–').map(v => parseInt(v.trim()));
-      toplamMin += mn || 0;
-      toplamMax += mx || 0;
-    } else {
-      const v = parseInt(temiz);
-      toplamMin += v || 0;
-      toplamMax += v || 0;
-    }
+    if (!s.rawMin) return; // ham fiyat yoksa atla
+    const hedefUygun = !indAktif ? false :
+      (_indirimData.hedef === 'hepsi' || (_indirimData.seciliIds?.includes(String(s.id))));
+    const carpan = (indAktif && hedefUygun) ? (1 - _indirimData.yuzde / 100) : 1;
+    toplamMin += Math.round((s.rawMin || 0) * carpan);
+    toplamMax += Math.round((s.rawMax || s.rawMin || 0) * carpan);
   });
+
+  // Fallback: rawMin yoksa data-price'dan parse et
+  if (toplamMin === 0) {
+    selectedServices.forEach(s => {
+      if (!s.fiyat || s.fiyat === 'Fiyat için arayın') { fiyatSorulacak = true; return; }
+      const temiz = s.fiyat.replace(/\./g,'').replace(' TL','').trim();
+      if (temiz.includes('–')) {
+        const [mn, mx] = temiz.split('–').map(v => parseInt(v.trim()));
+        toplamMin += mn || 0; toplamMax += mx || 0;
+      } else {
+        const v = parseInt(temiz);
+        toplamMin += v || 0; toplamMax += v || 0;
+      }
+    });
+  }
+
   let toplamFiyat = '—';
   if (selectedServices.length) {
     if (toplamMin === 0 && fiyatSorulacak) {
       toplamFiyat = 'Fiyat için arayın';
     } else if (toplamMin === toplamMax) {
-      toplamFiyat = toplamMin.toLocaleString('tr-TR') + ' TL' + (fiyatSorulacak ? ' + (fiyat sorulacak hizmetler)' : '');
+      toplamFiyat = toplamMin.toLocaleString('tr-TR') + ' TL' + (fiyatSorulacak ? ' +' : '');
     } else {
       toplamFiyat = toplamMin.toLocaleString('tr-TR') + ' – ' + toplamMax.toLocaleString('tr-TR') + ' TL' + (fiyatSorulacak ? ' +' : '');
     }
+    if (indAktif) toplamFiyat += ` (-%${_indirimData.yuzde} kampanya)`;
   }
   sumPrice.textContent = toplamFiyat;
   sumPrice.className = 'summary-val' + (selectedServices.length ? '' : ' empty');
@@ -981,10 +1008,8 @@ async function calismaVerisiYukle() {
       if (row.key === 'kampanya_indirim') {
         try {
           const d = JSON.parse(row.value);
-          const bugun = new Date().toISOString().split('T')[0];
-          // Başlangıç ≤ bugün ≤ bitiş
-          if (d && d.yuzde && d.bas <= bugun && d.bit >= bugun) {
-            _indirimData = d;
+          if (d && d.yuzde) {
+            _indirimData = d; // tarihi rezervasyon tarihiyle karşılaştıracağız
           }
         } catch(e) {}
       }
@@ -1166,7 +1191,7 @@ async function hizmetleriYukle() {
           }
         }
 
-        html += `<div class="custom-option" data-value="${h.ad}" data-price="${fiyatGoster}" data-sure="${sure}" onclick="selectCustomOption(this)">
+        html += `<div class="custom-option" data-value="${h.ad}" data-price="${fiyatGoster}" data-sure="${sure}" data-raw-min="${h.min_fiyat||0}" data-raw-max="${h.max_fiyat||0}" onclick="selectCustomOption(this)">
           <span>${h.ad}</span>
           <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;text-align:right">
             ${sure ? `<span style="font-size:0.62rem;color:var(--muted)">⏱ ${sure} dk</span>` : ''}
