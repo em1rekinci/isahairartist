@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>İsa Kurt | Admin</title>
+<title>Admin Panel — Hair Artist İsa Kurt</title>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -870,7 +870,9 @@ tbody td{padding:11px 14px;vertical-align:middle}
         <h2 style="font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--text)">Ayarlar</h2>
         <p style="font-size:.72rem;color:var(--text3);margin-top:4px">Yönetici erişim bilgilerini buradan güncelleyin</p>
       </div>
-      <div style="max-width:480px">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:680px">
+
+        <!-- Şifre -->
         <div class="card">
           <div class="ch"><h3>🔐 Şifre Değiştir</h3></div>
           <div class="cb">
@@ -884,6 +886,54 @@ tbody td{padding:11px 14px;vertical-align:middle}
             </div>
           </div>
         </div>
+
+        <!-- Haftalık Çalışma Saatleri -->
+        <div class="card">
+          <div class="ch">
+            <h3>🕐 Haftalık Çalışma Saatleri</h3>
+            <button class="tbtn pri" onclick="saatKaydet()">Kaydet</button>
+          </div>
+          <div class="cb">
+            <p style="font-size:.72rem;color:var(--text3);margin-bottom:16px;line-height:1.7">Salonun haftalık çalışma saatlerini ve kapalı günlerini ayarlayın. Kapalı günlerde rezervasyon alınamaz.</p>
+            <div class="cgrid" id="cgrid"></div>
+          </div>
+        </div>
+
+        <!-- Özel Günler -->
+        <div class="card">
+          <div class="ch">
+            <h3>📅 Özel Gün & İstisna</h3>
+          </div>
+          <div class="cb">
+            <p style="font-size:.72rem;color:var(--text3);margin-bottom:16px;line-height:1.7">Normalde kapalı olan bir günü geçici açın (bayram, özel gün) veya açık olan bir günü tatil için kapatın.</p>
+
+            <!-- Ekle formu -->
+            <div style="display:grid;grid-template-columns:1fr 1fr auto auto;gap:8px;align-items:end;margin-bottom:16px">
+              <div class="ff">
+                <label class="fl">Tarih</label>
+                <input class="fi" type="date" id="ozel-tarih" style="background:var(--bg)">
+              </div>
+              <div class="ff">
+                <label class="fl">Durum</label>
+                <select class="fsel" id="ozel-durum" style="background:var(--bg)">
+                  <option value="acik">✅ Bu gün açık</option>
+                  <option value="kapali">🔴 Bu gün kapalı</option>
+                </select>
+              </div>
+              <div class="ff">
+                <label class="fl">Not (opsiyonel)</label>
+                <input class="fi" type="text" id="ozel-not" placeholder="ör. Bayram tatili" style="background:var(--bg)">
+              </div>
+              <button class="tbtn pri" onclick="ozelGunEkle()" style="white-space:nowrap;height:40px;margin-bottom:1px">+ Ekle</button>
+            </div>
+
+            <!-- Liste -->
+            <div id="ozel-gun-liste" style="display:flex;flex-direction:column;gap:6px">
+              <div class="bos" style="padding:20px">Henüz özel gün eklenmedi.</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -2651,7 +2701,7 @@ function sayfaGec(sayfa,navEl){
   if(sayfa==='personel'){pListRender();pStatRender();}
   if(sayfa==='ciro')ciroRender();
   if(sayfa==='portfolio')portRender();
-  if(sayfa==='ayarlar'){cgridOlustur();ayarlarYukle();}
+  if(sayfa==='ayarlar'){cgridOlustur();ayarlarYukle();ozelGunleriYukle();}
 }
 
 // ─── PORTFOLİO ───
@@ -2901,6 +2951,77 @@ window.addEventListener('resize',()=>{
   },150);
 });
 
+
+// ─── ÖZEL GÜNLER ───
+let ozelGunler = [];
+
+async function ozelGunleriYukle() {
+  try {
+    const res = await sRest('ayarlar?key=eq.ozel_gunler&select=value');
+    if (res && res.length && res[0].value) {
+      ozelGunler = JSON.parse(res[0].value);
+    }
+  } catch(e) { ozelGunler = []; }
+  ozelGunRender();
+}
+
+function ozelGunRender() {
+  const el = document.getElementById('ozel-gun-liste');
+  if (!el) return;
+  if (!ozelGunler.length) {
+    el.innerHTML = '<div class="bos" style="padding:20px">Henüz özel gün eklenmedi.</div>';
+    return;
+  }
+  const sorted = [...ozelGunler].sort((a,b) => a.tarih.localeCompare(b.tarih));
+  el.innerHTML = sorted.map(g => {
+    const d = new Date(g.tarih + 'T12:00');
+    const tarihStr = d.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+    const gecmis = new Date(g.tarih) < new Date(new Date().toISOString().split('T')[0]);
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--line);border-radius:var(--r2);background:var(--white);${gecmis?'opacity:.45':''}">
+      <span style="font-size:1rem">${g.durum==='acik'?'✅':'🔴'}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.76rem;font-weight:600;color:var(--text)">${tarihStr}</div>
+        <div style="font-size:.65rem;color:var(--text3);margin-top:2px">${g.durum==='acik'?'Bu gün açık':'Bu gün kapalı'}${g.not?' · '+g.not:''}</div>
+      </div>
+      ${gecmis?'<span style="font-size:.52rem;color:var(--text3);letter-spacing:.1em">GEÇMİŞ</span>':''}
+      <button class="bsm bsil" onclick="ozelGunSil('${g.tarih}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+async function ozelGunEkle() {
+  const tarih = document.getElementById('ozel-tarih').value;
+  const durum = document.getElementById('ozel-durum').value;
+  const not   = document.getElementById('ozel-not').value.trim();
+  if (!tarih) { toast('Lütfen tarih seçin.', 'hata'); return; }
+  if (ozelGunler.find(g => g.tarih === tarih)) {
+    toast('Bu tarih zaten ekli.', 'hata'); return;
+  }
+  ozelGunler.push({ tarih, durum, not });
+  await ozelGunKaydet();
+  document.getElementById('ozel-tarih').value = '';
+  document.getElementById('ozel-not').value = '';
+  ozelGunRender();
+  toast('Özel gün eklendi.', 'ok');
+}
+
+async function ozelGunSil(tarih) {
+  ozelGunler = ozelGunler.filter(g => g.tarih !== tarih);
+  await ozelGunKaydet();
+  ozelGunRender();
+  toast('Silindi.', 'ok');
+}
+
+async function ozelGunKaydet() {
+  try {
+    const check = await sRest('ayarlar?key=eq.ozel_gunler&select=key');
+    if (check && check.length) {
+      await sRest('ayarlar?key=eq.ozel_gunler', { method: 'PATCH', body: JSON.stringify({ value: JSON.stringify(ozelGunler) }) });
+    } else {
+      await sRest('ayarlar', { method: 'POST', body: JSON.stringify({ key: 'ozel_gunler', value: JSON.stringify(ozelGunler) }) });
+    }
+  } catch(e) { toast('Kayıt hatası: ' + e.message, 'hata'); }
+}
 
 // ─── AYARLAR ───
 function ayarlarYukle(){
