@@ -286,7 +286,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       <div class="page-hero-stat-lbl">Portfolyo Çalışması</div>
     </div>
     <div class="page-hero-stat">
-      <div class="page-hero-stat-num">★ 4.9</div>
+      <div class="page-hero-stat-num" id="google-rating">★ 4.9</div>
       <div class="page-hero-stat-lbl">Google Puanı</div>
     </div>
   </div>
@@ -324,7 +324,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 <!-- CTA -->
 <div class="portfolio-cta">
   <h2>Siz de bu dönüşümün<br>bir parçası olun.</h2>
-  <a href="/rezervasyon" class="btn-gold">RANDEVU AL +</a>
+  <a href="/rezervasyon" class="btn-gold">REZERVASYON YAP</a>
 </div>
 
 <!-- FOOTER -->
@@ -539,6 +539,18 @@ document.getElementById('ham').addEventListener('click', () => {
 
 // ─── BAŞLAT ───────────────────────────────────────────────────────
 portfolyoYukle();
+
+// Google Rating
+(function() {
+  var el = document.getElementById('google-rating');
+  if (!el) return;
+  fetch('/api/google-rating')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.puan) el.textContent = '★ ' + d.puan;
+    })
+    .catch(function() {});
+})();
 </script>
 </body>
 </html>
