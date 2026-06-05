@@ -78,6 +78,7 @@ nav {
   transition:color 0.2s;
 }
 .mob-menu a:hover { color:var(--gold); opacity:1; }
+.mob-book:hover { color:var(--black) !important; opacity:0.88; }
 .mob-close {
   position:absolute; top:20px; right:28px;
   background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--muted);
@@ -848,8 +849,8 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   <a href="#about" onclick="this.closest('.mob-menu').classList.remove('open')">Hakkımızda</a>
   <a href="#services" onclick="this.closest('.mob-menu').classList.remove('open')">Hizmetler</a>
   <a href="/fiyatlar" onclick="this.closest('.mob-menu').classList.remove('open')">Fiyatlar</a>
-  <a href="#rezervasyon" onclick="this.closest('.mob-menu').classList.remove('open')">Rezervasyon</a>
   <a href="#contact" onclick="this.closest('.mob-menu').classList.remove('open')">İletişim</a>
+  <a href="/rezervasyon" class="mob-book">REZERVASYON YAP</a>
 </div>
 
 <!-- HERO: sonsuz otomatik carousel, 3 panel görünür, birer birer kayıyor -->
@@ -930,7 +931,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
         <div class="intro-stat-lbl">Memnun müşteri</div>
       </div>
       <div class="intro-stat">
-        <div class="intro-stat-num">★ 4.9</div>
+        <div class="intro-stat-num" id="google-rating">★ 4.9</div>
         <div class="intro-stat-lbl">Google puanı</div>
       </div>
     </div>
@@ -1043,7 +1044,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   <div class="banner-cta-bg"><img src="images/banner.jpg" alt="" onerror="this.style.display='none'"></div>
   <div class="banner-cta-content">
     <h2>ÇÜNKÜ SEN HER ŞEYE<br>DEĞERSİN</h2>
-    <a href="/rezervasyon" class="btn-gold">RANDEVU AL +</a>
+    <a href="/rezervasyon" class="btn-gold">REZERVASYON YAP</a>
   </div>
   <!-- Sağ kadın görseli -->
   <div class="banner-woman">
@@ -1125,7 +1126,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   </div>
   <div class="salon-content">
     <div class="salon-rating">
-      <span class="salon-rating-g">4,9</span>
+      <span class="salon-rating-g" id="google-rating-2">4,9</span>
       <span class="salon-stars">★★★★★</span>
     </div>
     <h2>İSA KURT HAIR ARTIST</h2>
@@ -1445,6 +1446,21 @@ function toggleService(btn) {
   btn.classList.toggle('open', !isOpen);
   items.classList.toggle('open', !isOpen);
 }
+// Google Rating — sunucudan çek (cache: 24 saat)
+(function() {
+  var el1 = document.getElementById('google-rating');
+  var el2 = document.getElementById('google-rating-2');
+  if (!el1 && !el2) return;
+  fetch('/api/google-rating')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.puan) {
+        if (el1) el1.textContent = '★ ' + d.puan;
+        if (el2) el2.textContent = d.puan;
+      }
+    })
+    .catch(function() { /* hata olursa mevcut değer kalır */ });
+})();
 </script>
 </body>
 </html>

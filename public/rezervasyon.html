@@ -59,8 +59,9 @@ nav {
 .nav-hamburger span { display:block; width:26px; height:2px; background:var(--black); }
 .mob-menu { display:none; position:fixed; inset:0; background:var(--white); z-index:190; flex-direction:column; align-items:center; justify-content:center; gap:28px; }
 .mob-menu.open { display:flex; }
-.mob-menu a { font-family:'Barlow Condensed',sans-serif; font-size:2.4rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--black); text-decoration:none; }
-.mob-menu a:hover { color:var(--gold); }
+.mob-menu a { font-family:'Barlow Condensed',sans-serif; font-size:2.4rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--black); text-decoration:none; transition:color 0.2s; }
+.mob-menu a:hover { color:var(--gold); opacity:1; }
+.mob-book:hover { color:var(--black) !important; opacity:0.88; }
 .mob-close { position:absolute; top:20px; right:28px; background:none; border:none; font-size:1.1rem; cursor:pointer; color:var(--muted); }
 .mob-book { display:inline-flex; align-items:center; justify-content:center; background:var(--gold); color:var(--black); font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:12px 26px; margin-top:12px; transition:opacity 0.2s; }
 .mob-book:hover { opacity:0.88; }
@@ -423,7 +424,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
       Kocatepe, No:231 · Bayrampaşa / İstanbul
     </a>
-    <a href="/rezervasyon" class="nav-book">REZERVASYON YAP +</a>
+    <a href="/rezervasyon" class="nav-book">REZERVASYON YAP</a>
     <button class="nav-hamburger" id="ham" aria-label="Menü"><span></span><span></span></button>
   </div>
 </nav>
@@ -436,9 +437,8 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
   <a href="/#services" onclick="this.closest('.mob-menu').classList.remove('open')">Hizmetler</a>
   <a href="/fiyatlar" onclick="this.closest('.mob-menu').classList.remove('open')">Fiyatlar</a>
   <a href="/portfolio" onclick="this.closest('.mob-menu').classList.remove('open')">Portfolyo</a>
-  <a href="/rezervasyon" onclick="this.closest('.mob-menu').classList.remove('open')">Rezervasyon</a>
   <a href="/#contact" onclick="this.closest('.mob-menu').classList.remove('open')">İletişim</a>
-  <a href="/rezervasyon" class="mob-book">REZERVASYON YAP +</a>
+  <a href="/rezervasyon" class="mob-book">REZERVASYON YAP</a>
 </div>
 
 <!-- PAGE HERO -->
