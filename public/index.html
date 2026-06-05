@@ -899,9 +899,31 @@ body.splash-active { overflow: hidden; }
   opacity: 0 !important;
   pointer-events: none !important;
 }
-/* Badge anchor - "Free Instagram Feed Widget" */
-a[href*="elfsight.com/instagram-feed-instashow"] {
+a[href*="utm_campaign=free-widget"],
+a[href*="removeBranding"] {
   display: none !important;
+}
+/* Load more butonu stilini değiştir */
+.eapps-instagram-feed-posts-grid-load-more {
+  background: var(--black) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: 13px 40px !important;
+  cursor: pointer !important;
+  transition: opacity 0.2s !important;
+}
+.eapps-instagram-feed-posts-grid-load-more:hover {
+  opacity: 0.85 !important;
+}
+/* Badge sonrası boşluğu kapat */
+.eapps-instagram-feed-posts-grid-load-more-container {
+  margin-bottom: 0 !important;
 }
 </style>
 </head>
