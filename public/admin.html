@@ -2431,12 +2431,23 @@ function kapaliToggle(i,kapali){
   document.getElementById(`ac-${i}`).disabled=kapali;
   document.getElementById(`kp-${i}`).disabled=kapali;
 }
-function saatKaydet(){
+async function saatKaydet(){
   calisma.forEach((c,i)=>{
     c.ac=document.getElementById(`ac-${i}`).value||c.ac;
     c.kp=document.getElementById(`kp-${i}`).value||c.kp;
   });
-  toast('Çalışma saatleri kaydedildi.','ok');
+  try {
+    const val = JSON.stringify(calisma);
+    const check = await sRest('ayarlar?key=eq.calisma_saatleri&select=key');
+    if (check && check.length) {
+      await sRest('ayarlar?key=eq.calisma_saatleri', {method:'PATCH', body:JSON.stringify({value:val})});
+    } else {
+      await sRest('ayarlar', {method:'POST', body:JSON.stringify({key:'calisma_saatleri', value:val})});
+    }
+    toast('Çalışma saatleri kaydedildi ✓','ok');
+  } catch(e) {
+    toast('Kayıt hatası: '+e.message,'hata');
+  }
 }
 
 // ─── HİZMET SIRALAMA ───

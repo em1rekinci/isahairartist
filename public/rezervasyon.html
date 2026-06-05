@@ -856,13 +856,62 @@ function updateSummary() {
 }
 
 // Minimum tarih = bugün (eski tarih seçilemesin)
+// Çalışma saatleri ve özel günler
+let _calismaData = null;
+let _ozelGunler = [];
+
+async function calismaVerisiYukle() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/ayarlar?key=in.(calisma_saatleri,ozel_gunler)&select=key,value`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    });
+    const data = await res.json();
+    data.forEach(row => {
+      if (row.key === 'calisma_saatleri') {
+        try { _calismaData = JSON.parse(row.value); } catch(e) {}
+      }
+      if (row.key === 'ozel_gunler') {
+        try { _ozelGunler = JSON.parse(row.value); } catch(e) {}
+      }
+    });
+  } catch(e) { console.warn('Çalışma verisi yüklenemedi:', e); }
+}
+
+function gunKapaliMi(tarihStr) {
+  const d = new Date(tarihStr + 'T12:00');
+  const jsGun = d.getDay(); // 0=Pazar
+  // TR indeks: Pzt=0, Sal=1, Car=2, Per=3, Cum=4, Cmt=5, Paz=6
+  const trIdx = jsGun === 0 ? 6 : jsGun - 1;
+
+  // Özel gün var mı? (öncelik özel günde)
+  const ozel = _ozelGunler.find(g => g.tarih === tarihStr);
+  if (ozel) {
+    return ozel.durum === 'kapali';
+  }
+
+  // Haftalık çalışma verisinden bak
+  if (_calismaData && _calismaData[trIdx]) {
+    return _calismaData[trIdx].kpli === true;
+  }
+
+  // Fallback: Salı kapalı
+  return trIdx === 1;
+}
+
 document.getElementById('rezDate').min = new Date().toISOString().split('T')[0];
 
-// Salı günlerini disable et (kapalı gün)
 document.getElementById('rezDate').addEventListener('change', function() {
-  const d = new Date(this.value);
-  if (d.getDay() === 2) { // Salı
-    alert('Salonumuz Salı günleri kapalıdır. Lütfen başka bir gün seçin.');
+  const val = this.value;
+  if (!val) { updateSummary(); return; }
+  if (gunKapaliMi(val)) {
+    const d = new Date(val + 'T12:00');
+    const gunAd = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'][d.getDay()];
+    // Özel gün notu varsa göster
+    const ozel = _ozelGunler.find(g => g.tarih === val);
+    const msg = ozel && ozel.not
+      ? `Salonumuz bu gün kapalıdır (${ozel.not}). Lütfen başka bir gün seçin.`
+      : `Salonumuz ${gunAd} günleri kapalıdır. Lütfen başka bir gün seçin.`;
+    alert(msg);
     this.value = '';
     updateSummary();
   } else {
@@ -992,6 +1041,7 @@ async function hizmetleriYukle() {
 window.addEventListener('DOMContentLoaded', () => {
   personelYukle();
   hizmetleriYukle();
+  calismaVerisiYukle();
 });
 
 // Form gönder
