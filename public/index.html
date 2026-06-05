@@ -1557,16 +1557,23 @@ function toggleService(btn) {
 <!-- Elfsight badge kaldır -->
 <script>
 function removeBadge() {
-  document.querySelectorAll('a').forEach(a => {
-    if (a.href && (a.href.includes('free-widget') || a.href.includes('removeBranding') || a.href.includes('utm_campaign=free'))) {
-      a.style.cssText = 'display:none!important';
-    }
+  document.querySelectorAll('a').forEach(function(a) {
+    try {
+      if (a.href && (a.href.indexOf('free-widget') > -1 || a.href.indexOf('removeBranding') > -1 || a.href.indexOf('utm_campaign=free') > -1)) {
+        a.style.setProperty('display', 'none', 'important');
+        a.style.setProperty('visibility', 'hidden', 'important');
+        a.style.setProperty('opacity', '0', 'important');
+        a.style.setProperty('height', '0', 'important');
+        a.style.setProperty('overflow', 'hidden', 'important');
+      }
+    } catch(e) {}
   });
 }
-// Hem hemen hem gecikmeli çalıştır
 setTimeout(removeBadge, 500);
 setTimeout(removeBadge, 1500);
 setTimeout(removeBadge, 3000);
+setTimeout(removeBadge, 5000);
+setTimeout(removeBadge, 8000);
 </script>
 </body>
 </html>
