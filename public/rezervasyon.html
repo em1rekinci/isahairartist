@@ -272,6 +272,16 @@ nav {
 .opt-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.04em; color: var(--muted); margin-left: 8px; white-space: nowrap; }
 
 /* Personel option avatar */
+/* Seçilen hizmet satırları */
+.hizmet-satir { display:flex; align-items:center; justify-content:space-between; padding:11px 14px; border:1px solid var(--border); margin-bottom:4px; background:var(--white); font-family:'Barlow Condensed',sans-serif; }
+.hizmet-satir-sol { display:flex; flex-direction:column; gap:2px; }
+.hizmet-satir-ad { font-size:0.82rem; font-weight:600; color:var(--black); letter-spacing:0.04em; }
+.hizmet-satir-sure { font-size:0.62rem; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; }
+.hizmet-satir-sag { display:flex; align-items:center; gap:12px; }
+.hizmet-satir-fiyat { font-size:0.76rem; font-weight:500; color:var(--black); white-space:nowrap; }
+.hizmet-satir-sil { background:none; border:none; cursor:pointer; color:var(--muted); font-size:1rem; padding:2px 4px; line-height:1; }
+.hizmet-satir-sil:hover { color:var(--black); }
+
 .personel-opt { display: flex; align-items: center; gap: 11px; flex: 1; }
 .personel-avatar {
   width: 32px; height: 32px; border-radius: 50%; object-fit: cover;
@@ -447,7 +457,8 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 @media (max-width: 768px) {
   nav { padding: 0 16px; height: 64px; }
   .nav-book { display: none; }
-  .nav-address { display:flex; border:1px solid var(--border); padding:6px 10px; font-size:0.56rem; border-radius:3px; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .nav-logo img { height:40px; }
+  .nav-address { display:flex; border:1px solid var(--border); padding:7px 11px; font-size:0.58rem; border-radius:3px; }
   .page-hero { margin-top: 64px; padding: 36px 16px 32px; }
   .page-hero-left h1 { font-size: 2.8rem; }
   .rez-form-col { padding: 36px 16px; }
@@ -461,7 +472,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
 }
 @media (max-width: 480px) {
   nav { padding: 0 12px; }
-  .nav-logo img { height: 48px; }
+  .nav-logo img { height:40px; }
   .service-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
   .time-slots { grid-template-columns: repeat(3, 1fr); }
 }
@@ -544,9 +555,12 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
           <span class="rez-step-title">Hizmet Seçin</span>
         </div>
         <div class="form-group">
-          <div class="custom-select-wrapper" id="serviceDropdown">
-            <div class="custom-select-trigger" onclick="toggleServiceDropdown()">
-              <span class="trigger-text" id="triggerText">— Hizmet seçin —</span>
+          <!-- Seçilen hizmetler listesi -->
+          <div id="selectedServiceList"></div>
+          <!-- Hizmet ekle dropdown -->
+          <div class="custom-select-wrapper" id="serviceDropdown" style="margin-top:6px">
+            <div class="custom-select-trigger" onclick="toggleServiceDropdown()" id="serviceAddBtn">
+              <span class="trigger-text" id="triggerText" style="color:var(--gold)">+ HİZMET EKLE</span>
               <svg class="trigger-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
             <div class="custom-select-dropdown" id="serviceDropdownList">
@@ -670,6 +684,10 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
           <span class="summary-val empty" id="sumPrice">—</span>
         </div>
         <div class="summary-row">
+          <span class="summary-label">Süre</span>
+          <span class="summary-val empty" id="sumSure">—</span>
+        </div>
+        <div class="summary-row">
           <span class="summary-label">Tarih</span>
           <span class="summary-val empty" id="sumDate">Seçilmedi</span>
         </div>
@@ -770,6 +788,7 @@ document.getElementById('ham').addEventListener('click', () => {
 
 // Seçili hizmet & saat
 let selectedService = '';
+let selectedServices = [];
 let selectedPrice   = '';
 let selectedTime    = '';
 
@@ -778,14 +797,48 @@ function toggleServiceDropdown() {
 }
 
 function selectCustomOption(el) {
-  selectedService = el.dataset.value;
-  selectedPrice   = el.dataset.price || '';
-  const t = document.getElementById('triggerText');
-  t.textContent = selectedService;
-  t.classList.add('has-value');
-  document.querySelectorAll('.custom-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  document.getElementById('serviceDropdown').classList.remove('open');
+  const val   = el.dataset.value;
+  const price = el.dataset.price || '';
+  const sure  = el.dataset.sure || '';
+  const idx   = selectedServices.findIndex(s => s.ad === val);
+
+  if (idx > -1) {
+    // Zaten seçiliyse kaldır
+    selectedServices.splice(idx, 1);
+    el.classList.remove('selected');
+  } else {
+    selectedServices.push({ ad: val, fiyat: price, sure: sure });
+    el.classList.add('selected');
+  }
+
+  renderServiceTags();
+  selectedService = selectedServices.map(s => s.ad).join(', ');
+  updateSummary();
+}
+
+function renderServiceTags() {
+  const el = document.getElementById('selectedServiceList');
+  if (!el) return;
+  el.innerHTML = selectedServices.map(s => `
+    <div class="hizmet-satir">
+      <div class="hizmet-satir-sol">
+        <span class="hizmet-satir-ad">${s.ad}</span>
+        ${s.sure ? `<span class="hizmet-satir-sure">⏱ ${s.sure} dk</span>` : ''}
+      </div>
+      <div class="hizmet-satir-sag">
+        <span class="hizmet-satir-fiyat">${s.fiyat}</span>
+        <button class="hizmet-satir-sil" onclick="hizmetKaldir('${s.ad.replace(/'/g,"\\'")}')">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+function hizmetKaldir(ad) {
+  selectedServices = selectedServices.filter(s => s.ad !== ad);
+  document.querySelectorAll('#serviceDropdownList .custom-option').forEach(el => {
+    if (el.dataset.value === ad) el.classList.remove('selected');
+  });
+  renderServiceTags();
+  selectedService = selectedServices.map(s => s.ad).join(', ');
   updateSummary();
 }
 
@@ -829,8 +882,8 @@ function updateSummary() {
   sumName.textContent = fullName || '—';
   sumName.className = 'summary-val' + (fullName ? '' : ' empty');
 
-  sumService.textContent = selectedService || 'Seçilmedi';
-  sumService.className = 'summary-val' + (selectedService ? '' : ' empty');
+  sumService.textContent = selectedServices.length ? selectedServices.map(s=>s.ad).join(', ') : 'Seçilmedi';
+  sumService.className = 'summary-val' + (selectedServices.length ? '' : ' empty');
 
   const sumPersonel = document.getElementById('sumPersonel');
   if (sumPersonel) {
@@ -840,6 +893,14 @@ function updateSummary() {
 
   sumPrice.textContent = selectedPrice || '—';
   sumPrice.className = 'summary-val' + (selectedPrice ? '' : ' empty');
+
+  // Toplam süre
+  const sumSure = document.getElementById('sumSure');
+  if (sumSure) {
+    const toplamSure = selectedServices.reduce((t, s) => t + (parseInt(s.sure) || 0), 0);
+    sumSure.textContent = toplamSure > 0 ? `~${toplamSure} dakika` : '—';
+    sumSure.className = 'summary-val' + (toplamSure > 0 ? '' : ' empty');
+  }
 
   if (date) {
     const d = new Date(date);
@@ -1032,8 +1093,13 @@ async function hizmetleriYukle() {
           : h.min_fiyat === h.max_fiyat || !h.max_fiyat
             ? `${h.min_fiyat.toLocaleString('tr-TR')} TL`
             : `${h.min_fiyat.toLocaleString('tr-TR')} – ${h.max_fiyat.toLocaleString('tr-TR')} TL`;
-        html += `<div class="custom-option" data-value="${h.ad}" data-price="${fiyat}" onclick="selectCustomOption(this)">
-          <span>${h.ad}</span><span class="opt-price">${fiyat}</span>
+        const sure = h.sure || '';
+        html += `<div class="custom-option" data-value="${h.ad}" data-price="${fiyat}" data-sure="${sure}" onclick="selectCustomOption(this)">
+          <span>${h.ad}</span>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+            ${sure ? `<span style="font-size:0.62rem;color:var(--muted)">⏱ ${sure} dk</span>` : ''}
+            <span class="opt-price">${fiyat}</span>
+          </div>
         </div>`;
       });
     }
@@ -1059,7 +1125,7 @@ async function submitForm() {
   const date      = document.getElementById('rezDate').value;
   const kvkk      = document.getElementById('kvkk').checked;
 
-  if (!selectedService) { alert('Lütfen bir hizmet seçin.'); return; }
+  if (!selectedServices.length) { alert('Lütfen en az bir hizmet seçin.'); return; }
   if (!date) { alert('Lütfen tarih seçin.'); return; }
   if (!selectedTime) { alert('Lütfen saat seçin.'); return; }
   if (!firstName) { alert('Lütfen adınızı girin.'); return; }
