@@ -568,7 +568,7 @@ footer { background:var(--black); color:var(--white); padding:64px 60px 0; overf
           <!-- Seçilen hizmetler listesi -->
           <div id="selectedServiceList"></div>
           <!-- Hizmet ekle butonu (hizmet seçilince görünür) -->
-          <button id="hizmetEkleBtn" onclick="toggleServiceDropdown()" style="display:none;width:100%;margin-top:4px;padding:11px 16px;border:1px dashed var(--border);background:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-align:left;transition:background 0.15s">+ HİZMET EKLE</button>
+          <button id="hizmetEkleBtn" onclick="event.stopPropagation();toggleServiceDropdown()" style="display:none;width:100%;margin-top:4px;padding:11px 16px;border:1px dashed var(--border);background:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);text-align:left;transition:background 0.15s">+ HİZMET EKLE</button>
         </div>
       </div>
 
